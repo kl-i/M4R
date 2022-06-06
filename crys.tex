@@ -1,0 +1,319 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[de Rham space]
+  
+By \linkto{dgcat.psh.triple}{the theory of left and right Kan extensions},
+we have the following adjunctions :
+\begin{cd}
+  {\mathrm{Aff}^\mathrm{red}} & {\mathrm{dAff}} & \rightsquigarrow & {\mathrm{PStk}_\mathrm{red}} && {\mathrm{PStk}}
+	\arrow["\subseteq", from=1-1, to=1-2]
+	\arrow["{\mathrm{res}}"{description}, from=1-6, to=1-4]
+	\arrow["{\mathrm{Ran}}"', shift right=5, from=1-4, to=1-6]
+	\arrow["{\mathrm{Lan}}", shift left=5, from=1-4, to=1-6]
+	\arrow["\bot"{description}, shift left=3, draw=none, from=1-4, to=1-6]
+	\arrow["\bot"{description}, shift right=3, draw=none, from=1-4, to=1-6]
+\end{cd}
+
+The functor which takes de Rham space is defined to be 
+$\DR := \mathrm{Ran}\,\mathrm{res}$.
+
+The unit of the adjunction $\mathrm{res} \dashv \RAN$ is a
+natural transformation $\id{\PSTK} \to \DR$.
+For $X \in \PSTK$, we write $p_\DR : X \to X_\DR$
+for the component of the natural transformation.
+
+\end{dfn}
+
+\begin{rmk}
+  Let $X \in \PSTK$ and $\SPEC\, A \in \DAFF$.
+  Then points of $X_\DR$ has the following description :
+\[
+  \PSTK(\SPEC\,A , X_\DR) 
+  \simeq \PSTK_\mathrm{red}(\SPEC\,A_\mathrm{red} , X_\mathrm{red})
+  \simeq \PSTK(\SPEC\,A_\RED , X)
+\]
+  The first equivalence is by definition of $\RAN$ and
+  the second is by the fully faithful embedding $\PSTK_\RED \to \PSTK$.
+  In particular, the morphism $p_\DR : X \to X_\DR$ gives
+  at the level of points : 
+  \[
+    \PSTK(\SPEC\,A , X) \to \PSTK(\SPEC\,A_\RED , X)  
+  \]
+\end{rmk}
+
+\begin{rmk}[Relation to Grothendieck's infinitesimal site]
+  
+  Let $X \in \PSTK$.
+  For simplicity, we assume the underlying classical prestack
+  of $X$ is zero-truncated, meaning for every $\SPEC\, A \in \AFF$
+  we have $X(A)$ is a set. 
+  (E.g. if $X$ has an underlying scheme.)
+  We will describe the underlying classical prestack of $X_\DR$,
+  i.e. the over category $\AFF / X_\DR$.
+
+  First note that since $X^\CL$ is zero-truncated,
+  so is $X_\DR^\CL$.
+  This means for $\SPEC\, A \in \AFF$,
+  $X_\DR(A)$ is a set so we do not have to worry about
+  any homotopical phenomena.
+  Then given two classical points $x : \SPEC\, A \to X_\DR$ and
+  $y : \SPEC\, B \to X_\DR$,
+  a morphism $f : y \to x$ over $X_\DR$ is precisely 
+  a morphism $f : \SPEC\, B \to \SPEC\, A$ such that 
+  $x f = y$ at the reduced level.
+  \begin{cd}
+    {\mathrm{Spec}\,B} && {\leftrightsquigarrow} & {\mathrm{Spec}\,B} & {\mathrm{Spec}\,B^\RED} \\
+    {\mathrm{Spec}\,A} & {X_\mathrm{dR}} && {\mathrm{Spec}\,A} & {\mathrm{Spec}\,A^\RED} & X
+    \arrow["f"', from=1-1, to=2-1]
+    \arrow["y", from=1-1, to=2-2]
+    \arrow["x"', from=2-1, to=2-2]
+    \arrow["f"', from=1-4, to=2-4]
+    \arrow[from=1-5, to=1-4]
+    \arrow[from=2-5, to=2-4]
+    \arrow["{f^\RED}"', from=1-5, to=2-5]
+    \arrow["{y^\RED}", from=1-5, to=2-6]
+    \arrow["{x^\RED}"', from=2-5, to=2-6]
+  \end{cd}
+  Now assuming $X$ has a underlying scheme,
+  Grothendieck's infinitesimal site of $X$ is precisely
+  the full subcategory of $\AFF / X_\DR$
+  with objects $x : \SPEC\, A \to X_\DR$ such that $\SPEC\, A^\RED \to X$
+  is an open immersion.
+
+\end{rmk}
+
+\begin{rmk}[What about $\mathrm{Lan}\,\mathrm{res}$]
+  
+  From the discussion on \linkto{dsch.lan}{prestacks},
+  the left Kan extension functor $\LAN : \PSTK_\RED \to \PSTK$
+  simply takes a reduced prestack and views it as a general prestack.
+  Thus $\LAN\,\mathrm{res}$ is the functor that takes 
+  the underlying reduced prestack of a general prestack.
+  
+\end{rmk}
+
+\begin{rmk}
+  
+  We actually have more than just an inclusion $\AFF^\RED \to \DAFF$ 
+  but an adjunction : 
+  \begin{cd}
+    {\AFF^\RED} && \DAFF
+    \arrow["\subs", shift left=3, from=1-1, to=1-3]
+    \arrow["{\SPEC\, (\pi_0 A)_\RED \mapsfrom \SPEC\,A}", shift left=3, from=1-3, to=1-1]
+    \arrow["\bot"{description}, draw=none, from=1-1, to=1-3]
+  \end{cd}
+  From this, we can also deduce that $\DR$ preserves 
+  both small colimits and small limits which is useful.
+\end{rmk}
+
+\begin{prop}
+  
+  The functor $\DR$ taking de Rham spaces preserves 
+  small colimits and small limits.
+\end{prop}
+\begin{proof}
+
+  We proceed by a slightly different proof to GR Crys 1.1.4.
+  To show $\DR = \RAN\,\RES$ preserves small colimits and small limits, 
+  it suffices that $\RAN$ is a left adjoint.
+  By applying \linkto{dgcat.psh.triple}{the theory of left and right 
+  Kan extensions of presheaves} to the adjunction 
+  $\AFF^\RED \rightleftarrows \DAFF$, we obtain \emph{two} adjoint triples : 
+  \begin{cd}
+    &&& {\PSTK_\RED} && \PSTK \\
+    {\AFF^\RED} & \DAFF & \rightsquigarrow \\
+    {} & {} & {} & {\PSTK_\RED} & {} & \PSTK \\
+    {} & {} & {}
+    \arrow["\LAN"', shift right=5, from=3-6, to=3-4]
+    \arrow["{\mathrm{res}}"{description}, from=3-4, to=3-6]
+    \arrow["\RAN", shift left=5, from=3-6, to=3-4]
+    \arrow["\bot"{description}, shift left=3, draw=none, from=3-4, to=3-6]
+    \arrow["\bot"{description}, shift right=3, draw=none, from=3-4, to=3-6]
+    \arrow["\subs", shift left=3, from=2-1, to=2-2]
+    \arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
+    \arrow["\RED", shift left=3, from=2-2, to=2-1]
+    \arrow["\LAN", shift left=5, from=1-4, to=1-6]
+    \arrow["{\mathrm{res}}"{description}, from=1-6, to=1-4]
+    \arrow["\RAN"', shift right=5, from=1-4, to=1-6]
+    \arrow["\bot"{description}, shift left=3, draw=none, from=1-4, to=1-6]
+    \arrow["\bot"{description}, shift right=3, draw=none, from=1-4, to=1-6]
+  \end{cd}
+  The point is that we have a commuting square : 
+  \begin{cd}
+    {\AFF^\RED} & \DAFF \\
+    {\PSTK_\RED} & \PSTK
+    \arrow[from=1-1, to=2-1]
+    \arrow["{\mathrm{res}}", from=2-2, to=2-1]
+    \arrow["{\RED}"',from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+  \end{cd}
+  So $\mathrm{res}$ in the top adjunction is isomorphic to 
+  $\LAN$ in the bottom adjunction,
+  hence by uniqueness of adjoint functors 
+  we obtain a quadruple of adjoints : 
+  \begin{cd}
+    {\PSTK_\RED} && \PSTK
+    \arrow["\LAN", shift left=9, from=1-1, to=1-3]
+    \arrow["{\mathrm{res}}"{description}, shift right = 3, from=1-3, to=1-1]
+    \arrow["\RAN"{description}, shift right=3, from=1-1, to=1-3]
+    \arrow["\bot"{description}, shift left=6, draw=none, from=1-1, to=1-3]
+    \arrow["\bot"{description}, shift right=6, draw=none, from=1-1, to=1-3]
+    \arrow[shift left=9, from=1-3, to=1-1]
+    \arrow["\bot"{description}, draw=none, from=1-3, to=1-1]
+  \end{cd}
+  This proves $\RAN$ is a left adjoint and hence preserves small colimits.
+
+\end{proof}
+  
+\begin{dfn}[Left and Right Crystals]
+  
+  Let $X \in \PSTK_\LAFT$.
+  Then we define the \emph{$\infty$-category of left crystals on $X$} to be
+  \[
+    \CRYS^L(X) := \QCOH\,X_\DR  
+  \]
+  The \emph{$\infty$-category of right crystals on $X$} is defined to be
+  \[
+    \CRYS^R(X) := \INDCOH\,X_\DR  
+  \]
+
+\end{dfn}
+
+Technically speaking, for the definition of right crystals to make sense,
+we need to show that $X_\DR$ is also locally almost finite type.
+Indeed, we have the following.
+
+\begin{prop}[$\PSTK_\LAFT$ is closed under $\DR$ (GR Crys 1.3.3)]
+  \link{crys.dR.laft}
+
+  Let $X \in \PSTK_\LAFT$.
+  Then $X_\DR \in \PSTK_\LAFT \cap \PSTK_\CL$.
+\end{prop}
+\begin{proof}
+  IP.
+\end{proof}
+
+\begin{rmk}
+  
+  A specific situation worth noting is when 
+  the morphism $X \to X_\DR$ exhibits $X_\DR$ as the 
+  geometric realisation of its Cech nerve $\check{C}(X/X_\DR)$,
+  i.e. when $X \to X_\DR$ is an effective epimorphism.\footnote{
+    For a definition of Cech nerves,
+    see Lurie HTT 6.1.2.11. 
+  }
+\end{rmk}
+
+\begin{prop}
+  \link{crys.cfsm}
+
+  Let $X \in \PSTK_\LAFT$.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item For all $S \in \DAFF$, 
+    the map of sets $\pi_0 X(S) \to \pi_0 X(S_\RED)$ is surjective.
+    \item $X \to X_\DR$ is an effective epimorphism in $\PSTK$.
+  \end{enumerate}
+  We say $X$ is \emph{classically formally smooth}
+  when any (and thus all) of the above are satisfied.
+  In this case, we have 
+  \begin{cd}
+    {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))} \\
+    {\mathrm{Crys}^L\,X} & {\varprojlim \mathrm{QCoh}(\check{C}(X/X_\mathrm{dR}))}
+    \arrow["\sim", from=1-1, to=1-2]
+    \arrow["\sim", from=2-1, to=2-2]
+  \end{cd}
+  i.e. ``crystals are the same as sheaves equipped with equivariance
+  with respect to the infinitesimal groupoid''.
+\end{prop}
+\begin{proof}
+  
+  For the equivalence of $(1)$ and $(2)$.
+  Colimits in $\PSTK = \PSH\,\DAFF$ are computed pointwise,
+  the lemma is equivalent to claiming that
+  $X(S) \to X(S_\RED)$ is effectively epic if and only if
+  it is surjective on $\pi_0$.
+  This is a non-trivial fact about $\infty$-groupoids which we will assume.
+  \begin{lem}
+    
+    Let $q : X \to Y$ be a morphism of $\infty$-groupoids.
+    Then $q$ is an effective epimorphism if and only if 
+    it is surjective on $\pi_0$.
+    \begin{proof1}
+      We defer the interested reader to Lurie HTT 6.1.2.14.
+
+      % Let us assume $X, Y$ are sets.
+      % Then the colimit of the Cech nerve $\check{C}(q)$ is
+      % the same as that of a smaller portion of the simplicial object : 
+      % \begin{cd}
+      %   {X \times_Y X} & X
+      %   \arrow[shift left=1, from=1-1, to=1-2]
+      %   \arrow[shift right=1, from=1-1, to=1-2]
+      % \end{cd}
+      % Then $X \to Y$ exhibits $Y$ as the colimit of the about diagram
+      % if and only if ``mapping out of $Y$ is the same as mapping out of $X$
+      % such that fibers are mapped to the same element'',
+      % in other words ``$Y$ is a quotient of $X$''.
+      % This is plainly equivalent to $q$ being surjective.
+      % 
+      % !!! this is false. Eg. Bool -> * gives Bool x Bool => Bool.
+      %     
+    \end{proof1}
+  \end{lem}
+
+  Now assume $X$ is classically formally smooth.
+  Since $\QCOH^* : \PSTK \to (\DGCAT_\CTS)^\OP$ is the left Kan extension of
+  its restriction to $\DAFF$, it preserves small colimits
+  and in particular geometric realisations.
+  We thus obtain the equivalence 
+  $\CRYS^L\,X \map{\sim}{} \LIM \QCOH(\check{C}(X / X_\DR))$.
+
+  We want to use the same argument for right crystals,
+  however the subtlety is that $\INDCOH^!$ is 
+  \emph{not} defined on all of $\PSTK$ but rather just $\PSTK_\LAFT$.\footnote{
+    This is GR Crys 2.3.11. However, 
+    the proof in the reference simply claims that the argument is
+    the same as for left crystals.
+    We provide some unclear details.
+  }
+  It suffices to show that the Cech nerve of $X \to X_\DR$ lies in $\PSTK_\LAFT$
+  and that $X \to X_\DR$ is an effective epimorphism \emph{in $\PSTK_\LAFT$}.
+  For the first part,
+  note that the morphism $X \to X_\DR$ is in $\PSTK_\LAFT$ because 
+  \linkto{crys.dR.laft}{$dR$ preserves laft-ness}.
+  Since \linkto{dsch.laft.fin_lim}{$\PSTK_\LAFT$ is closed under finite limits},
+  we obtain that the Cech nerve of $X \to X_\DR$ in $\PSTK_\LAFT$
+  agrees with the one in $\PSTK$.
+  For the second part, we use \linkto{dsch.laft.char}
+  {$\mathrm{res} : \PSTK_\LAFT \map{\sim}{} \PSH\,\DAFF^{<\infty}_\FT$}.
+  Since colimits are computed pointwise, by the lemma above
+  it suffices to show that $X(A) \to X_\DR(A)$ is a surjection on $\pi_0$
+  for all $\SPEC\,A \in \DAFF^{< \infty}_\FT$.
+  This is true by assumption.
+
+\end{proof}
+
+Here is a sufficient condition to be classically formally smooth,
+whose proof we won't go into.
+
+\begin{prop}[Comparison of classically formally smooth and smoothness]
+  \link{crys.sm_implies_cfsm}
+  
+  Let $X$ be a laft smooth classical scheme of finite type over $k$.
+  Then $X$ is classically formally smooth when considered as a prestack.
+\end{prop}
+\begin{proof}
+  Omitted.
+  It is shown in GR DGINDSCH 8.4.2 that 
+  smooth classical schemes of finite type over $k$
+  are \emph{formally smooth} when considered as prestacks.\footnote{
+  GR's usage of the term ``formally smooth'' does \emph{not}
+  immediately match the usual usage.
+  The interested reader may find the definition in the reference provided.
+}
+With the additional assumption of laft-ness,
+this implies classically formally smooth.
+\end{proof}
+
+\end{document}

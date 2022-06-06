@@ -1,0 +1,85 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{dfn}[Ind-coherent sheaves on laft prestacks (GR1 Ch5 3.4.1)]
+  
+  We define $\INDCOH^! : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP$
+  as the left Kan extension of 
+  $\INDCOH^! : \DAFF^{<\infty}_\FT \to (\DGCAT_\CTS)^\OP$
+  via the \linkto{dgcat.psh.up}{
+    universal property of presheaf $\infty$-categories
+  }.
+\end{dfn}
+  
+(Something about $\INDCOH^! \to \QCOH^*$)
+
+There is also a functor turning quasi-coherent sheaves into
+ind-coherent sheaves.
+
+\begin{dfn}[Action of $\QCOH\,X$ on $\INDCOH\,X$]
+  
+  Let $X \in \DSCH_\AFT$.
+  It is shown in BZFN-3.19 that $\QCOH\,X = \IND((\QCOH\,X)^c)$,
+  where $(\QCOH\,X)^c$ is the full subcategory of compact objects,
+  which in this case coincides with $\PERF\,X$,
+  the full subcategory of perfect complexes.
+
+  Then the tensor product $\QCOH\,X \otimes \QCOH\,X \to \QCOH\,X$ 
+  which is a morphism in $\DGCAT_\CTS$
+  restricts to a tensor product $\PERF\,X \otimes \COH\,X \to \COH\,X$
+  which is a morphism in $\DGCAT$.
+  By taking ind-objects,
+  we obtain the following morphism in $\DGCAT$, 
+  \[
+    \QCOH\,X \otimes \INDCOH\,X \to \INDCOH\,X
+  \]
+  
+  Restricting along $\VEC \to \INDCOH\,X$ corresponding to
+  the unit $\om_X$ of $\otimes^!$ gives 
+  \[
+    \Upsilon_X : \QCOH\,X \to \INDCOH\,X
+  \]
+  which on objects gives $\FF \mapsto \FF \otimes \om_X$.
+
+  It is shown in GR1, Ch 6, 3.3 that $\Upsilon$ can be made into 
+  a natural transformation $\QCOH^* \to \INDCOH^!$ as functors
+  $\DSCH_\AFT \to (\DGCAT_\CTS)\op$.
+  To extend to all laft prestacks, 
+  we first restrict to $\DAFF^{<\infty}_\FT \subs \DSCH_\AFT$.
+  \begin{cd}
+    {} && {\mathrm{QCoh}^*} & 
+      {\mathrm{IndCoh}^!} & {\text{in}} & 
+        {\mathrm{Fun}(\DAFF^{<\infty}_\FT,
+        \mathrm{DGCat}_\mathrm{cts}^\OP)} \\
+    && 
+    {\widetilde{\mathrm{QCoh}^*}} & 
+      {\mathrm{IndCoh}^!} & {\text{in}} & 
+        {\mathrm{Fun}(\mathrm{PStk}_\mathrm{laft},
+        \mathrm{DGCat}_\mathrm{cts}^\OP)}
+    \arrow["{\mathrm{Lan}}"', squiggly, from=1-6, to=2-6]
+    \arrow["{\Upsilon }", from=1-3, to=1-4]
+    \arrow["\Upsilon", from=2-3, to=2-4]
+  \end{cd}
+  For each individual $X \in \PSTK_\LAFT$,
+  this means \begin{align*}
+    \widetilde{\QCOH^*}(X) &
+      \simeq \LIM_{S \in \DAFF^{<\infty}_\FT / X} \QCOH^*(X)
+    \\
+    \INDCOH^!(X) &
+      \simeq \LIM_{S \in \DAFF^{<\infty}_\FT / X} \INDCOH^!(X) 
+  \end{align*}
+  Finally, we obtain $\Upsilon : \QCOH^* \to \INDCOH^!$
+  on all of $\PSTK_\LAFT$ as the following composition : 
+  \begin{cd}
+    {\QCOH^*} & {\widetilde{\QCOH^*}} \\
+    & {\INDCOH^!}
+    \arrow[from=1-1,to=1-2]
+    \arrow[from=1-2,to=2-2, "{\Upsilon}"]
+    \arrow[from=1-1,to=2-2,"{\Upsilon}"']
+  \end{cd}
+  where the top morphism has components
+  $\QCOH^*(X) \to \widetilde{\QCOH^*}(X)$ induced by the inclusion
+  $\DAFF^{<\infty}_\FT / X \to \DAFF / X$.
+\end{dfn}
+
+\end{document}

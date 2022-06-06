@@ -1,0 +1,109 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+\begin{dfn}[Covariant $\QCOH$]
+
+  There is a functor $\QCOH^* : \DAFF \to \DGCAT_{cts}^\OP$
+  that assigns to each $A \in \DAFF$ the 
+  \emph{derived category of $A$-modules}, denoted $A\dash\MOD$.
+
+  For $A$ discrete (i.e. a commutative ring),
+  there is the following description of $A\dash\MOD$
+  under the quasi-category model of $\infty$-categories
+  summarised in a single diagram : 
+  \begin{cd}
+    {N(\mathrm{Ch}\,A)} \\
+    {N_{dg}(\mathrm{Ch}\,A)} & 
+      {N_{dg}((\mathrm{Ch}\,A)_f)} & {A\text{-}\mathrm{Mod}} \\
+    & {D(A)}
+    \arrow["\subseteq"', from=1-1, to=2-1]
+    \arrow["L", shift left=2, from=2-1, to=2-2]
+    \arrow["\supseteq", shift left=2, from=2-2, to=2-1]
+    \arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
+    \arrow["{W^{-1}}", shift left=3, from=1-1, to=2-2]
+    \arrow["{=:}"{description}, draw=none, from=2-2, to=2-3]
+    \arrow["h", from=2-2, to=3-2]
+  \end{cd}
+  Details : 
+  \begin{itemize}
+    \item $\CH\,A$ is the honest-to-god dg-category of chain complexes of
+    honest-to-god $A$-modules
+    and $D(A)$ is the category of complexes of injectives 
+    \item $\CH\,A$ has a model structure such that 
+    cofibrations are degree-wise injections and 
+    weak equivalences are quasi-isomorphisms (Lurie HA 1.3.5.3).
+    Although the class of fibrations are defined abstractly as
+    those satisfying right lifting with respect to acyclic cofibrations,
+    it turns out that any fibrant complex must be degree-wise injective,
+    and partially conversely,
+    any bounded above complex of injectives is fibrant 
+    (Lurie HA 1.3.5.6).
+    $(\CH\,A)_f$ denotes the full subcategory of fibrant complexes.
+    \item $N$ denotes the nerve functor which converts
+    1-categories to simplicial sets, which have the property of being
+    $\infty$-categories.
+    $N_{dg}$ denotes the dg-nerve functor which achieves the same thing for
+    honest-to-god dg-catgeory categories. 
+    (See Kerodon 2.5.3 for a construction.)
+    \item $h$ is the truncation of an infinity category to a 1-category
+    by taking its homotopy catgeory.
+    It is the left adjoint to $N$.
+    (See Kerodon 1.2.5 for a construction.)
+
+    We have that the homotopy category of $A\dash\MOD$ gives the
+    usual derived category of $A$-modules, as in classical algebraic geometry.
+    \item $L$ is a left adjoint to the inclusion 
+    $N_{dg}((\CH\,A)_f) \subs N_{dg}(\CH\,A)$.
+    Intuitively, for every complex $M_\bullet$, 
+    there exists a acyclic cofibration $M_\bullet \to I_\bullet$ 
+    to fibrant $I_\bullet$
+    and this is initial in the category of arrows from 
+    $M_\bullet$ into $N_{dg}((\CH\,A)_f)$
+    (Lurie HA 1.3.5.12).
+    This means for each $M_\bullet$, 
+    such a morphism $M_\bullet \to I_\bullet$ is unique up to equivalence
+    and assembles to the desired functor $L$.
+    Practically speaking, $L(M_\bullet) \simeq I_\bullet$.
+    \item The composition $N(\CH\, A) \to N_{dg}((\CH\, A)_f)$
+    exhibits the latter as the $\infty$-categorical localisation 
+    of the former at quasi-isomorphisms (Lurie HA 1.3.5.15).
+    This matches the standard treatment in classical algebraic geometry : 
+    the localisation functor from $\CH\, A$ to $D(A)$
+    takes a complex and resolves it by injecting it
+    quasi-isomorphically into a complex of injectives.
+  \end{itemize}
+
+\end{dfn}
+
+\begin{itemize}
+  \item $\DAFF^\OP$ is localisation of commutative dg-algebras w.r.t.
+  suitable model structure. 
+  (Alternatively, localisation of simplicial commutative rings w.r.t. 
+  suitable model structure. However, then need to show
+  is equivalent to commutative algebra objects in $\VEC$.)
+  \item for $\SPEC\,A \in \DAFF$, $A\dash\MOD$ is
+  $\infty$-category of left modules over $A$ in $\VEC$.
+  Can be realised as localisation of left modules over
+  $A$ as a commutative dg-algebra w.r.t. some model structure.
+
+  \item $\QCOH^* : \DAFF \to \DGCAT_\CTS^\OP$ works
+  and for each $f : \SPEC\,B \to \SPEC\,A$,
+  $f^* : \QCOH\,A \to \QCOH\,B$ can be realised as
+  $A \otimes^L_k \_$.
+
+  \item for $\SPEC\,A \in \DAFF$, $\QCOH\,A$ has obvious t-structure.
+  
+\end{itemize}
+
+\begin{dfn}[Quasi-coherent Sheaves on Prestacks]
+  
+  We define $\QCOH^* : \PSTK \to \DGCAT_\CTS^\OP$
+  as the left Kan extension of $\QCOH^* : \DAFF \to \DGCAT_\CTS^\OP$.
+\end{dfn}
+
+\begin{rmk}
+  
+\end{rmk}
+
+
+\end{document}

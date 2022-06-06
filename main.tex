@@ -3,13 +3,82 @@
 
 \begin{document}
 
-\title{Notes on \dots}
+\title{M4R : Crystals }
 
 \author{Ken Lee}
-\date{2020}
+\date{2022}
 \maketitle
 
-%\tableofcontents
+\tableofcontents
+
+``IP'' stands for ``indefinitely postponed'', 
+which means the details are at the bottom of the priority list,
+and I will only fill them in if I have time at the end.
+
+\section{Introduction}
+
+  \subsection{Why?}\subfile{why.tex}
+
+\section{Setting}
+
+  \subsection{How to work with ``DG Categories''}\subfile{dgcat.tex}
+
+  \subsection{Derived Schemes}\subfile{dsch.tex}
+% 1. DMod(X) = IndCoh(X_dR)
+%    [Classically, nilpotent extensions were enough to consider.
+%     What do we get from using all of dAff?]
+% 2. LieAlg(IndCoh X) = Grp(FormMod / X)
+%    [Q : this is where DAG is hiding?]
+% 3. BB localization as B(exp g) <- B_X(exp g) -> X_dR
+
+\section{IndCoherent Sheaves on Derived Schemes}
+
+  \subsection{Quasi-Coherent Sheaves}\subfile{qcoh.tex}
+
+  \subsection{Why Ind-Coherent Sheaves?}\subfile{indcoh.tex}
+
+  \subsection{Correspondences and Six Functor Formalisms}\subfile{corr.tex}
+
+  \subsection{Ind-Coherent Sheaves on a single Derived Scheme}
+    \subfile{indCohdSch.tex}
+
+  \subsection{Relation between Quasi-Coherent Sheaves and Ind-Coherent Sheaves}
+    \subfile{qcohindcoh.tex}
+
+  \subsection{Pushward and Pullback across Various Morphisms}
+
+  \subsection{Integral Transforms}
+
+  \subsection{Serre Duality}
+% Desired computations : 
+% - !-pullback for a non-proper non-open morphism
+% - example of proper basechange
+% - integral transform formula, at least in dAff case
+% - the unit of !-tensor is really dualizing sheaf
+% - the abstract duality functors match the classical computation
+
+\section{Crystals and D-modules}
+
+  \subsection{A note on inf-schemes}
+  Say something about making $\INDCOH$ base change
+  for larger class of spaces and morphisms
+  that includes $X \to X_\DR$.
+
+  \subsection{Left and Right Crystals}\subfile{crys.tex}
+
+  \subsection{Induction of Left and Right Crystals}\subfile{induction.tex}
+
+  \subsection{Equivalence of Left Crystals and D-modules}\subfile{dmodules.tex}
+
+  \subsection{Kashiwara's Lemma}\subfile{kashiwara.tex}
+% Desired computations : 
+% - the crystals monad actually corresponds sheaf of diff operators
+%   (fill in details omitted in GR)
+
+% \section{Lie Algebras and ``Formal'' Groups}
+
+% \section{The Localization Functor}
+% example of sl2-mod iso QCoh(P^1) as a correspondence
 
 %\printbibliography
 

@@ -27,6 +27,46 @@
 
 % % Local to this project
 \renewcommand\labelitemi{--} % Makes itemize use dashes instead of bullets
+\newcommand{\OP}{\mathrm{op}}
+\newcommand{\CL}{\mathrm{cl}}
+\newcommand{\DAFF}{\mathrm{dAff}}
+\newcommand{\CAT}{\mathrm{Cat}}
+\newcommand{\VEC}{\mathrm{Vec}}
+\newcommand{\DGCAT}{\mathrm{DGCat}}
+\newcommand{\MOD}{\mathrm{Mod}}
+\newcommand{\SPC}{\mathrm{Spc}}
+\newcommand{\PRE}[1]{\mathrm{P}#1}
+\newcommand{\PSTK}{\mathrm{PStk}}
+\newcommand{\STK}{\mathrm{Stk}}
+\newcommand{\SPEC}{\mathrm{Spec}}
+\newcommand{\PSH}{\mathrm{PSh}}
+\newcommand{\FT}{\mathrm{ft}}
+\newcommand{\AFT}{\mathrm{aft}}
+\newcommand{\LAFT}{\mathrm{laft}}
+\newcommand{\RED}{\mathrm{red}}
+\newcommand{\AFF}{\mathrm{Aff}}
+\newcommand{\DSCH}{\mathrm{dSch}}
+\newcommand{\QCOH}{\mathrm{QCoh}}
+\newcommand{\COH}{\mathrm{Coh}}
+\newcommand{\INDCOH}{\mathrm{IndCoh}}
+\newcommand{\CH}{\mathrm{Ch}}
+\newcommand{\IND}{\mathrm{Ind}}
+\newcommand{\FUN}{\mathrm{Fun}}
+\newcommand{\SET}{\mathrm{Set}}
+\newcommand{\EX}{\mathrm{ex}}
+\newcommand{\CTS}{\mathrm{cts}}
+\newcommand{\EXT}{\mathrm{Ext}}
+\newcommand{\DR}{\mathrm{dR}}
+\newcommand{\CRYS}{\mathrm{Crys}}
+\newcommand{\CORR}{\mathrm{Corr}}
+\newcommand{\PERF}{\mathrm{Perf}}
+\newcommand{\LAN}{\mathrm{Lan}}
+\newcommand{\RAN}{\mathrm{Ran}}
+\newcommand{\DIFF}{\mathrm{Diff}}
+\newcommand{\INDUCE}{\mathrm{ind}}
+\newcommand{\OBLV}{\mathrm{oblv}}
+\newcommand{\HOM}{\mathrm{Hom}}
+\newcommand{\RES}{\mathrm{res}}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -127,21 +167,6 @@
 \DeclareMathOperator{\obj}{Obj}
 \DeclareMathOperator{\END}{End}
 \DeclareMathOperator{\AUT}{Aut}
-\newcommand{\CAT}{\mathbf{Cat}}
-\newcommand{\SET}{\mathbf{Set}}
-\newcommand{\TOP}{\mathbf{Top}}
-\newcommand{\MON}{\mathbf{Mon}}
-\newcommand{\GRP}{\mathbf{Grp}}
-\newcommand{\AB}{\mathbf{Ab}}
-\newcommand{\RING}{\mathbf{Ring}}
-\newcommand{\CRING}{\mathbf{CRing}}
-\newcommand{\MOD}{\mathbf{Mod}}
-\newcommand{\VEC}{\mathbf{Vec}}
-\newcommand{\ALG}{\mathbf{Alg}}
-\newcommand{\PSH}{\mathbf{PSh}}
-\newcommand{\SH}{\mathbf{Sh}}
-\newcommand{\ORD}{\mathbf{Ord}}
-\newcommand{\POSET}{\mathbf{PoSet}}
 \newcommand{\id}[1]{\mathbbm{1}_{#1}}
 \newcommand{\map}[2]{\yrightarrow[#2][2.5pt]{#1}[-1pt]}
 \newcommand{\iso}[1][]{\cong_{#1}}
@@ -285,7 +310,7 @@
 \theoremstyle{definitionstyle}
 \newmdtheoremenv[
     linewidth = 2pt,
-    leftmargin = 20pt,
+    leftmargin = 0pt,
     rightmargin = 0pt,
     linecolor = darkgrey,
     topline = false,
@@ -295,7 +320,7 @@
 ]{dfn}{Definition}
 \newmdtheoremenv[
     linewidth = 2 pt,
-    leftmargin = 20pt,
+    leftmargin = 0pt,
     rightmargin = 0pt,
     linecolor = darkgrey,
     topline = false,
@@ -305,7 +330,7 @@
 ]{prop}{Proposition}
 \newmdtheoremenv[
     linewidth = 2 pt,
-    leftmargin = 20pt,
+    leftmargin = 0pt,
     rightmargin = 0pt,
     linecolor = darkgrey,
     topline = false,

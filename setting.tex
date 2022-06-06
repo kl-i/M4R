@@ -1,0 +1,592 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+\begin{itemize}
+
+  
+
+  \item $\DAFF$ to be the opposite of the 
+  infinity category of coconnective commutative dg-algebras over $k$.
+
+  (IP : Explain how this is the infinity category of 
+  commutative algebra objects in $\VEC$ and how practically
+  it is the infinity category underlying the 
+  model category of usual commutative dg-algebras over $k$,
+  meaning all computations can be done 1-categorically
+  using the model structure.)
+
+  \item $\SPC$ denote the infinity category of infinity groupoids.
+  For any infinity category $C$, let $\PSH\, C := (\SPC^{op})^C$
+  be the infinity category of contravariant functors from $C$ to $\SPC$.
+  Objects of $\PSH\, C$ are called \emph{presheaves over $C$}.
+  
+  \item $\PRE{\STK} := \PSH\,\DAFF$ denotes
+  the infinity category of \emph{prestacks},
+  which are contravariant functors from $\DAFF$ to $\SPC$.
+  We will use $\SPEC : \DAFF \to \PRE{\STK}$ to denote
+  the Yoneda embedding so that for a commutative dg-algebra $A$ over $k$,
+  $\SPEC\, A$ denotes the corresponding prestack.
+  The objects in the essential image of $\SPEC$ are called 
+  \emph{derived affine schemes}.
+\end{itemize}
+
+\begin{itemize}
+  \item
+  $A \in \DAFF^{\leq n}$ means $H^{< -n} A = 0$.
+  $\AFF := \DAFF^{\leq 0}$ consists of classical affine schemes and 
+  $\AFF_\red$ is the full subcategory of $\AFF$
+  consisting of reduced classical affine schemes.
+  $A \in \DAFF^{<\infty} := \bigcup_{n \geq 0} \DAFF^{\leq n}$
+  are called \emph{eventually coconnective}.
+
+  $\DAFF^{<\infty}_{\ft}$ denotes the full subcategory of $\DAFF^{<\infty}$
+  consisting \emph{finite type} $A$,
+  which means $H^0 A$ finite type over $k$ and 
+  $H^{<0} A$ finitely generated over $H^0 A$.
+
+  \item 
+  The fully faithful embedding $\AFF_\red \to \DAFF$
+  induces an adjunction $\PSH \AFF_\red \leftrightarrow \PRE{\STK}$
+  with right adjoint restriction and left adjoint left Kan extension,
+  which is also full and faithful.
+  Objects in the essential image will be called
+  \emph{classical prestacks}.
+  
+  $\PRE{\STK}_{\laft} := \PSH\,\DAFF^{<\infty}_{\ft}$ denotes 
+  the infinity category of \emph{prestacks of locally almost finite type}.
+  
+  We have $\DAFF^{<\infty}_{\ft} \subs \DAFF^{<\infty} \subs \DAFF$.
+  Then by first left Kan extending then right Kan extending,
+  we get that $\PRE{\STK}_{\laft}$ fully faithfully embeds into $\PRE{\STK}$.
+  We henceforth treat $\PRE{\STK}_{\laft}$ as a full subcategory of $\PRE{\STK}$.
+
+  \textbf{
+    Unanswered Q : where is the $\laft$ condition used in the theory?
+  }
+
+  \item Let $f : A \to B$ be a morphism of commutative dg-algebras.
+  
+  $f$ flat := $H^0 A \to H^0 B$ flat morphism of $k$-algebras and
+  $H^0 B \otimes_{H^0 A} H^{< 0} A \map{\sim}{} H^{< 0} B$.
+
+  $f$ smooth, étale, open immersion, Zariski-cover := 
+  $f$ flat and on nil-(smooth, étale, open immersion, Zariski-cover).
+
+\end{itemize}
+
+\subsection{How to work with ``DG Categories''}
+
+Gaitsgory-Rozenblyum has a highly abstract but clean definition of
+dg-categories, which can be summarised in the following diagram : 
+\begin{cd}
+	& {(\infty,1)\text{-}\mathrm{Cat}} & {(\infty,1)\text{-}\mathrm{Cat}^\mathrm{ex}} & {\mathrm{Vec}^\mathrm{f.d.}\text{-}\mathrm{Mod}} \\
+	{} & {\bigcup_\kappa (\infty,1)\text{-}\mathrm{Cat}^\mathrm{ex}_{\kappa\text{-c.g.}}} & {(\infty,1)\text{-}\mathrm{Cat}^\mathrm{ex}_\mathrm{cts}} & {\mathrm{Vec}\text{-}\mathrm{Mod}} \\
+	& {} & {} & {}
+	\arrow[from=1-3, to=1-2]
+	\arrow[from=1-4, to=1-3]
+	\arrow["{=:}"{description}, draw=none, from=2-3, to=2-2]
+	\arrow[from=2-3, to=1-3]
+	\arrow[from=2-4, to=1-4]
+	\arrow[from=2-4, to=2-3]
+\end{cd}
+% https://q.uiver.app/?q=WzAsOCxbMSwwLCIoXFxpbmZ0eSwxKVxcdGV4dHstfVxcbWF0aHJte0NhdH0iXSxbMiwwLCIoXFxpbmZ0eSwxKVxcdGV4dHstfVxcbWF0aHJte0NhdH1eXFxtYXRocm17ZXh9Il0sWzMsMCwiXFxtYXRocm17VmVjfV5cXG1hdGhybXtmLmQufVxcdGV4dHstfVxcbWF0aHJte01vZH0iXSxbMSwyLCIoXFxpbmZ0eSwxKVxcdGV4dHstfVxcbWF0aHJte0NhdH1eXFxtYXRocm17UHJ9X0wiXSxbMiwyLCIoXFxpbmZ0eSwxKVxcdGV4dHstfVxcbWF0aHJte0NhdH1eXFxtYXRocm17ZXh9X1xcbWF0aHJte2N0c30iXSxbMywyLCJcXG1hdGhybXtWZWN9XFx0ZXh0ey19XFxtYXRocm17TW9kfSJdLFsxLDEsIlxcbWF0aHJte0FjY30iXSxbMCwxLCJcXG1hdGhybXtBY2N9X1xca2FwcGEiXSxbMSwwXSxbMiwxXSxbNiwwXSxbMyw2XSxbNCwzXSxbNSw0XSxbNCwxXSxbNSwyXSxbNyw2XSxbNywwLCIiLDEseyJvZmZzZXQiOjF9XSxbMCw3LCJcXG1hdGhybXtJbmR9X1xca2FwcGEiLDIseyJsYWJlbF9wb3NpdGlvbiI6NzAsIm9mZnNldCI6NSwic2hvcnRlbiI6eyJzb3VyY2UiOjIwfX1dLFs3LDAsIlxcYm90IiwxLHsib2Zmc2V0IjotMiwic3R5bGUiOnsiYm9keSI6eyJuYW1lIjoibm9uZSJ9LCJoZWFkIjp7Im5hbWUiOiJub25lIn19fV1d
+Some explanations are due :  
+\begin{itemize}
+  \item We will use ``infinity category'' to refer only to 
+  $(\infty,1)$-categories.
+  The word ``category'' will exclusively refer to $1$-categories.
+
+  $(\infty,1)\dash\CAT$ denotes the infinity category of 
+  small infinity categories. 
+  $(\infty,1)\dash\CAT$ has all small limits (Kerodon 7.4.1.11)
+  and small colimits (Kerodon 7.4.3.13).
+
+  Just like one can learn how to compute with integrals without first knowing
+  the definition of Lebesgue integration,
+  we won't need to know the precise definition of $\infty$-categories
+  because we will soon specialise to the ones we can \emph{compute} with,
+  namely \emph{compactly generated $\infty$-categories}.
+  Before this, we first explain
+  the $\infty$-categories with homological significance : 
+  stable $\infty$-categories.
+
+  % (IP : Explain how $1\dash\CAT$ classifies cocartesian fibrations.)
+
+  \item $(\infty,1)\dash\CAT^\mathrm{ex}$ denotes subcategory of $1\dash\CAT$
+  consisting of \emph{stable infinity categories} and \emph{exact functors}.  
+  It contains all small limits and
+  the ``inclusion'' $1\dash\CAT^{ex} \to 1\dash\CAT$ preserves 
+  small limits (Lurie HA 1.1.4.4).
+  We note also that the functor $\infty$-category $\FUN(C,D)$
+  is stable given $D$ is stable (Lurie HA 1.1.3.1),
+  and hence $1\dash\CAT^\mathrm{ex}$ is cartesian closed.
+
+  Stable infinity categories are basically
+  triangulated categories where exact triangles are determined by
+  an infinity-categorical universal property.
+  Here is the definition.
+  \begin{dfn}
+    
+    Let $C$ be an infinity category. 
+    We say $C$ has a \emph{zero object} when
+    it has an object that is both initial and final. 
+    (Lurie HA 1.1.1.1.)
+
+    Now assume $C$ have a zero object.
+    Then a \emph{triangle} in $C$ is defined as a diagram in $C$ of the form : 
+    \begin{cd}
+      X & Y \\
+      0 & Z
+      \arrow[from=1-1,to=1-2]
+      \arrow[from=1-1,to=2-1]
+      \arrow[from=1-2,to=2-2]
+      \arrow[from=2-1,to=2-2]
+    \end{cd}
+    A triangle is called a \emph{fiber sequence} when it is a cartesian
+    and a \emph{cofiber sequence} when it is cocartesian.
+    (Lurie HA 1.1.1.4.)
+    In the first case,
+    we say \emph{$Y \to Z$ admits a kernel} and refer to $X$ as the kernel,
+    and in the other case
+    we say \emph{$X \to Y$ admits a cokernel} and refer to $Z$ as the cokernel.
+    \footnote{
+      In Lurie HA,
+      kernels are called fibers and cokernels are called cofibers.
+    }
+
+    $C$ is called \emph{stable} when the following are true : 
+    \begin{itemize}
+      \item every morphism has both a kernel and a cokernel.
+      \item A triangle is fiber sequence iff it is a cofiber sequence.
+      Such triangles are called \emph{exact triangles}.
+    \end{itemize}
+    (Lurie HA 1.1.1.9.)
+
+    An exact functor $F : C \to D$ between stable infinity categories
+    is one which satisfy any of the following equivalent conditions : 
+    \begin{itemize}
+      \item $F$ preserves exact triangles
+      \item $F$ preserves finite limits
+      \item $F$ preserves finite colimits.
+    \end{itemize}
+    (Lurie HA 1.1.4.1)
+  \end{dfn}
+  To help build intuition of ``stable infinity categories as 
+  fixed triangulated categories'',
+  we record here the important parts of the procedure
+  of extracting a triangulated category from a stable infinity category.
+  \begin{prop}[Lurie 1.1.2.14]
+    
+    Let $C$ be a stable infinity category.
+    Then the following defines a triangulated structure on 
+    the 1-category $hC$ : 
+    \begin{itemize}
+      \item Define the \emph{suspension functor} $\Sigma : C \to C$ by
+      pushout against zeros : 
+      \begin{cd}
+        X & 0 \\
+        0 & \Sigma X
+        \arrow[from=1-1,to=1-2]
+        \arrow[from=1-1,to=2-1]
+        \arrow[from=1-2,to=2-2]
+        \arrow[from=2-1,to=2-2] 
+      \end{cd}
+      Since the above square is a cofiber sequence,
+      it is also a fiber sequence. 
+      This shows that \emph{looping} $\Omega : C \to C$,
+      given by pullback against zeros, gives an inverse for $\Sigma$
+      and hence shows that $\Sigma$ is an equivalence.
+      Taking homotopy categories, we obtain an equivalence 
+      $[1] : hC \map{\sim}{} hC$, which we use as the shift functor
+      for the triangulated structure.
+
+      \item We call a diagram \[
+        X \map{f}{} Y \map{g}{} Z \map{h}{} X[1] 
+      \]
+      in $hC$ an exact triangle (in the triangulated categorical sense) 
+      when it comes from a diagram of the following form in $C$ : 
+      \begin{cd}
+        X & Y & 0 \\
+        0 & Z & {X[1]}
+        \arrow[from=1-1, to=1-2]
+        \arrow[from=1-2, to=2-2]
+        \arrow[from=2-2, to=2-3]
+        \arrow[from=1-1, to=2-1]
+        \arrow[from=2-1, to=2-2]
+        \arrow[from=1-2, to=1-3]
+        \arrow[from=1-3, to=2-3]
+        \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, 
+          draw=none, from=2-2, to=1-1]
+        \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, 
+          draw=none, from=2-3, to=1-2]
+      \end{cd}
+      i.e. two exact triangles (in the stable infinity categorical sense).
+      \item For $X, Y$ objects of $C$,
+      we have 
+      \begin{align*}
+        C(X,Y) &\simeq C(\Sigma \Omega X , Y) \simeq \Omega C(\Omega X , Y) \\
+        &\simeq C(\Sigma^2 \Omega^2 X , Y) \simeq \Omega^2 C(\Omega^2 X , Y)
+      \end{align*}
+      Upon taking $\pi_0$ , we obtain 
+      \[
+        hC(X,Y) := \pi_0 C(X,Y) \simeq \pi_1 C(\Om X , Y) 
+        \simeq \pi_2 (\Om^2 X , Y)
+      \]
+      where the last isomorphism is a group morphism.
+      For $\pi_2$ of any ``space'' \footnote{
+        In the quasi-category model of infinity categories,
+        $C(X,Y)$ is a Kan complex,
+        which one can take homotopy groups of.
+      } the obvious group structure given by is abelian,
+      this gives $hC(X,Y)$ an abelian group structure,
+      making $hC$ into an additive category.
+    \end{itemize}
+  \end{prop}
+
+  \item We are now ready for compactly generated $\infty$-categories.
+  We will only make use of the case of 
+  \emph{stable} compactly generated $\infty$-categories
+  since many definitions then admit alternative characterisations
+  which can be checked at the level of triangulated categories.
+  
+  For $\ka$ a regular cardinal\footnote{
+    A regular cardinal $\ka$ is a cardinality that is 
+    ``sufficiently large'' in the sense that
+    the 1-category $\SET_{<\ka}$ of sets with cardinality strictly less than
+    $\ka$ has all colimits of size strictly less than $\ka$.
+    The cardinality of $\N$ is an example, 
+    since a finite colimit of finite sets is still finite.
+  }, 
+  we denote with $(\infty,1)\dash\CAT^\mathrm{ex}_{\ka\text{-c.g.}}$
+  the subcategory of $(\infty,1)\dash\CAT^\mathrm{ex}$ whose objects are
+  \emph{$\ka$-compactly generated stable $\infty$-categories}
+  and morphisms are colimit preserving functors.
+
+  To explain, 
+  the starting point is the theory of \emph{inductive cocompletions}\footnote{
+    In the literature, this is called ind-completion.
+    This is a bit of a misnomer because 
+    intuitively we are adding filtered \emph{colimits}, not limits.
+  }.
+  Here is the main result concerning ind-completions in the stable case.
+  \begin{prop}[Ind-completions of Stable $\infty$-Categories]
+  
+    Let $C$ be a small $\infty$-category and $\ka$ a regular cardinal.
+    Then the Yoneda embedding $C \to \PSH\,C$ factors through a full subcategory
+    $\IND_\ka(C)$ with the following properties : 
+    \begin{itemize}
+      \item (Lurie HTT 5.3.5.3) 
+      $\IND_\ka(C)$ has all small $\ka$-filtered colimits
+      and the inclusion $\IND_\ka(C) \subs \PSH\, C$ preserves them
+      \item (Lurie HTT 5.3.5.4) 
+      An object $X$ in $\PSH\,C$ is in $\IND_\ka(C)$ iff
+      it is a $\ka$-filtered colimit of representables iff
+      $X : C\op \to \SPC$ preserves $\ka$-small limits.
+      \item (Lurie HA 1.1.3.6) If $C$ is stable then so is $\IND_\ka(C)$.
+      \item (Lurie HTT 5.3.5.10) For any $\infty$-category $D$ 
+      admitting small $\ka$-filtered colimits,
+      we have the following equivalence of functor $\infty$-categories : 
+      \[
+        \FUN_\ka(\IND_\ka(C) , D) \map{\sim}{} \FUN(C , D)
+      \]
+      where \begin{itemize}
+        \item the left category denotes the full subcategory of 
+        $\FUN(\IND_\ka(C),D)$ consisting of functors preserving 
+        $\ka$-filtered colimits.
+        \item the forward functor is given by restricting along the Yoneda embedding 
+        $C \to \IND_\ka(C)$
+        \item the inverse functor is given by left Kan extension.
+      \end{itemize} 
+      Assuming $D$ is stable, the above equivalence restricts to
+      an equivalence between the following two full subcategories :
+      \[
+        \FUN_\ka^\EX(\IND_\ka(C) , D) \map{\sim}{} \FUN^\EX(C , D)
+      \]
+      where
+      \begin{itemize}
+        \item $\FUN^\EX(C,D)$ is the full subcategory of $\FUN(C,D)$
+        consisting of exact functors.
+        \item $\FUN_\ka^\EX(\IND_\ka(C),D)$ is the full subcategory of
+        $\FUN_\ka(\IND_\ka(C),D)$ consisting of exact functors
+        preserving $\ka$-filtered colimits.\footnote{
+          Left kan extending an exact functor $C \to D$
+          to $\IND_\ka(C) \to D$ stays exact essentially because
+
+        }
+      \end{itemize}
+
+
+    \end{itemize}
+  \end{prop}
+  
+  For a regular cardinal $\ka$ and an $\infty$-category $C$,
+  we say $C$ is $\ka$-compactly generated when
+  it has all small colimits and there exists a small $\infty$-category
+  $C^0$ with an equivalence $\IND_\ka(C^0) \map{\sim}{} C$.\footnote{
+    This is unraveled from Lurie HTT 5.5.7.1, 5.5.0.18, and 5.4.2.1.
+    In particular, the second condition is usually called 
+    $\ka$-accessibility, but we have no need for such terminology.
+  }
+  For the case of $\ka =$ cardinality of $\N$,
+  we simply say \emph{compactly generated}.
+
+  For functors out of $\IND_\ka(C)$,,
+  fully faithfulness and equivalence can be detected at the level of $C$.
+  \begin{prop}[Functors out of Compactly Generated Categories]
+    
+    Let $C^0$ be a small $\infty$-category, $\ka$ a regular cardinal,
+    $C = \IND_\ka(C^0)$ and
+    $D$ an $\infty$-category admitting $\ka$-filtered colimits.
+    Let $D^\ka$ be the full subcategory of $D$ consisting of 
+    $\ka$-compact objects.
+    Let $F : C \to D$ be a functor preserving $\ka$-filtered colimits
+    and $F_0 : C^0 \to D$ its restriction along 
+    the Yoneda embedding $C^0 \to C$.
+    \begin{itemize}
+      \item If $F_0$ is fully faithful and its essential image lands in $D^\ka$,
+      then $F$ is fully faithful.
+      \item $F$ is an equivalence iff the following are true :
+      \begin{itemize}
+        \item $F_0$ fully faithful
+        \item $F_0$ factors through $D^\ka$
+        \item all objects of $D$ are $\ka$-filtered colimits of diagrams
+        in $D$ with objects in the image of $F_0$.
+      \end{itemize}
+      In particular,
+      for any full subcategory $\tilde{C} \subs C^\ka$ which
+      generates $C$ under $\ka$-filtered colimits,
+      we have $\IND_\ka(\tilde{C}) \map{sim}{} C$.
+    \end{itemize}
+    (Lurie 5.3.5.11)
+
+    Furthermore, 
+    the Yoneda embedding $C^0 \to C$ factors through $C^\ka$.
+    The fully faithful functor $C^0 \to C^\ka$ is not in general an equivalence,
+    however it does exhibit $C^\ka$ as the \emph{idempotent completion}
+    of $C^0$.
+    (Lurie 5.4.2.4.)
+    So if $C^0$ is idempotent complete, 
+    then we recover the $\ka$-compact objects of $C$ as precisely 
+    (the essential image of) $C^0$.
+
+  \end{prop}
+
+  Readers need not worry about what the $\infty$-categorical definition of 
+  ``idempotent complete'' means,
+  since when we specialise to \emph{stable $\infty$-categories},
+  we will be able to detect this at the level of
+  triangulated categories.
+
+\item Ultimately, we would like to be able to create functors 
+out of our favourite $\infty$-categories : 
+derived $\infty$-categories of quasi-coherent sheaves $\QCOH(X)$
+on a scheme $X$.
+
+These $\infty$-categories tend to be ``generated'' by a much smaller 
+(sometimes finite!) subcategory. 
+The precise sense of ``generated'' is that of \emph{inductive cocompletions}.
+The following is the main result.
+
+
+
+
+
+
+\item $(\infty,1)\dash\CAT^\mathrm{Pr}_L$ denotes the
+subcategory of $(\infty,1)\dash\CAT$ whose objects are
+\emph{presentable $\infty$-categories} and
+morphisms are colimit-preserving functors.
+
+The point of presentable $\infty$-categories is that
+we can use the adjoint functor theorem without worry.
+\begin{prop}[Lurie HTT 5.5.2.9]
+  
+  Let $F : C \to D$ be a functor between presentable $\infty$-categories.
+  \begin{itemize}
+    \item $F$ admits a right adjoint iff $F$ preserves all small colimits.
+    \item $F$ admits a left adjoint iff $F$ preserves all small limits
+    and is accessible.
+  \end{itemize}
+\end{prop}
+
+
+
+\item 
+  $(\infty,1)\dash\CAT^\mathrm{ex}_\mathrm{cts}$ 
+  denotes the subcategory of $1\dash\CAT^\mathrm{ex}$
+  consisting of cocomplete stable infinity categories and 
+  exact, colimit-preserving\footnote{
+    GR confusingly refers to colimit-preservating as ``continuous''.
+    This conflicts with the category theory literature where
+    ``continuous'' usually refers to limit-preserving and 
+    ``cocontinuous'' refers to colimit-preserving.
+  } functors.
+  For stable infinity categories,
+  cocompleteness is equivalent to existence of arbitrary coproduct.
+  (Intuition from 1-categories : colimits exist iff coequalizers and 
+  arbitrary coproducts exist. Having cokernels gives coequalizers,
+  so colimits exist iff arbitrary coproducts do.)
+  Also, exact functors between cocomplete stable infinity categories are
+  colimits preserving iff they preserve arbitrary coproduct.
+  
+  \item $1\dash\CAT^\mathrm{ex}_\mathrm{cts}$ 
+  has symmetric monoidal structure $\otimes$
+  via the \emph{Lurie tensor product}. 
+
+  We won't really need to know anything about the tensor product
+  other than its universal property. 
+
+  (IP : Explain how practically speaking, 
+  it suffices to know the univeral property
+  because we will work with compactly generated dg-categories,
+  meaning computation will come down to
+  compact generators and their homs.)
+
+  (IP : Give impression of symmetric monoidal infinity categories via
+  Lawvere theory perspective.)
+
+  \item An example of a cocomplete stable infinity category 
+  is the infinity category of complexes of vector spaces over a field $k$.
+  Fixing $k$, we will use $\VEC$ to denote it.
+  
+  The precise definition of $\VEC$ depends on the model of infinity categories
+  one chooses to use.
+  All we really need to know is that
+  objects of $\VEC$ are complexes of vector spaces
+  and for two objects $V, W$ in $\VEC$,
+  the points of 
+  
+  \item $k$ field of characteristic zero.
+  
+  \textbf{
+  Unanswered Q : is this only used because
+  the theory of commutative dg-algebras compromises in positive characteristic?
+  }
+
+  \item $(\VEC, \otimes)$ 
+  is the stable symmetric monoidal infinity category of 
+  complexes of $k$-vector spaces.
+  Its homotopy category $h(\VEC)$ is 1-categorical localisation of 
+  the category of complexes of $k$-vectors spaces at quasi-isomorphisms,
+  and has the usual $t$-structure.
+  The heart of $\VEC$ is the usual abelian category of $k$-vector spaces.
+  We use cohomological degree,
+  where negative cohomological degree refers to homological degree.
+
+  Practically speaking, 
+  computations tensor product are done by using the projective model structure 
+  on the category of complexes of $k$-vectors spaces.
+
+  \item $(\VEC,\otimes)$ can be seen as an commutative algebra object in 
+  the symmetric monoidal infinity category $1\dash\CAT^{st,cocompl}_{cts}$.
+  Then $\DGCAT_{cts}$ denotes the infinity category of 
+  modules over $\VEC$ inside $1\dash\CAT^{st,cocompl}_{cts}$.
+
+  (IP : Explain how practically speaking, 
+  computations such as infinity categorical limits 
+  can be done via the model category of 
+  honest-to-god dg-catgeories over $k$.)
+
+  (IP : Explain how $\VEC\dash\MOD(1\dash\CAT^{st,cocompl}_{cts})$
+  is closed symmetric monoidal infinity category.)
+\end{itemize}
+
+\subsection{Quasi-Coherent Sheaves}
+
+\begin{dfn}[Covariant $\QCOH$]
+
+  There is a functor $\QCOH_* : \DAFF \to \DGCAT_{cts}$
+  that assigns to each $A \in \DAFF$ the 
+  \emph{derived category of $A$-modules}, denoted $A\dash\MOD$.
+
+  For $A$ discrete (i.e. a commutative ring),
+  there is the following description of $A\dash\MOD$
+  under the quasi-category model of $\infty$-categories
+  summarised in a single diagram : 
+  \begin{cd}
+    {N(\mathrm{Ch}\,A)} \\
+    {N_{dg}(\mathrm{Ch}\,A)} & 
+      {N_{dg}((\mathrm{Ch}\,A)_f)} & {A\text{-}\mathrm{Mod}} \\
+    & {D(A)}
+    \arrow["\subseteq"', from=1-1, to=2-1]
+    \arrow["L", shift left=2, from=2-1, to=2-2]
+    \arrow["\supseteq", shift left=2, from=2-2, to=2-1]
+    \arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
+    \arrow["{W^{-1}}", shift left=3, from=1-1, to=2-2]
+    \arrow["{=:}"{description}, draw=none, from=2-2, to=2-3]
+    \arrow["h", from=2-2, to=3-2]
+  \end{cd}
+  Details : 
+  \begin{itemize}
+    \item $\CH\,A$ is the honest-to-god dg-category of chain complexes of
+    honest-to-god $A$-modules
+    and $D(A)$ is the category of complexes of injectives 
+    \item $\CH\,A$ has a model structure such that 
+    cofibrations are degree-wise injections and 
+    weak equivalences are quasi-isomorphisms (Lurie HA 1.3.5.3).
+    Although the class of fibrations are defined abstractly as
+    those satisfying right lifting with respect to acyclic cofibrations,
+    it turns out that any fibrant complex must be degree-wise injective,
+    and partially conversely,
+    any bounded above complex of injectives is fibrant 
+    (Lurie HA 1.3.5.6).
+    $(\CH\,A)_f$ denotes the full subcategory of fibrant complexes.
+    \item $N$ denotes the nerve functor which converts
+    1-categories to simplicial sets, which have the property of being
+    $\infty$-categories.
+    $N_{dg}$ denotes the dg-nerve functor which achieves the same thing for
+    honest-to-god dg-catgeory categories. 
+    (See Kerodon 2.5.3 for a construction.)
+    \item $h$ is the truncation of an infinity category to a 1-category
+    by taking its homotopy catgeory.
+    It is the left adjoint to $N$.
+    (See Kerodon 1.2.5 for a construction.)
+
+    We have that the homotopy category of $A\dash\MOD$ gives the
+    usual derived category of $A$-modules, as in classical algebraic geometry.
+    \item $L$ is a left adjoint to the inclusion 
+    $N_{dg}((\CH\,A)_f) \subs N_{dg}(\CH\,A)$.
+    Intuitively, for every complex $M_\bullet$, 
+    there exists a acyclic cofibration $M_\bullet \to I_\bullet$ 
+    to fibrant $I_\bullet$
+    and this is initial in the category of arrows from 
+    $M_\bullet$ into $N_{dg}((\CH\,A)_f)$
+    (Lurie HA 1.3.5.12).
+    This means for each $M_\bullet$, 
+    such a morphism $M_\bullet \to I_\bullet$ is unique up to equivalence
+    and assembles to the desired functor $L$.
+    Practically speaking, $L(M_\bullet) \simeq I_\bullet$.
+    \item The composition $N(\CH\, A) \to N_{dg}((\CH\, A)_f)$
+    exhibits the latter as the $\infty$-categorical localisation 
+    of the former at quasi-isomorphisms (Lurie HA 1.3.5.15).
+    This matches the standard treatment in classical algebraic geometry : 
+    the localisation functor from $\CH\, A$ to $D(A)$
+    takes a complex and resolves it by injecting it
+    quasi-isomorphically into a complex of injectives.
+  \end{itemize}
+
+\end{dfn}
+
+\begin{prop}[Universal Property of Presheaf Categories (Lurie HTT 5.1.5.6)]
+
+  Let $S$ be a small $\infty$-category and $C$ an $\infty$-category
+  with small colimits. 
+  Let $\mathrm{Fun}^L(\PSH\, S , C)$ denote the
+  full subcategory of $\mathrm{Fun}(\PSH\, S, C)$ consisting of
+  functors preserving small colimits.
+  Then restricting along the Yoneda embedding $S \to \PSH\, S$
+  gives an equivalence of $\infty$-categories : 
+  \[
+    \mathrm{Fun}^L(\PSH\, S , C) \map{\sim}{} \mathrm{Fun}(S , C)  
+  \]
+  An inverse functor is given by left Kan extension.
+  In particular,
+  for $F \in \mathrm{Fun}^L(\PSH\, S , C)$ corresponding to 
+  $F_0 \in \mathrm{Fun}(S , C)$,
+  we have for every $X \in \PSH\, S$ that
+  $F$ exhibits $F(X)$ as the colimit of the diagram 
+  $S_{/ X} \to S \to C$. 
+
+\end{prop}
+
+\end{document}
