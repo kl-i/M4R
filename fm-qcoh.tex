@@ -1,0 +1,628 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+Let $X, Y \in \PSTK$.
+The theory of integral transforms for quasi-coherent sheaves says that
+under suitable conditions on $X, Y$,
+there is an equivalence in $\DGCAT_\CTS$ : 
+\[
+  \QCOH(Y \times X) \simeq \DGCAT_\CTS(\QCOH\,X , \QCOH\,Y)
+\]
+which sends a sheaf $\QQ$ on $Y \times X$ to
+the functor $(p_Y)_*(p_X^*(\_) \otimes \QQ)$.
+For intuition, there is a nice analogy with linear algebra  : 
+\begin{align*}
+  &k \text{ base field} 
+    & \VEC \\
+  & \text{1-category of $k$-modules } k\MOD
+    & \DGCAT_\CTS = \VEC\MOD \\
+  & \SET
+    & \PSTK \\
+  & k^\_ = \SET(\_,k) : \SET \to (k\MOD)^\OP
+    & \QCOH^* : \PSTK \to (\DGCAT_\CTS)^\OP \\
+  &s, t \text{ finite sets} 
+    & X , Y \text{ aft derived schemes} \\
+  & t \leftarrow t\times s \rightarrow s
+    & X \leftarrow X \times Y \rightarrow Y \\
+  & k^s \to k^{t \times s} , 
+  [v_j]_{j \in s} \mapsto [v_j]_{i , j \in t \times s}
+    & p_X^* \\
+  & k^{t \times s} \to k^t , 
+  [A_{i , j}]_{i , j \in t \times s} 
+  \mapsto \sqbrkt{\sum_{j \in s} A_{i , j}}_{i \in t}
+    & (p_Y)_* \\
+  &k^s \simeq k^{\oplus s}
+    & \QCOH\,X \simeq \IND\,((\QCOH\,X)^c)\\
+  &\text{pointwise multiplcation on } k^{t \times s} 
+    & \otimes \text{ on } \QCOH(Y \times X) \\
+  &k^{t \times s} \simeq k^s \otimes k^t
+    &\QCOH(X \times Y) \simeq \QCOH\,X \otimes \QCOH\,Y \\
+  &\<\_,\_\> : k^s \otimes k^s \to k
+    &\<\_ , \_\> : \QCOH\,X \otimes \QCOH\,X \to \VEC \\
+  &\id{} \otimes \<\_,\_\> : k^t \otimes k^s \otimes k^s \to k^t
+    &\id{} \otimes \<\_,\_\> : 
+    \QCOH\,Y \otimes \QCOH\,X \otimes \QCOH\,X \to \QCOH\,Y \\
+  &k^s \otimes k^t \simeq \HOM_k(k^s , k^t)
+    &\QCOH\,X \otimes \QCOH\,Y \simeq \DGCAT_\CTS(\QCOH\,X , \QCOH\,Y) \\
+  &k^{t \times s} \simeq \HOM_k(k^s , k^t)
+    &\QCOH(Y \times X) \simeq \DGCAT_\CTS(\QCOH\,X , \QCOH\,Y) \\
+  &A \mapsto \brkt{v \mapsto \sqbrkt{\sum_{j \in s} A_{i,j} v_j}_{i \in t}}
+    & \QQ \mapsto (p_2)_*(p_1^*(\_) \otimes \QQ)
+\end{align*}
+Following the analogy, the ansatz for the integral transform equivalence
+is the following composition : 
+\begin{cd}
+  {\QCOH(Y\times X)} & {\QCOH\,X \otimes \QCOH\,Y} & {\DGCAT_\CTS(\QCOH\,X , \QCOH\,Y)}
+	\arrow["\sim"',"{(1)}", from=1-2, to=1-1]
+	\arrow["\sim","{(2)}"', from=1-2, to=1-3]
+\end{cd}
+where (2) should come from $\QCOH\,X$ being ``self-dual'' in a suitable sense
+and (1) comes from a computation on ``basis elements''.
+
+Let us first address the topic of duality.
+There are many definitions of dualisability in a 
+symmetric monoidal $\infty$-category.
+We will take the following to be equivalent for granted.
+\begin{prop}[Dualisable Objects]
+  \link{duality.dualisable}
+  
+  Let $C$ be a symmetric monoidal $\infty$-category.
+  Let $e : x^\vee \otimes x \to 1_C$ where $1_C$ is the unit.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item (duality datum) there exists $c : 1_C \to x \otimes x^\vee$
+    such that we have the following commuting triangles in $hC$ : 
+    \begin{cd}
+      x & {x \otimes x^\vee \otimes x} & x^\vee \\
+      & x & {x^\vee \otimes x \otimes x^\vee} & x^\vee
+      \arrow["\id{}"', from=1-1, to=2-2]
+      \arrow["{c \otimes \id{}}", from=1-1, to=1-2]
+      \arrow["{\id{} \otimes e}", from=1-2, to=2-2]
+      \arrow["{\id{} \otimes c}"', from=1-3, to=2-3]
+      \arrow["{e \otimes \id{}}"', from=2-3, to=2-4]
+      \arrow["{\id{}}", from=1-3, to=2-4]
+    \end{cd}
+    \item (Adjunction) for all $a \in C$, 
+    the morphism $\id{} \otimes e : a \otimes x^\vee \otimes x \to a$
+    induces an equivalence 
+    \begin{cd}
+      {C(b , a \otimes x^\vee)} & {C(b \otimes x , a \otimes x^\vee \otimes x)} \\
+      & {C(b \otimes x , a)}
+      \arrow["{\_ \otimes x}", from=1-1, to=1-2]
+      \arrow["{(\id{} \otimes e)\,\_}", from=1-2, to=2-2]
+      \arrow["\sim"', from=1-1, to=2-2]
+    \end{cd}
+    \item (Internal Hom) 
+    Under the extra condition that $C$ has internal hom $\underline{\HOM}$,
+    for any object $a \in C$,
+    the morphism $e \otimes \id{} : a \otimes x^\vee \otimes x \to a$
+    induces an equivalence \[
+      a \otimes x^\vee \to \underline{\HOM}(x , a)
+    \]
+
+  \end{enumerate}
+  \cite[Prop 4.6.1.6]{Lurie-HA}
+  An object $x$ is called \emph{dualisable} when 
+  there exists another object $x^\vee$ together with
+  a morphisms $e : x^\vee \otimes x \to 1_C$ satisfying any
+  (and thus all) of the above.
+
+\end{prop}
+
+\begin{rmk}
+  In the definition of dualisable objects,
+  we assumed $C$ is symmetric monoidal.
+  This implies given a dualisable pair $e : x^\vee \otimes x \to 1_C$,
+  $e_\mathrm{transposed} : x \otimes x^\vee \to 1_C$ is also a dualisable pair.
+  In particular, $(x^\vee)^\vee \simeq x$.
+\end{rmk}
+
+\begin{dfn}
+  
+  Let $C \in \DGCAT_\CTS$.
+  Then $C$ is called \emph{dualisable} when
+  it is dualisable as an object in $\DGCAT_\CTS = \VEC\MOD$.
+\end{dfn}
+
+\begin{rmk}
+  
+  Let's unpack the above a bit.
+  To say $C \in \DGCAT_\CTS$ is dualisable means
+  there exists $C^\vee \in \DGCAT_\CTS$ and 
+  $e \in \DGCAT_\CTS(C^\vee \otimes C, \VEC)$
+  such that for all $D \in \DGCAT_\CTS$,
+  we have an equivalence
+  \begin{cd}
+    {\DGCAT_\CTS(E , D \otimes C^\vee)} & {\DGCAT_\CTS(E \otimes C , D \otimes C^\vee \otimes C)} \\
+    & {\DGCAT_\CTS(E \otimes C , D)}
+    \arrow["{\_ \otimes C}", from=1-1, to=1-2]
+    \arrow["{(\id{} \otimes e)\,\_}", from=1-2, to=2-2]
+    \arrow["\sim"', from=1-1, to=2-2]
+  \end{cd}
+  In particular, applying $D = \VEC$, 
+  gives $C^\vee \simeq \DGCAT_\CTS(C , \VEC)$.
+  On the other hand, applying $E = \VEC$ and a transposition yields
+  $C^\vee \otimes D \simeq \DGCAT_\CTS(C , D)$.
+
+  The following shows that compact generation of $C$ is sufficient for
+  being dualisable and in fact, the dual $C^\vee$ has a explicit description.
+\end{rmk}
+
+\begin{prop}[Duality for Compactly Generated DG $\infty$-Categories]
+  \link{duality.cg}
+  
+  Let $C \in \DGCAT_\CTS$ be compactly generated.
+  Consider the following : 
+  \begin{cd}
+    {(C^c)^\OP \times C^c} 
+      & {\IND((C^c)^\OP) \times C} 
+        & {\IND((C^c)^\OP) \otimes C} \\
+    & \VEC
+    \arrow[from=1-1, to=1-2]
+    \arrow["{\HOM_C}"', from=1-1, to=2-2]
+    \arrow[dashed, from=1-2, to=2-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow["{e}", dashed, from=1-3, to=2-2]
+  \end{cd}
+  The enriched hom bi-functor $\HOM_C$ on compact objects
+  is $\VEC$-linear and exact in both variables 
+  hence the
+  middle dashed morphism 
+  \linkto{dgcat.ind.up}{by left Kan extension in each variable}/
+  This is $\VEC$-linear and continuous in both variables,
+  hence the right dashed morphism in $\DGCAT_\CTS$ by
+  the \linkto{dgcat.dgcat.tensor}{universal property of tensors}. 
+  Then $e$ exhibits $\IND((C^c)^\OP)$ as the dual of $C$.
+  \cite[Ch 1, 7.3.2]{GR1}
+\end{prop}
+\begin{proof}
+  For any $E \in \DGCAT_\CTS$, we have the following equivalences
+  \begin{align*}
+    \DGCAT_\CTS(\DGCAT_\CTS(C , D) , E)
+    &\simeq \DGCAT_\CTS(\DGCAT(C^c , D) , E) \\
+    &\simeq \DGCAT_\CTS(E^\OP , \DGCAT(C^c , D)^\OP) \\
+    &\simeq \DGCAT_\CTS(E^\OP , \DGCAT((C^c)^\OP , D^\OP)) \\
+    &\simeq \DGCAT((C^c)^\OP , \DGCAT_\CTS(E^\OP , D^\OP)) \\
+    &\simeq \DGCAT((C^c)^\OP , \DGCAT_\CTS(D , E)) \\
+    &\simeq \DGCAT_\CTS(\IND((C^c)^\OP) , \DGCAT_\CTS(D , E)) \\
+    &\simeq \DGCAT_\CTS(\IND((C^c)^\OP) \otimes D , E)
+  \end{align*}
+  where we have used the following equivalence without proof : 
+  \[
+    \DGCAT_\CTS(\_ , \star) \map{\sim}{} \DGCAT_\CTS(\star^\OP , \_^\OP)
+  \]
+  where the forward direction is obtained by taking right adjoints via the
+  \linkto{dgcat.adjoint}{adjoint functor theorem} and the right side is
+  well-defined because \linkto{dgcat.presentable.has_lim}{
+    presentable $\infty$-categories have small limits
+  }.
+\end{proof}
+
+\begin{prop}[$\QCOH\,A$ Compactly Generated (Derived Affine Case)]
+  \link{duality.daff}
+
+  Let $\SPEC\,A \in \DAFF$ and $C := \QCOH\,A$.
+  Then $C \simeq \IND\,C(\om)$ where
+  $C(\om)$ is the smallest stable full subcategory of $C$ containing $A$.
+  In particular, $C$ is compactly generated.
+  
+  Furthermore, for $M \in C$, the following are equivalent : 
+  \begin{itemize}
+    \item $M$ is a retract of objects in $C(\om)$.
+    \item $M$ is compact
+    \item $M$ is dualisable
+  \end{itemize}
+
+\end{prop}
+\begin{proof}
+
+  Let $C := \QCOH\,A$.
+  One can check that $A$ is a compact object of $\QCOH\,A$ by
+  using the \linkto{dgcat.stable.cg}{1-categorical characterisation of
+  compact objects} and the fact that
+  homotopy coproducts in $h\QCOH\,A$ coincide with
+  taking degree-wise coproducts.
+  Similarly, one can check that $A$ is a generator
+  at the level of the 1-categorical derived category $h\QCOH\,A$.
+  \linkto{dgcat.stable.cg}{Hence} $C \simeq \IND\,C(\om)$.
+  We also deduce that \linkto{dgcat.idem}{$C(\om) \to C^c$ exhibits $C^c$
+  as the idempotent completion of $C(\om)$}.
+  Therefore compact objects coincide with retracts of objects in $C(\om)$.
+
+  We now show an $M \in C$ is compact if and only if it is dualisable.
+  This is a slightly different proof to \cite[Lem 3.4]{BZFN}.
+
+  Suppose $M$ is compact.
+  Our ansatz for $M^\vee$ is $\underline{\HOM}(M,1)$,
+  where $\underline{\HOM} := \underline{\HOM}_S$ is the internal hom of
+  $\QCOH\,S$.
+  For $e : M \otimes \underline{\HOM}(M,1) \to 1$,
+  we choose it to correspond to the identity morphism 
+  $\underline{\HOM}(M,1) \to \underline{\HOM}(M,1)$ under the adjunction
+  $M\otimes \_ \dashv \underline{\HOM}(M , \_)$.
+  \linkto{duality.dualisable}{It remains to show}
+  that the natural transformation 
+  $\_ \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , \_)$
+  coming from 
+  $\id{} \otimes e : \_ \otimes M \otimes \underline{\HOM}(M , 1) \to \_$
+  is an equivalence.
+  By assumption, $\underline{\HOM}(M , \_)$ preserves small coproducts.
+  \linkto{dgcat.stable.colimits}
+  {Hence}, both $\underline{\HOM}(M , \_)$ and 
+  $\_ \otimes \underline{\HOM}(M , 1)$ preserves small colimits.
+  Since $\QCOH\,S =: C \simeq \IND\,C(\om)$,
+  \linkto{dgcat.ind.up}{it suffices} to show that
+  $\_ \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , \_)$
+  is an equivalence on $C(\om)$.
+  Since $C(\om)$ is obtained from $1 = \OO(S)$ by 
+  \link{dgcat.stable.cg}{iteratively adding it cofibers} and 
+  both functors preserve small colimits, it suffices to show that
+  $1 \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , 1)$
+  is an equivalence.
+  This is clear.
+
+  Now assume $M$ is dualisable.
+  Then $\underline{\HOM}(M , \_) \simeq \_ \otimes M^\vee$
+  and hence preserves small coproducts.
+  Therefore $M$ is compact.
+
+\end{proof}
+
+\begin{prop}[$\QCOH\,X$ Compactly Generated (Derived Scheme Case)]
+  \link{duality.dsch}
+
+  Let $X \in \DSCH_\mathrm{qc}$. 
+  Then $\QCOH\,X \simeq \IND\,\PERF\,X$ where
+  $\FF$ is in the full subcategory $\PERF\,X$ if and only if
+  any of the following equivalent conditions are true : 
+  \begin{itemize}
+    \item $\FF$ is dualisable
+    \item $\FF$ is compact
+    \item for all $x : S \to X$ where $S$ derived affine,
+    $\FF_x \in \QCOH\,S$ is compact.
+  \end{itemize}
+\end{prop}
+\begin{proof}
+  
+  We omit the proof of $\QCOH\,X \simeq \IND\,\PERF\,X$ for brevity.
+  See \cite[Prop 3.19]{BZFN} for a proof.
+  For $\FF \in \QCOH\,X$,
+  the fact that $\FF$ is dualisable if and only if
+  it is fiberwise dualisable is proved in \cite[Prop 3.6]{BZFN}.
+  The equivalence of dualisability and compactness
+  is shown in \cite[Prop 3.9]{BZFN}.
+\end{proof}
+
+We now show that $\QCOH\,X$ has a \emph{self-duality} when 
+$X$ is a quasi-compact derived scheme.
+
+\begin{prop}[Self Duality of $\QCOH\,X$]
+  \link{duality.naive}
+
+  Let $X \in \DSCH_\mathrm{qc}$.
+  Define \[
+    \<\_,\_\> : 
+    \QCOH\,X \otimes \QCOH\,X \map{\otimes}{} \QCOH\,X \map{(p_X)_*}{} \VEC
+  \]
+  Then $\<\_,\_\>$ exhibits $\QCOH\,X$ as its own dual.
+  Let $\D : \QCOH\,X \simeq (\QCOH\,X)^\vee$ correspond to $\<\_,\_\>$.
+  We refer to $\D$ as the \emph{naive dualisation functor}.
+
+\end{prop}
+\begin{proof}
+  This proved in \cite[Ch 1 , 9.2]{GR1} for general 
+  stable rigid monoidal $\infty$-categories.
+  What follows is an application of the general proof to this example.
+  
+  We know that the dual of $\QCOH\,X \simeq \IND\,\PERF\,X$
+  is $\IND((\PERF\,X)^\OP)$.
+  We thus compute the naive dualisation functor as : 
+  \begin{align*}
+    \QCOH\,X \map{}{} 
+    \DGCAT_\CTS(\QCOH\,X , \VEC) \mapfrom{\sim}{}
+    (\QCOH\,X)^\vee \\
+    \FF \mapsto 
+    \<\_ , \FF \> \simeq \HOM_X(\D \FF , \_)
+    \mapsfrom \D \FF
+  \end{align*}
+  It suffices to show $\D$ is an equivalence.
+  Since $\QCOH\,X$ is the ind-completion of $\PERF\,X$,
+  \linkto{dgcat.cg.out}{it suffices} to show that
+  $\D$ maps $\PERF\,X$ fully faithfully into 
+  $(\PERF\,X)^\OP$ inside $(\QCOH\,X)^\vee$.
+
+  Let $\FF \in \PERF\,X$.
+  Then \[
+    \HOM_X(\D \FF , \_) \simeq 
+    \<\_ , \FF\> \simeq
+    \HOM_X(\OO_X , \_ \otimes \FF) \simeq
+    \HOM_X(\FF^\vee , \_) \simeq
+    \HOM_X(\underline{\HOM}_X(\FF , \OO_X) , \_)
+  \]
+  Therefore on $\PERF\,X$, 
+  the dualisation functor 
+  $\D$ lands in the image under Yoneda of $(\PERF\,X)^\OP$.
+  Identifying $(\PERF\,X)^\OP$ as a full subcategory of $(\QCOH\,X)^\vee$,
+  we see that $\D(\_) \simeq \_^\vee \simeq \underline{\HOM}_X(\_ , \OO_X)$
+  which is an equivalence $\PERF\,X \simeq (\PERF\,X)^\OP$
+  because this is simply taking dual objects.
+
+\end{proof}
+
+This sorts out the equivalence (2) for $X \in \DSCH_\mathrm{qc}$.
+We now address the equivalence (1).
+
+\begin{prop}[Integral Transform for Quasi-Coherent Sheaves]
+   \link{fm.qcoh}
+  
+  Let $X , Y \in \PSTK$.
+  Suppose $\QCOH\,X$ is dualisable in $\DGCAT_\CTS$.
+  Then we have an equivalence
+  \begin{cd}
+    \boxtimes & {\QCOH\,X \otimes \QCOH\,Y} & {\QCOH(Y\times X)} \\
+    & {\QCOH\,X \times \QCOH\,Y}
+    \arrow["\sim", from=1-2, to=1-3]
+    \arrow[from=2-2, to=1-2]
+    \arrow["{p_X^*(\_) \otimes p_Y^*(\_)}"'{pos=1}, from=2-2, to=1-3]
+    \arrow["{:}"{description}, draw=none, from=1-1, to=1-2]
+  \end{cd}
+  \cite[Ch 3, 3.1.7]{GR1}
+\end{prop}
+\begin{proof}
+  % (2) We defer the reader to the reference.
+
+  What follows is the proof of \cite[Ch 3 , 3.1.7]{GR1}
+  completed with details from \cite{BZFN}.
+
+  By the \linkto{dgcat.dgcat.tensor}
+  {universal property of the tensor product in $\DGCAT_\CTS$},
+  it suffices to give an abstract equivalence 
+  $\QCOH\,X \otimes \QCOH\,Y \simeq \QCOH(Y \times X)$ 
+  that restricts to $p_X^* \otimes p_Y^*$ on $\QCOH\,X \times \QCOH\,Y$.
+
+  Let us show that it suffices to show
+  for any derived affines $S, T$, we have that
+  $\boxtimes : \QCOH\,S \otimes \QCOH\,T \to \QCOH(T \times S)$ is 
+  an equivalence.
+  Assume this. Then we have the following chain of equivalences : 
+  \begin{align*}
+    &\QCOH\,X \otimes \QCOH\,Y \\
+    &\map{\sim}{} \QCOH\,X \otimes \brkt{\LIM_{T \in \DAFF / Y} \QCOH\,T}
+      &\text{by $\QCOH^*$ left Kan extension} \\
+    &\map{\sim}{} \LIM_{T \in \DAFF / Y} \QCOH\,X \otimes \QCOH\,T
+      &\text{by $\QCOH\,X$ dualisable} \\
+    &\map{\sim}{} \LIM_{T \in \DAFF / Y} 
+    \brkt{\LIM_{S \in \DAFF / X} \QCOH\,S} \otimes \QCOH\,T
+      &\text{by $\QCOH^*$ left Kan extension} \\
+    &\map{\sim}{} \LIM_{T \in \DAFF / Y} 
+    \LIM_{S \in \DAFF / X} \QCOH\,S \otimes \QCOH\,T 
+      &\text{by $\QCOH\,T$ dualisable} \\
+    &\map{\sim}{} \LIM_{(T , S) \in \DAFF / Y \times \DAFF / X}
+    \QCOH(S \times T)
+      &\text{by assumption and limits commute with limits} \\
+    &\mapfrom{\sim}{} \LIM_{R \in \DAFF / Y \times X} \QCOH\,R
+      &\text{by $\DAFF / Y \times \DAFF / X \to \DAFF / Y \times X$ cofinal}\\
+    &\mapfrom{\sim}{} \QCOH(Y \times X)
+      &\text{by $\QCOH^*$ left Kan extension}
+  \end{align*}
+  The fact that restricting along $\otimes : \QCOH\,X \times \QCOH\,Y \to 
+  \QCOH\,X \otimes \QCOH\,Y$ produces $p_X^*(\_) \otimes p_Y^*(\_)$
+  comes from its definition, which amounts to the following
+  commuting diagram : 
+  \begin{cd}
+    {\QCOH\,X \times \QCOH\,Y} & {\QCOH(Y\times X)} \\
+    {\LIM_{(T , S) \in \DAFF/Y \times \DAFF / X} \QCOH\,S \times \QCOH\,T} 
+      & {\LIM_{T \times S \in \DAFF / Y \times X} \QCOH\,(T \times S)}
+    \arrow["{p_X^*(\_) \otimes p_Y^*(\_)}", from=1-1, to=1-2]
+    \arrow["\sim"', from=1-1, to=2-1]
+    \arrow["\sim", from=1-2, to=2-2]
+    \arrow[from=2-1, to=2-2, "{\LIM\,p_S^*(\_)\otimes p_T^*(\_)}"'{yshift = -3}]
+  \end{cd}
+  We thus reduce to the special case of derived affines.
+  We need to compute with the tensor product of dg-$\infty$-categories.
+  \begin{lem}[GR1 Ch1 7.4.2]
+    Let $C , D \in \DGCAT_\CTS$ with compactly generating sets of objects
+    $C_0 \subs C$ and $D_0 \subs D$.
+    Then the set $\set{c_0 \otimes d_0 \st c_0 \in C_0, d_0 \in D_0}$ 
+    compactly generates $C \otimes D$.
+    Furthermore, 
+    for $c_0, d_0 \in C_0, D_0$ and $c , d \in C , D$,
+    we have an equivalence \[
+      \HOM_C(c_0 , c) \otimes \HOM_D(d_0 , d) \simeq
+      \HOM_{C \otimes D}(c_0 \otimes d_0 , c \otimes d)  
+    \]
+    \cite[Ch 1 , 7.4.2]{GR1}
+    \begin{proof1}
+      $C \simeq \IND\,C_0$ \linkto{duality.cg}{implies}
+      $C^\vee := \IND(C_0^\OP)$ is a dual for $C$.
+      Then we have \[
+        C \otimes D \simeq \DGCAT_\CTS(C^\vee , D)
+        \simeq \DGCAT(C_0^\OP , \DGCAT(D_0^\OP , \VEC)) 
+        \simeq \FUN^\mathrm{Bi-Ex}_\VEC(C_0^\OP \times D_0^\OP , \VEC)
+      \]
+      where the latter is the dg-$\infty$-category of
+      functors $C_0^\OP \times D_0^\OP$ which are $\VEC$-linear and exact
+      in each variable.
+      Under these equivalences, 
+      the functor $\boxtimes : C \times D \to C \otimes D$ corresponds to
+      \begin{align*}
+        C \times D &\map{}{} 
+        \DGCAT(C_0^\OP , \VEC) \times \DGCAT(D_0^\OP , \VEC) 
+        \,\,\,\,\text{enriched Yoneda}\\
+        &\map{\sim}{}
+        \FUN^\mathrm{Bi-Ex}_\VEC(C_0^\OP \times D_0^\OP , \VEC \times \VEC)\\
+        &\map{}{}
+        \FUN^\mathrm{Bi-Ex}_\VEC(C_0^\OP \times D_0^\OP , \VEC)
+        \,\,\,\,\text{compose with }\otimes
+      \end{align*}
+      Let $h$ the above composition.
+      Let $\HOM$ denote the enriched hom of 
+      $\FUN^\mathrm{Bi-Ex}_\VEC(C_0^\OP \times D_0^\OP , \VEC)$.
+      Now applying the tensor-hom adjunction in $\VEC$ with
+      two applications of enriched Yoneda's lemma shows that
+      for any $F \in 
+      \FUN^\mathrm{Bi-Ex}_\VEC(C_0^\OP \times D_0^\OP , \VEC)$,
+      and $(c_0, d_0) \in C_0 \times D_0$, we have \[
+        \HOM(h(c_0 , d_0) , F) \map{\sim}{} F(c_0 , d_0) \text{ in }\VEC
+      \]
+      Since $h$ corresponds to $\boxtimes$,
+      this shows that $\set{c_0 \otimes d_0 \st c_0 \in C_0 , d_0 \in D_0}$
+      compactly generates $C \otimes D$.
+
+      Finally, for formula,
+      $c \otimes d$ and $c_0 \otimes d_0$ transported across
+      the equivalences yield $h(c , d)$ and $h(c_0 , d_0)$.
+      So we have \[
+        \HOM_{C \otimes D}(c_0 \otimes d_0 , c \otimes d)
+        \simeq \HOM(h(c_0 , d_0) , h(c , d))
+        \simeq \HOM_C(c_0 , c) \otimes \HOM_D(d_0 , d)
+      \]
+      as desired.
+
+    \end{proof1}
+  \end{lem}
+  Finally, we are ready.
+  \begin{lem}[Integral Transforms for Quasi-Coherent Sheaves on Derived Affines]
+    \link{fm.qcoh.daff}
+    For $S , T \in \DAFF$, 
+    we have the equivalence $\boxtimes : 
+    \QCOH\,S \otimes \QCOH\,T \map{\sim}{} \QCOH(S \times T)$.
+    \begin{proof1}
+      We follow the approach of \cite[Prop 4.6]{BZFN}.
+      By the \linkto{dgcat.stable.cg}{
+        theory of compactly generated stable $\infty$-categories
+      },
+      it suffices to show that $\QCOH\,S \otimes \QCOH\,T$
+      has a small compactly generating full subcategory that
+      gets sent fully faithfully to a compactly generating full subcategory
+      of $\QCOH(S \otimes T)$.
+      Of course, we choose to show that
+      \begin{enumerate}
+        \item $\set{M \boxtimes N \in \QCOH(S \times T) \st 
+        M \in (\QCOH\,S)^c , N \in (\QCOH\,T)^c}$ compactly generates
+        $\QCOH(S \times T)$
+        \item for all $M, M_1 \in (\QCOH\,S)^c$ and $N , N_1 \in (\QCOH\,T)^c$,
+        we have \[
+          \HOM_S(M , M_1) \otimes \HOM_T(N , N_1) \map{\sim}{}
+          \HOM_{S \times T}(M \boxtimes N , M_1 \boxtimes N_1)  
+        \]
+      \end{enumerate}
+      For (1), we use that fact that 
+      for $M \in \QCOH\,S$ where $S$ is derived affine, 
+      \linkto{duality.daff}{$M$ is compact if and only if it is dualisable}.
+      Therefore, if $M, N \in \QCOH\,S , \QCOH\,T$ are compact,
+      then they are dualisable.
+      Since for any morphism $f$ of derived affines, 
+      $f^*$ is \linkto{qcoh.symm_mon}{symmetric monoidal},
+      we obtain that $p_S^*(M), p_T^*(N)$ are both dualisable in
+      $\QCOH(S \times T)$.
+      It is not hard to show that the tensor product of two dualisable objects
+      is again dualisable, so we obtain $M \boxtimes N$ is dualisable,
+      and hence compact in $\QCOH(S \times T)$.
+
+      Now we show that $\set{M \boxtimes N \st M, N \text{ compact } \in 
+      \QCOH\,S , \QCOH\,T}$ generates $\QCOH(S \times T)$.
+      What follows is essentially a series of definitions.
+      Let $P \in \QCOH(S \times Y)$ and assume that
+      \[
+        \pi_0 \HOM_{S\times T}((\QCOH\,S)^c \boxtimes (\QCOH\,T)^c , P) \simeq 0
+      \]
+      Then for any $N \in (\QCOH\,T)^c$, we have 
+      \[
+        0 \simeq \pi_0\HOM_{S \times T}((\QCOH\,S)^c \boxtimes N , P)
+        \simeq \pi_0\HOM_S((\QCOH\,S)^c , 
+          (p_S)_*\underline{\HOM}_{S \times T}(p_T^* N , P))
+      \]
+      Since $(\QCOH\,S)^c$ compactly generates $\QCOH\,S$,
+      we obtain $0 \simeq (p_S)_*\underline{\HOM}_{S \times T}(p_T^* N , P)$ 
+      for any $N \in (\QCOH\,T)^c$.
+
+      We are now in the world of algebra.
+      For $N \in (\QCOH\,T)^c$,
+      $0 \simeq (p_S)_*\underline{\HOM}_{S \times T}(p_T^* N , P)$ says
+      that the $\OO(S \times T)$-module 
+      $\underline{\HOM}_{S \times T}(p_T^* N , P)$ is zero
+      after applying the forgetful functor $\OO(S\times T)\MOD \to \OO(S)\MOD$.
+      Thus \begin{align*}
+        0 &\simeq \underline{\HOM}_{S \times T}(p_T^* N , P) \\
+        &\Rightarrow
+        0 \simeq \HOM_{S \times T}(\OO(S \times T) , 
+          \underline{\HOM}_{S \times T}(p_T^* N , P))
+          \simeq \HOM_{S \times T}(p_T^*N , P)
+          \simeq \HOM_{T}(N , (p_T)_* P)
+      \end{align*}
+      This holds for all $N \in (\QCOH\,T)^c$.
+      So by compact generation of $\QCOH\,T$,
+      we see that $0 \simeq (p_T)_* P$.
+      This just says $0 \simeq P$ as an $\OO(T)$-module.
+      This clearly implies $0 \simeq P$ as an $\OO(S \times T)$-module,
+      finishing the proof of (1).
+      
+      (2) \begin{align*}
+        &\,\,\,\,\HOM_{S \times T}(M \boxtimes N , M_1 \boxtimes N_1) \\
+        \simeq &\,\,\,\, \Ga(S \times T , 
+        (p_S^*(M) \otimes p_T^*(N))^\vee \otimes p_S^*(M_1) \otimes p_T^*(N_1))
+        &\text{ tensor of dualisables is dualisable }
+        \\
+        \simeq &\,\,\,\, \Ga(S \times T , 
+        p_S^*(M^\vee) \otimes p_T^*(N^\vee) \otimes p_S^*(M_1) \otimes p_T^*(N_1))
+        &\text{ $p^*$ preserve dualisables }
+        \\
+        \simeq &\,\,\,\, \Ga\brkt{S \times T , 
+        p_S^*(M^\vee \otimes M_1) \otimes p_T^*(N^\vee \otimes N_1)}
+        &\text{ $p^*$ symmetric monoid }
+        \\
+        \simeq &\,\,\,\, \Ga\brkt{S \times T , 
+        p_S^*(\underline{\HOM}_S(M , M_1) 
+        \otimes p_T^*(\underline{\HOM}_T(N,N_1)))}
+        &\text{ internal hom and dualisable }
+        \\
+        \simeq &\,\,\,\, \Ga\brkt{T , (p_T)_*\brkt{
+          p_S^*(\underline{\HOM}_S(M , M_1) 
+        \otimes p_T^*(\underline{\HOM}_T(N,N_1)))
+        }}
+        &\text{ ${p_T}_*$ definition }
+        \\
+        \simeq &\,\,\,\, \Ga\brkt{
+          T , (p_T)_* p_S^* (\underline{\HOM}_S(M , M_1))
+        \otimes \underline{\HOM}_T(N,N_1)
+        }
+        &\text{ projection formula for $S \times T \to T$ }
+        \\
+        \simeq &\,\,\,\, \HOM_S(M , M_1) \otimes \HOM_T(N , N_1)
+        &\text{ ??? }
+      \end{align*}
+      The special case of projection formula for $S \times T \to T$
+      can be deduced as follows.
+      We wish to show that for all $M \in \QCOH(S \times T)$, 
+      we have an equivalence : 
+      \[
+        ((p_T)_* M) \otimes \_ \map{\sim}{} (p_T)_*\brkt{M \otimes p_T^* \_}
+      \]
+      as endo-functors of $\QCOH\,T$.
+      Let $C := \QCOH\,T$. 
+      We have seen that $C \simeq \IND\,C(\om)$ where
+      $C(\om)$ is the smallest stable full subcategory of $C$ containing
+      $\OO(T)$.
+      \linkto{dgcat.ind.up}{It suffices}
+      that the above two functors are continuous and
+      that they agree on $C(\om)$.
+      Since $\otimes$ is continuous in each variable,
+      $((p_T)_* M) \otimes \_$ is continuous.
+      Continuity of $(p_T)_*\brkt{M \otimes p_T^* \_}$
+      follows from continuity of $p_T^*, M \otimes\_ \,, (p_T)_*$
+      where the last one uses our specific situation $S \times T \to T$
+      of derived affines.
+      Now, to show the two functors agree on $C(\om)$,
+      \linkto{dgcat.stable.cg}{recall} that $C(\om)$ is obtained from
+      $\OO(T)$ by first taking all shifts, then iteratively 
+      adding in cofibers.
+      Since the two functors preserve shifts and cofibers,
+      it suffices that they agree on $\OO(T)$.
+      This is now clear.
+    \end{proof1}
+  \end{lem}
+
+\end{proof}
+
+\end{document}

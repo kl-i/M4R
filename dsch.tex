@@ -1,84 +1,99 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
 
-\begin{rmk}[Why use derived-ness?]
-	
-	A simple reason is that base change theorems break 
-	without flatness assumptions.
-	Consider the following example.
-	Let $A := k[t]/(t)^2$ where $k$ is a field and let
-	$\SPEC\,k \to \SPEC\,A$ be the closed embedding of $t = 0$.
-	Then the \emph{classical} fiber product gives the following.
-	\begin{cd}
-		{\SPEC\,k} & {\SPEC\,k} & \rightsquigarrow & {\QCOH\,k} & {\QCOH\,k} \\
-		{\SPEC\,k} & {\SPEC\,A} && {\QCOH\,k} & {\QCOH\,A}
-		\arrow["i"', from=2-1, to=2-2]
-		\arrow["{\id{}}"', from=1-1, to=2-1]
-		\arrow["{\id{}}", from=1-1, to=1-2]
-		\arrow["i", from=1-2, to=2-2]
-		\arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
-		\arrow["{\id{}}"', from=1-4, to=2-4]
-		\arrow["{\id{}}"', from=1-5, to=1-4]
-		\arrow["{Li^*}", from=2-5, to=2-4]
-		\arrow["{R i_*}", from=1-5, to=2-5]
-		\arrow["\not\simeq"{description}, Rightarrow, from=1-4, to=2-5]
-	\end{cd}
-	Indeed the diagram on the right hand side does not commute up to isomorphism
-	since we have : 
-	\begin{cd}
-		&&& \vdots & \vdots \\
-		&&& {A \otimes_A k} & k \\
-		{Li^*(Ri_* \,k)} & {Li^*(k)} & {k \otimes^L_A k} & {A \otimes_A k} & k & k
-		\arrow["\simeq"{description}, draw=none, from=3-1, to=3-2]
-		\arrow["\simeq"{description}, draw=none, from=3-2, to=3-3]
-		\arrow["{t \otimes 1}"', from=2-4, to=3-4]
-		\arrow["{t \otimes 1}"', from=1-4, to=2-4]
-		\arrow["\simeq"{description}, draw=none, from=3-3, to=3-4]
-		\arrow["0"', from=1-5, to=2-5]
-		\arrow["0"', from=2-5, to=3-5]
-		\arrow["\simeq"{description}, draw=none, from=3-4, to=3-5]
-		\arrow["\not\simeq"{description}, draw=none, from=3-5, to=3-6]
-	\end{cd}
-  Going derived fixes this because we have the isomorphism 
-	\[
-    \_ \otimes^L_A k \simeq \_ \otimes^L_k (k \otimes^L_A k)		
-	\]
-
-\end{rmk}
-  
-IP : explain the setup of prestacks, i.e. the following diagram.
-
-GR1, Ch 2, 1.7.6.
+Now that we have explained
+the kind of category of sheaves,
+we describe the spaces the sheaves will be on.
+The big picture to follow is the following : 
+% \begin{cd}
+% 	& {\mathrm{dAff}} & {\mathrm{Aff}} & {\mathrm{Aff}^\mathrm{red}} \\
+% 	{\mathrm{Stk}_\mathrm{ét}} & {\mathrm{PStk}} & {\mathrm{PStk}_\mathrm{cl}} & {\mathrm{PStk}_\mathrm{red}} \\
+% 	{} & {\mathrm{PStk}_\mathrm{laft}} && {\mathrm{PSh}\,\mathrm{dAff}^{<\infty}_\mathrm{ft}} && {} \\
+% 	&& {\mathrm{PSh}\,\mathrm{dAff}^{<\infty}}
+% 	\arrow["\sim"{description}, draw=none, from=3-2, to=3-4]
+% 	\arrow["\LAN"', shift right=2, from=2-3, to=2-2]
+% 	\arrow["\LAN"', shift right=2, from=2-4, to=2-3]
+% 	\arrow["L"', shift right=2, from=2-2, to=2-1]
+% 	\arrow["\subseteq"', shift right=2, from=2-1, to=2-2]
+% 	\arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
+% 	\arrow["\subseteq"', from=3-2, to=2-2]
+% 	\arrow[shift left=2, from=3-4, to=3-2]
+% 	\arrow["{\mathrm{res}}", shift left=1, from=3-2, to=3-4]
+% 	\arrow["{\mathrm{Ran}}"{description}, from=4-3, to=3-2]
+% 	\arrow["{\mathrm{Lan}}"{description}, from=3-4, to=4-3]
+% 	\arrow[from=1-2, to=2-2]
+% 	\arrow["\supseteq"{description}, from=1-3, to=1-2]
+% 	\arrow[from=1-3, to=2-3]
+% 	\arrow[from=1-4, to=2-4]
+% 	\arrow["\supseteq"{description}, from=1-4, to=1-3]
+% 	\arrow["{\mathrm{cl}}"', shift right=2, from=2-2, to=2-3]
+% 	\arrow["{\mathrm{red}}"', shift right=2, from=2-3, to=2-4]
+% 	\arrow["\bot"{description}, draw=none, from=2-2, to=2-3]
+% 	\arrow["\bot"{description}, draw=none, from=2-3, to=2-4]
+% \end{cd}
 \begin{cd}
-	& {\mathrm{dAff}} & {\mathrm{Aff}} & {\mathrm{Aff}^\mathrm{red}} \\
-	{\mathrm{Stk}_\mathrm{ét}} & {\mathrm{PStk}} & {\mathrm{PStk}_\mathrm{cl}} & {\mathrm{PStk}_\mathrm{red}} \\
-	{} & {\mathrm{PStk}_\mathrm{laft}} && {\mathrm{PSh}\,\mathrm{dAff}^{<\infty}_\mathrm{ft}} && {} \\
-	&& {\mathrm{PSh}\,\mathrm{dAff}^{<\infty}}
-	\arrow["\sim"{description}, draw=none, from=3-2, to=3-4]
-	\arrow["\LAN"', shift right=2, from=2-3, to=2-2]
-	\arrow["\LAN"', shift right=2, from=2-4, to=2-3]
-	\arrow["L"', shift right=2, from=2-2, to=2-1]
-	\arrow["\subseteq"', shift right=2, from=2-1, to=2-2]
+	{\AFF^\RED} & \AFF & \DAFF & {\PSH\,\DAFF^{\leq n}} & {\PSH\,\DAFF^{\leq n}_\FT} & {} \\
+	{\PSTK_\RED} & {\PSTK_\CL} & \PSTK & {\PSH\,\DAFF^{<\infty}} & {\PSH\,\DAFF^{<\infty}_\FT} \\
+	&& {\STK_\text{ét}} & {\PSTK_\LAFT}
+	\arrow["\LAN"', shift right=3, from=1-4, to=2-4]
+	\arrow["\LAN"', shift right=3, from=1-5, to=2-5]
+	\arrow["\LAN", shift left=3, from=2-1, to=2-2]
+	\arrow["\LAN", shift left=3, from=2-2, to=2-3]
+	\arrow["\RED", shift left=3, from=2-2, to=2-1]
+	\arrow["\CL", shift left=3, from=2-3, to=2-2]
 	\arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
-	\arrow["\subseteq"', from=3-2, to=2-2]
-	\arrow[shift left=2, from=3-4, to=3-2]
-	\arrow["{\mathrm{res}}", shift left=1, from=3-2, to=3-4]
-	\arrow["{\mathrm{Ran}}"{description}, from=4-3, to=3-2]
-	\arrow["{\mathrm{Lan}}"{description}, from=3-4, to=4-3]
-	\arrow[from=1-2, to=2-2]
-	\arrow["\supseteq"{description}, from=1-3, to=1-2]
-	\arrow[from=1-3, to=2-3]
-	\arrow[from=1-4, to=2-4]
-	\arrow["\supseteq"{description}, from=1-4, to=1-3]
-	\arrow["{\mathrm{cl}}"', shift right=2, from=2-2, to=2-3]
-	\arrow["{\mathrm{red}}"', shift right=2, from=2-3, to=2-4]
 	\arrow["\bot"{description}, draw=none, from=2-2, to=2-3]
+	\arrow["L"', shift right=3, from=2-3, to=3-3]
+	\arrow["\subseteq"', shift right=3, from=3-3, to=2-3]
+	\arrow["\dashv"{description}, draw=none, from=3-3, to=2-3]
+	\arrow["\subseteq"{description}, shift left=1, from=3-4, to=2-3]
+	\arrow["\RAN", shift left=3, from=2-4, to=3-4]
+	\arrow["\LAN", shift left=3, from=2-5, to=2-4]
+	\arrow[shift left=3, from=2-4, to=2-5]
+	\arrow["\top"{description}, draw=none, from=2-4, to=2-5]
+	\arrow[shift left=3, from=3-4, to=2-4]
+	\arrow["\dashv"{description}, draw=none, from=3-4, to=2-4]
+	\arrow["\sim"{description}, shift right=2, from=3-4, to=2-5]
+	\arrow[shift right=3, from=2-3, to=2-4]
+	\arrow[shift right=3, from=2-4, to=2-3]
 	\arrow["\bot"{description}, draw=none, from=2-3, to=2-4]
+	\arrow["\LAN"', shift right=3, from=1-5, to=1-4]
+	\arrow["{\leq n}"', shift right=3, from=2-4, to=1-4]
+	\arrow["\dashv"{description}, draw=none, from=2-4, to=1-4]
+	\arrow[shift right=3, from=1-4, to=1-5]
+	\arrow["\bot"{description}, draw=none, from=1-4, to=1-5]
+	\arrow[shift right=3, from=2-5, to=1-5]
+	\arrow["\dashv"{description}, draw=none, from=1-5, to=2-5]
+	\arrow["\subseteq", from=1-1, to=1-2]
+	\arrow["\subseteq", from=1-2, to=1-3]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=2-2]
+	\arrow[from=1-3, to=2-3]
 \end{cd}
 \[
   \DSCH_\AFT := \DSCH_\mathrm{qc} \cap \STK_\text{ét} \cap \PSTK_\LAFT  
 \]
+Let us explain.
 \begin{itemize}
+
+	\item $\DAFF$ refers to the opposite of the infinity category
+	of commutative algebra objects in $\VEC$.
+
+	Practically speaking, $\DAFF^\OP$ can be realised as 
+	the localisation of commutative dg-algebras concentrated in non-positive degree 
+	with respect to a suitable model structure. 
+  (Alternatively, localisation of simplicial commutative rings w.r.t. 
+  suitable model structure. However, you would then need to show
+  is equivalent to commutative algebra objects in $\VEC$.)
+	We use cohomological grading so homological degree refer to 
+	negative cohomological degree.
+
+	$\AFF$ is the full subcategory of $\DAFF$ of classical affine schemes,
+	and $\AFF^\RED$ the reduced classical affine schemes,
+	which we will simply refer to as \emph{reduced} for brevity.
+
+	We use $\SPEC$ to denote the Yoneda embedding of
+	any of $\AFF^\RED , \AFF , \DAFF$ into their presheaf $\infty$-categories.
 
 	\item \link{dsch.lan}
 	
@@ -106,7 +121,7 @@ GR1, Ch 2, 1.7.6.
 	\item For $X \in \PSTK$, we say $X$ has an underlying scheme when
 	the underlying classical prestack is a scheme.
 
-	\item (GR1 Ch2 1.2.3, 1.2.7)
+	\item \cite[Ch 2, 1.2.3, 1.2.7]{GR1}
 	$\DAFF^{<\infty} := \bigcup_{0 \leq n} \DAFF^{\leq n}$ where
   $\DAFF^{\leq n}$ is the full subcategory of $\DAFF$ consisting of
 	$\SPEC\,A$ such that $\pi_{i > n} A \simeq H^{i < -n} A \simeq 0$.
@@ -123,22 +138,47 @@ GR1, Ch 2, 1.7.6.
 	\PSTK \rightleftarrows \PSH\,\DAFF^{<\infty}$.
 	Then essential image of $\RAN$ is of importance due to the following
 	characterisation.
-	\begin{prop}[GR1 Ch2 1.4.7]
+	\begin{prop}
+		\link{dsch.pstk.conv}
 		
 		Let $X \in \PSTK$.
 		Then $X$ is in the essential image of 
 		$\RAN : \PSH\,\DAFF^{<\infty} \to \PSTK$ if and only if
 		for all $\SPEC\,A \in \DAFF$,
 		we have $X(A) \map{\sim}{} \LIM_{0 \leq n} X(\tau^{\leq n} A)$.
+		We call such prestacks \emph{convergent}.
+		\cite[Ch2, 1.4.7]{GR1}
 	\end{prop}
 
 	\item $\DAFF_\AFT$ is defined as the full subcategory of $\DAFF$
   consisting of derived affines of \emph{almost finite type}.
 	This means $\SPEC\,A$ where $H^0 A$ is finite type over the base field $k$
-	and $H^{i > 0} A$ are finite generated over $H^0 A$.
-
-	$\DAFF^{<\infty}_\FT := \DAFF^{<\infty} \cap \DAFF_\AFT$.
-
+	and $H^{i > 0} A$ are finite generated over $H^0 A$.\cite[Ch 2, 1.7.1]{GR1}
+  We also define 
+  \[ \DAFF^{\leq n}_\FT := \DAFF^{\leq n} \cap \DAFF_\AFT \]
+	With 
+	\linkto{dgcat.psh.up}{the same argument as in previous points},
+	we obtain an adjunction $\LAN \dashv \RES : 
+	\PSH\,\DAFF^{\leq n}_\FT \rightleftarrows \PSH\,\DAFF^{\leq n}$
+	where $\LAN$ is fully faithful so 
+	we can see the former as a full subcategory of the latter.
+	The objects of this subategory has the following charactersation : 
+	\begin{prop}
+		\link{dsch.pstk.preserve_fil_colim}
+		
+		Let $X \in \PSH\,\DAFF^{\leq n}$.
+		Then $X$ lies in $\PSH\,\DAFF^{\leq n}_\FT$ if and only if
+		as a functor $(\DAFF^{\leq n})^\OP \to \SPC$,
+		it preserves small filtered colimits.
+		\cite[Ch 2, 1.6.4]{GR1}
+	\end{prop}
+  Finally, the building blocks of derived algebraic geometry
+	which will allow us to do computations
+	\[ \DAFF^{<\infty}_\FT := \DAFF^{<\infty} \cap \DAFF_\AFT 
+	= \bigcup_{0 \leq n} \DAFF^{\leq n}_\FT \]
+	We have a characterisation of the prestacks determined by
+	how $S \in \DAFF^{<\infty}_\FT$ map into them.
+	These are the \emph{laft prestacks}.
 	\begin{prop}[Characterisation of Prestacks of Locally Almost Finite Type]
 		\link{dsch.laft.char}
 		
@@ -152,18 +192,58 @@ GR1, Ch 2, 1.7.6.
 			\arrow["\RAN", shorten >=3pt, from=2-2, to=1-1]
 			\arrow["\LAN", shorten <=4pt, from=1-3, to=2-2]
 		\end{cd}
-		where an inverse is given by 
-		first \emph{left} Kan extending along 
-		$\DAFF^{<\infty}_\FT \subs \DAFF^{<\infty}$
-		then \emph{right} Kan extending along $\DAFF^{<\infty} \subs \DAFF$.
+		where \begin{itemize}
+			\item $\PSTK_\LAFT$ is the full subcategory of $\PSTK$ consisting of
+      $X$ such that \begin{enumerate}
+				\item $X$ is \linkto{dsch.pstk.conv}{convergent}.
+        \item $X$ takes filtered limits in $\DAFF^{\leq n}$ to 
+				filtered colimits in $\SPC$,
+				\linkto{dsch.pstk.preserve_fil_colim}{equivalently}
+				$X^{\leq n}$ lies in $\PSH\,\DAFF^{\leq n}_\FT$.
+			\end{enumerate}
+			\item an inverse is given by 
+			first \emph{left} Kan extending along 
+			$\DAFF^{<\infty}_\FT \subs \DAFF^{<\infty}$
+			then \emph{right} Kan extending along $\DAFF^{<\infty} \subs \DAFF$.
+		\end{itemize}
+		\cite[Ch 2, 1.7.6]{GR1}
 	\end{prop}
+	This is the class of prestacks for which
+	$\INDCOH$ will be developed.
 
-	\linkto{dsch.laft.fin_lim}{}
-	$\PSTK_\LAFT \subs \PSTK$ preserves finite limits.
-	(GR1 Ch2 1.7.10)
+  We also have that
+	$\PSTK_\LAFT \subs \PSTK$ preserves finite limits,
+	which will be useful for us later.
+	\link{dsch.laft.fin_lim}
+	\cite[Ch 2 , 1.7.10]{GR1}
 
-	$\DAFF_\AFT = \DAFF \cap \PSTK_\LAFT$ (GR1 Ch2 1.7.2)
+  One can also show that
+	$\DAFF_\AFT = \DAFF \cap \PSTK_\LAFT$.
+	\cite[Ch 2 , 1.7.2]{GR1}
 
+	\item In the adjunction 
+	$L \dashv \text{ forget } : \PSTK \rightleftarrows \STK_\text{ét}$,
+	we have $\STK_\text{ét}$ denoting the full subcategory of $\PSTK$
+	consisting of prestacks satisfying étale descent.
+	$L$ is the sheafification functor.
+	We refer the reader to \cite[Ch 2, 2.3]{GR1}
+	for details of the definition.
+
+	\item $\DSCH$ denotes the full subcategory of $\PSTK$ consisting of
+	\emph{derived schemes}. 
+	See \cite[Ch 2, 3.1.1]{GR1} for the definition.
+	A thing to note is that the derived schemes in \cite{GR1}
+	have diagonals that are closed embeddings and affine by definition.
+
+	$\DSCH_\mathrm{qc}$ denotes the full subcategory of $\DSCH$
+	consisting of derived schemes which admit a finite Zariski cover by
+	derived affines.
+
+	Finally, $\DSCH_\AFT$ denotes the $\infty$-category of
+	\emph{derived schemes of almost finite type}.
+	\cite[Ch 2, 3.5]{GR1}
+	The theory of $\INDCOH$ will be built from these spaces.
+	
 \end{itemize}
 
 \end{document}

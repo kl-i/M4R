@@ -1,0 +1,182 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+\begin{prop}[Equivalence of Left and Right Crystals]
+  \link{crys.leftRight}
+  
+  Let $X \in \PSTK_\LAFT$.
+  Then we have an equivalence \[
+    \Upsilon_{X_\DR} : \CRYS^L\,X \map{\sim}{} \CRYS^R\,X
+  \]
+
+\end{prop}
+\begin{proof}
+  We filled in some minor details from \cite[Prop 2.4.4]{Crys}.
+  
+  (Step 0 - Reduce to derived affine)
+  Since $\CRYS^L, \CRYS^R$ are both left Kan extensions
+  from $\DAFF^{<\infty}_\FT$,
+  we can WLOG assume $X \in \DAFF_\AFT$.
+
+  (Step 1 - Reduce to classically formally smooth)
+  Writing $X = \SPEC\,A$,
+  we have that $H^0 A$ is a finite type algebra over $k$.
+  Choose a surjection $k[\A^n] \to H^0 A \simeq A_0 / \mathrm{Im} d^1$ 
+  of algebras over $k$ and choose a lift $k[\A^n] \to A_0$
+  where $A_0$ is the degree zero part of $A$, which is also an
+  algebra over $k$.
+  Then this defines a morphism of commutative dg algebras $
+    k[\A^n] \to A  
+  $
+  Viewing things geometrically,
+  we have found a closed embedding $i : X \to Z$ for some
+  smooth classical affine scheme $Z$.
+
+  Now consider the \emph{formal completion of $Z$ along $X$},
+  which is defined by the following fiber product : 
+  \begin{cd}
+    {Z_{\widehat{X}}} & Z \\
+    {X_\DR} & {Z_\DR}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd} 
+  By the universal property of fiber products,
+  we have a morphism $X \to Z_{\widehat{X}}$.
+  We claim that this induces \[
+    X_\DR \map{\sim}{} \brkt{Z_{\widehat{X}}}_\DR  
+  \]
+  Indeed, since taking the underlying reduced prestack is a right adjoint,
+  fiber products are preserved and we get 
+  \begin{cd}
+    {Z_{\widehat{X}}} & Z & \rightsquigarrow 
+      & {(Z_{\widehat{X}})^\RED} & {Z^\RED} \\
+    {X_\DR} & {Z_\DR} && {(X_\DR)^\RED} & {(Z_\DR)^\RED}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+    \arrow["\sim"', from=1-4, to=2-4]
+    \arrow[from=2-4, to=2-5]
+    \arrow[from=1-4, to=1-5]
+    \arrow["\sim", from=1-5, to=2-5]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-4, to=2-5]
+  \end{cd}
+  Since $Z_{\widehat{X}} \to X_\DR$ induces an equivalence on
+  reduced points, we get $(Z_{\widehat{X}})_\DR \simeq X_\DR$.
+  Therefore we can replace $X$ by $Z_{\widehat{X}}$.
+
+  What do we gain from this? Well, note that $Z$ is formally classically smooth,
+  i.e. $Z \to Z_\DR$ is an effective epimorphism.
+  By \cite[Prop 6.2.3.15]{Lurie-HTT},
+  the pullback of an effective epimorphism in a presheaf $\infty$-category
+  is an effective epimorphism,
+  so $Z_{\widehat{X}} \to X_\DR$ is also an effective epimorphism.
+  But we saw earlier that this morphism equivalent to
+  $Z_{\widehat{X}} \to (Z_{\widehat{X}})_\DR$.
+  Therefore $Z_{\widehat{X}}$ is classically formally smooth.
+  In other words,
+  we can WLOG assume $X$ is classically formally smooth.
+  
+  (Step 2 - Reduce to $\check{C}^i(X / X_\DR)$)
+  Since $X \to X_\DR$ is an effective epimorphism,
+  we have the commutative square : 
+  \begin{cd}
+    {\CRYS^L\,X} & {\CRYS^R\,X} \\
+    {\LIM\,\QCOH\,\check{C}(X / X_\DR)} & {\LIM\,\INDCOH\,\check{C}(X / X_\DR)}
+    \arrow["\sim"', from=1-1, to=2-1]
+    \arrow["\sim", from=1-2, to=2-2]
+    \arrow["{\LIM\,\Upsilon_i}"', from=2-1, to=2-2]
+    \arrow["{\Upsilon_{X_\DR}}", from=1-1, to=1-2]
+  \end{cd}
+  where $\Upsilon_i : \QCOH\,\check{C}^i(X / X_\DR) \to 
+  \INDCOH\,\check{C}^i(X / X_\DR)$ comes from the $i$-simplices
+  of the Cech nerve.
+  So for $\Upsilon_{X_\DR}$ to be an equivalence,
+  it suffices for each $\Upsilon_i$ to be an equivalence.
+
+  (Step 3 - Reduction to smooth classical affines)
+  Recall from step 1 that we have $X \simeq X_\DR \times_{Z_\DR} Z$.
+  Then by the pasting lemma for ($\infty$-categorical) pullbacks 
+  \begin{cd}
+    X & {X^i} & {Z^i} \\
+    {X_\DR} & {X^i_\DR} & {Z^i_\DR}
+    \arrow[from=1-2, to=1-3]
+    \arrow[from=1-3, to=2-3]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-2, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-2, to=2-3]
+    \arrow["\De"', from=2-1, to=2-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd}
+  we see that $\check{C}^i(X / X_\DR) \simeq Z^i_{\widehat{X}}$
+  the formal completion of $Z^i$ along $X$ closed embedded in the diagonal.
+  Let $U^i \subs Z^i$ be the open complement of $X$.
+
+  We now have the following descriptions of
+  $\QCOH$ and $\INDCOH$ on formal completions along closed embeddings.
+  \begin{lem}[Sheaves on Formal Completions along Closed Embeddings]
+
+    Let $i : X \to Z$ be a closed embedding in $\DAFF_\AFT$.
+    Let $j : U \to Z$ be the open complement of $X$.
+    Define the following full dg-subcategories : 
+    \begin{cd}
+      {(\QCOH\,Z)_X} & {\QCOH\,Z} & {(\INDCOH\,Z)_X} & {\INDCOH\,Z} \\
+      0 & {\QCOH\,U} & 0 & {\INDCOH\,U}
+      \arrow[from=1-1, to=2-1]
+      \arrow[from=2-1, to=2-2]
+      \arrow[from=1-1, to=1-2]
+      \arrow["{j^*}", from=1-2, to=2-2]
+      \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+      \arrow[from=1-3, to=2-3]
+      \arrow[from=2-3, to=2-4]
+      \arrow[from=1-3, to=1-4]
+      \arrow["{j^!}", from=1-4, to=2-4]
+      \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-3, to=2-4]
+    \end{cd}
+    Then \begin{itemize}
+      \item \cite[Prop 7.1.3]{DGINDSCH}
+      There is an equivalence $\QCOH(Z_{\widehat{X}}) \simeq (\QCOH\,Z)_X$.
+      \item \cite[Prop 7.4.5]{DGINDSCH}
+      There is an equivalence $\INDCOH(Z_{\widehat{X}}) \simeq (\INDCOH\,Z)_X$.
+    \end{itemize}
+    \begin{proof1}
+      Omitted. 
+    \end{proof1}
+  \end{lem}
+  Thus, we obtain the following ``double short exact sequence''
+  in $\DGCAT_\CTS$ : 
+  \begin{cd}
+    {\QCOH\,Z_{\widehat{X}}} & {\mathrm{Ker}\,j^*} & {\QCOH\,Z^i} & {\QCOH\,U_i} \\
+    {\INDCOH\,Z_{\widehat{X}}} & {\mathrm{Ker}\,j^!} & {\INDCOH\,Z^i} & {\INDCOH\,U_i}
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-2, to=2-3]
+    \arrow[from=1-2, to=1-3]
+    \arrow["{j^*}", from=1-3, to=1-4]
+    \arrow["{j^!}", from=2-3, to=2-4]
+    \arrow["{\Upsilon_{Z^i}}", from=1-3, to=2-3]
+    \arrow["{\Upsilon_{U_i}}", from=1-4, to=2-4]
+    \arrow["\simeq"{description}, draw=none, from=1-1, to=1-2]
+    \arrow["\simeq"{description}, draw=none, from=2-1, to=2-2]
+    \arrow["{\Upsilon_{Z_{\widehat{X}}}}", from=1-1, to=2-1]
+  \end{cd}
+  Thus is suffices to show $\Upsilon_S$ is an equivalence for
+  smooth classical affines $S$.
+
+  This is true because \linkto{duality.Upsilon}{we saw that} 
+  under the self-dualities 
+  $\mathbb{D}_\mathrm{naive} : \QCOH\,S \simeq (\QCOH\,S)^\vee$
+  and $\mathbb{D}_\mathrm{Serre} : \INDCOH\,S \simeq (\INDCOH\,S)^\vee$,
+  we have $\Upsilon_S^\vee \simeq \Psi_S$.
+  This is an equivalence because it is well-known that 
+  for smooth classical affines $S$,
+  $\PERF\,S = \COH\,S$. Thus, we are done.
+  
+\end{proof}
+
+\end{document}

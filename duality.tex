@@ -1,0 +1,457 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+TODO : 
+\begin{itemize}
+  \item describe how GR's Serre duality concretely
+  recovers classical Serre duality
+  \item IP : proof of $\om_X = \Om^d_X[d]$ in classical smooth case.
+\end{itemize}
+
+From the perspective of GR, 
+both Serre duality and duality of D-modules are instances of
+general duality of (left) modules over a commutative algebra object in
+a symmetric monoidal $\infty$-category.
+Extending the analogy with linear algebra : 
+this is about getting an isomorphism $V \simeq V^\vee$ of vector spaces
+from a non-degenerate bilinear form $\<\_,\_\> : V \otimes V \to k$.
+
+There are many definitions of dualisability in a 
+symmetric monoidal $\infty$-category.
+We will take the following to be equivalent for granted.
+\begin{prop}[Dualisable Objects (Lurie HA 4.6.1.6)]
+  \link{duality.dualisable}
+  
+  Let $C$ be a symmetric monoidal $\infty$-category.
+  Let $e : x^\vee \otimes x \to 1_C$ where $1_C$ is the unit.
+  Then the following are equivalent : 
+  \begin{enumerate}
+    \item (duality datum) there exists $c : 1_C \to x \otimes x^\vee$
+    such that we have the following commuting triangles in $hC$ : 
+    \begin{cd}
+      x & {x \otimes x^\vee \otimes x} & x^\vee \\
+      & x & {x^\vee \otimes x \otimes x^\vee} & x^\vee
+      \arrow["\id{}"', from=1-1, to=2-2]
+      \arrow["{c \otimes \id{}}", from=1-1, to=1-2]
+      \arrow["{\id{} \otimes e}", from=1-2, to=2-2]
+      \arrow["{\id{} \otimes c}"', from=1-3, to=2-3]
+      \arrow["{e \otimes \id{}}"', from=2-3, to=2-4]
+      \arrow["{\id{}}", from=1-3, to=2-4]
+    \end{cd}
+    \item (Adjunction) for all $a \in C$, 
+    the morphism $\id{} \otimes e : a \otimes x^\vee \otimes x \to a$
+    induces an equivalence 
+    \begin{cd}
+      {C(b , a \otimes x^\vee)} & {C(b \otimes x , a \otimes x^\vee \otimes x)} \\
+      & {C(b \otimes x , a)}
+      \arrow["{\_ \otimes x}", from=1-1, to=1-2]
+      \arrow["{(\id{} \otimes e)\,\_}", from=1-2, to=2-2]
+      \arrow["\sim"', from=1-1, to=2-2]
+    \end{cd}
+    \item (Internal Hom) 
+    Under the extra condition that $C$ has internal hom $\underline{\HOM}$,
+    for any object $a \in C$,
+    the morphism $e \otimes \id{} : a \otimes x^\vee \otimes x \to a$
+    induces an equivalence \[
+      a \otimes x^\vee \to \underline{\HOM}(x , a)
+    \]
+
+  \end{enumerate}
+  An object $x$ is called \emph{dualisable} when 
+  there exists another object $x^\vee$ together with
+  a morphisms $e : x^\vee \otimes x \to 1_C$ satisfying any
+  (and thus all) of the above.
+
+\end{prop}
+
+\begin{rmk}
+  In the definition of dualisable objects,
+  we assumed $C$ is symmetric monoidal.
+  This implies given a dualisable pair $e : x^\vee \otimes x \to 1_C$,
+  $e_\mathrm{transposed} : x \otimes x^\vee \to 1_C$ is also a dualisable pair.
+  In particular, $(x^\vee)^\vee \simeq x$.
+\end{rmk}
+
+\begin{dfn}
+  
+  Let $C \in \DGCAT_\CTS$.
+  Then $C$ is called \emph{dualisable} when
+  it is dualisable as an object in $\DGCAT_\CTS = \VEC\MOD$.
+\end{dfn}
+
+\begin{rmk}
+  
+  Let's unpack the above a bit.
+  To say $C \in \DGCAT_\CTS$ is dualisable means
+  there exists $C^\vee \in \DGCAT_\CTS$ and 
+  $e \in \DGCAT_\CTS(C^\vee \otimes C, \VEC)$
+  such that for all $D \in \DGCAT_\CTS$,
+  we have an equivalence
+  \begin{cd}
+    {\DGCAT_\CTS(E , D \otimes C^\vee)} & {\DGCAT_\CTS(E \otimes C , D \otimes C^\vee \otimes C)} \\
+    & {\DGCAT_\CTS(E \otimes C , D)}
+    \arrow["{\_ \otimes C}", from=1-1, to=1-2]
+    \arrow["{(\id{} \otimes e)\,\_}", from=1-2, to=2-2]
+    \arrow["\sim"', from=1-1, to=2-2]
+  \end{cd}
+  In particular, applying $D = \VEC$, 
+  gives $C^\vee \simeq \DGCAT_\CTS(C , \VEC)$.
+  On the other hand, applying $E = \VEC$ and a transposition yields
+  $C^\vee \otimes D \simeq \DGCAT_\CTS(C , D)$.
+
+  The following shows that compact generation of $C$ is sufficient for
+  being dualisable and in fact, the dual $C^\vee$ has a explicit description.
+\end{rmk}
+
+\begin{prop}[Duality for Compactly Generated DG $\infty$-Categories
+  (GR1 Ch1 7.3.2)]
+  \link{duality.cg}
+  
+  Let $C \in \DGCAT_\CTS$ be compactly generated.
+  Consider the following : 
+  \begin{cd}
+    {(C^c)^\OP \times C^c} 
+      & {\IND((C^c)^\OP) \times C} 
+        & {\IND((C^c)^\OP) \otimes C} \\
+    & \VEC
+    \arrow[from=1-1, to=1-2]
+    \arrow["{\HOM_C}"', from=1-1, to=2-2]
+    \arrow[dashed, from=1-2, to=2-2]
+    \arrow[from=1-2, to=1-3]
+    \arrow["{e}", dashed, from=1-3, to=2-2]
+  \end{cd}
+  The enriched hom bi-functor $\HOM_C$ on compact objects
+  is $\VEC$-linear and exact in both variables 
+  hence the
+  middle dashed morphism 
+  \linkto{dgcat.ind.up}{by left Kan extension in each variable}/
+  This is $\VEC$-linear and continuous in both variables,
+  hence the right dashed morphism in $\DGCAT_\CTS$ by
+  the \linkto{dgcat.dgcat.tensor}{universal property of tensors}. 
+  Then $e$ exhibits $\IND((C^c)^\OP)$ as the dual of $C$.
+
+\end{prop}
+\begin{proof}
+  For any $E \in \DGCAT_\CTS$, we have the following equivalences
+  \begin{align*}
+    \DGCAT_\CTS(\DGCAT_\CTS(C , D) , E)
+    &\simeq \DGCAT_\CTS(\DGCAT(C^c , D) , E) \\
+    &\simeq \DGCAT_\CTS(E^\OP , \DGCAT(C^c , D)^\OP) \\
+    &\simeq \DGCAT_\CTS(E^\OP , \DGCAT((C^c)^\OP , D^\OP)) \\
+    &\simeq \DGCAT((C^c)^\OP , \DGCAT_\CTS(E^\OP , D^\OP)) \\
+    &\simeq \DGCAT((C^c)^\OP , \DGCAT_\CTS(D , E)) \\
+    &\simeq \DGCAT_\CTS(\IND((C^c)^\OP) , \DGCAT_\CTS(D , E)) \\
+    &\simeq \DGCAT_\CTS(\IND((C^c)^\OP) \otimes D , E)
+  \end{align*}
+  where we have used the following equivalence without proof : 
+  \[
+    \DGCAT_\CTS(\_ , \star) \map{\sim}{} \DGCAT_\CTS(\star^\OP , \_^\OP)
+  \]
+  where the forward direction is obtained by taking right adjoints via the
+  \linkto{dgcat.adjoint}{adjoint functor theorem} and the right side is
+  well-defined because \linkto{dgcat.presentable.has_lim}{
+    presentable $\infty$-categories have small limits
+  }.
+\end{proof}
+
+\begin{prop}[$\QCOH\,A$ Compactly Generated (Derived Affine Case)]
+  \link{duality.daff}
+
+  Let $\SPEC\,A \in \DAFF$ and $C := \QCOH\,A$.
+  Then $C \simeq \IND\,C(\om)$ where
+  $C(\om)$ is the smallest stable full subcategory of $C$ containing $A$.
+  In particular, $C$ is compactly generated.
+  
+  Furthermore, for $M \in C$, the following are equivalent : 
+  \begin{itemize}
+    \item $M$ is a retract of objects in $C(\om)$.
+    \item $M$ is compact
+    \item $M$ is dualisable
+  \end{itemize}
+
+\end{prop}
+\begin{proof}
+
+  Let $C := \QCOH\,A$.
+  One can check that $A$ is a compact object of $\QCOH\,A$ by
+  using the \linkto{dgcat.stable.cg}{1-categorical characterisation of
+  compact objects} and the fact that
+  homotopy coproducts in $h\QCOH\,A$ coincide with
+  taking degree-wise coproducts.
+  Similarly, one can check that $A$ is a generator
+  at the level of the 1-categorical derived category $h\QCOH\,A$.
+  \linkto{dgcat.stable.cg}{Hence} $C \simeq \IND\,C(\om)$.
+  We also deduce that \linkto{dgcat.idem}{$C(\om) \to C^c$ exhibits $C^c$
+  as the idempotent completion of $C(\om)$}.
+  Therefore compact objects coincide with retracts of objects in $C(\om)$.
+
+  We now show an $M \in C$ is compact if and only if it is dualisable.
+  This is a slightly different proof to BZFN 3.4.
+
+  Suppose $M$ is compact.
+  Our ansatz for $M^\vee$ is $\underline{\HOM}(M,1)$,
+  where $\underline{\HOM} := \underline{\HOM}_S$ is the internal hom of
+  $\QCOH\,S$.
+  For $e : M \otimes \underline{\HOM}(M,1) \to 1$,
+  we choose it to correspond to the identity morphism 
+  $\underline{\HOM}(M,1) \to \underline{\HOM}(M,1)$ under the adjunction
+  $M\otimes \_ \dashv \underline{\HOM}(M , \_)$.
+  \linkto{duality.dualisable}{It remains to show}
+  that the natural transformation 
+  $\_ \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , \_)$
+  coming from 
+  $\id{} \otimes e : \_ \otimes M \otimes \underline{\HOM}(M , 1) \to \_$
+  is an equivalence.
+  By assumption, $\underline{\HOM}(M , \_)$ preserves small coproducts.
+  \linkto{dgcat.stable.colimits}
+  {Hence}, both $\underline{\HOM}(M , \_)$ and 
+  $\_ \otimes \underline{\HOM}(M , 1)$ preserves small colimits.
+  Since $\QCOH\,S =: C \simeq \IND\,C(\om)$,
+  \linkto{dgcat.ind.up}{it suffices} to show that
+  $\_ \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , \_)$
+  is an equivalence on $C(\om)$.
+  Since $C(\om)$ is obtained from $1 = \OO(S)$ by 
+  \link{dgcat.stable.cg}{iteratively adding it cofibers} and 
+  both functors preserve small colimits, it suffices to show that
+  $1 \otimes \underline{\HOM}(M , 1) \to \underline{\HOM}(M , 1)$
+  is an equivalence.
+  This is clear.
+
+  Now assume $M$ is dualisable.
+  Then $\underline{\HOM}(M , \_) \simeq \_ \otimes M^\vee$
+  and hence preserves small coproducts.
+  Therefore $M$ is compact.
+
+\end{proof}
+
+\begin{prop}[$\QCOH\,X$ Compactly Generated (Derived Scheme Case)]
+
+  Let $X \in \DSCH_\mathrm{qc}$. 
+  Then $\QCOH\,X \simeq \IND\,\PERF\,X$ where
+  $\FF$ is in the full subcategory $\PERF\,X$ if and only if
+  any of the following equivalent conditions are true : 
+  \begin{itemize}
+    \item $\FF$ is dualisable
+    \item $\FF$ is compact
+    \item for all $x : S \to X$ where $S$ derived affine,
+    $\FF_x \in \QCOH\,S$ is compact.
+  \end{itemize}
+\end{prop}
+\begin{proof}
+  
+  We omit the proof of $\QCOH\,X \simeq \IND\,\PERF\,X$ for brevity.
+  See BZFN 3.19. 
+  For $\FF \in \QCOH\,X$,
+  the fact that $\FF$ is dualisable if and only if
+  it is fiberwise dualisable is proved in BZFN 3.6.
+  The equivalence of dualisability and compactness
+  is shown in BZFN 3.9.
+\end{proof}
+
+We now show that $\QCOH\,X$ has a \emph{self-duality} when 
+$X$ is a quasi-compact derived scheme.
+
+\begin{prop}[Self Duality of $\QCOH\,X$]
+  \link{duality.naive}
+
+  Let $X \in \DSCH_\mathrm{qc}$.
+  Define \[
+    \<\_,\_\> : 
+    \QCOH\,X \otimes \QCOH\,X \map{\otimes}{} \QCOH\,X \map{(p_X)_*}{} \VEC
+  \]
+  Then $\<\_,\_\>$ exhibits $\QCOH\,X$ as its own dual.
+  Let $\D : \QCOH\,X \simeq (\QCOH\,X)^\vee$ correspond to $\<\_,\_\>$.
+  We refer to $\D$ as the \emph{naive dualisation functor}.
+
+\end{prop}
+\begin{proof}
+  This proved in GR1 Ch1 9.2 for general 
+  stable rigid monoidal $\infty$-categories.
+  What follows is an application of the general proof to this example.
+  
+  We know that the dual of $\QCOH\,X \simeq \IND\,\PERF\,X$
+  is $\IND((\PERF\,X)^\OP)$.
+  We thus compute the naive dualisation functor as : 
+  \begin{align*}
+    \QCOH\,X \map{}{} 
+    \DGCAT_\CTS(\QCOH\,X , \VEC) \mapfrom{\sim}{}
+    (\QCOH\,X)^\vee \\
+    \FF \mapsto 
+    \<\_ , \FF \> \simeq \HOM_X(\D \FF , \_)
+    \mapsfrom \D \FF
+  \end{align*}
+  It suffices to show $\D$ is an equivalence.
+  Since $\QCOH\,X$ is the ind-completion of $\PERF\,X$,
+  \linkto{dgcat.cg.out}{it suffices} to show that
+  $\D$ maps $\PERF\,X$ fully faithfully into 
+  $(\PERF\,X)^\OP$ inside $(\QCOH\,X)^\vee$.
+
+  Let $\FF \in \PERF\,X$.
+  Then \[
+    \HOM_X(\D \FF , \_) \simeq 
+    \<\_ , \FF\> \simeq
+    \HOM_X(\OO_X , \_ \otimes \FF) \simeq
+    \HOM_X(\FF^\vee , \_) \simeq
+    \HOM_X(\underline{\HOM}_X(\FF , \OO_X) , \_)
+  \]
+  Therefore on $\PERF\,X$, 
+  the dualisation functor 
+  $\D$ lands in the image under Yoneda of $(\PERF\,X)^\OP$.
+  Identifying $(\PERF\,X)^\OP$ as a full subcategory of $(\QCOH\,X)^\vee$,
+  we see that $\D(\_) \simeq \_^\vee \simeq \underline{\HOM}_X(\_ , \OO_X)$
+  which is an equivalence $\PERF\,X \simeq (\PERF\,X)^\OP$
+  because this is simply taking dual objects.
+
+\end{proof}
+
+We describe duality for $\INDCOH\,X$ when $X \in \DSCH_\AFT$.
+Note that by definition, $\INDCOH\,X$ is compactly generated
+and hence dualisable.
+What's interesting is that $\INDCOH\,X$ is also self-dual
+and this recovers the classical Serre duality for coherent sheaves.
+First, we need to give $\INDCOH\,X$ a symmetric monoidal structure.
+
+\begin{prop}[GR1 Ch4 6.3.2]
+
+  There exists a unique functor
+  \[
+    \boxtimes \in \DGCAT_\CTS\brkt{
+      \INDCOH\,X \otimes \INDCOH\,Y , \INDCOH(Y \times X)
+    }
+  \]
+  that preserves compact objects and makes the following diagram commute : 
+  \begin{cd}
+    {\INDCOH\,X \otimes \INDCOH\,Y} & {\INDCOH(Y \times X)} \\
+    {\QCOH\,X \otimes \QCOH\,Y} & {\QCOH(Y\times X)}
+    \arrow["{\Psi_X \otimes \Psi_Y}"', from=1-1, to=2-1]
+    \arrow["\boxtimes"', from=2-1, to=2-2]
+    \arrow["{\Psi_{Y \times X}}", from=1-2, to=2-2]
+    \arrow["\boxtimes", from=1-1, to=1-2]
+  \end{cd}
+\end{prop}
+
+In GR1 Ch5 4.1, functoriality of $\boxtimes$ is shown.
+\begin{prop}
+ 
+  There is a symmetric monoidal structure on 
+  $\INDCOH^! : \DSCH_\AFT^\OP \to \DGCAT_\CTS$ 
+  such that for $X , Y \in \DSCH_\AFT$,
+  the morphism \[
+    \INDCOH\,X \otimes \INDCOH\,Y \map{}{} \INDCOH(Y \times X)
+  \]
+  from the symmetric monoidal structure of $\INDCOH^!$
+  recovers $\boxtimes$. 
+\end{prop}
+\begin{proof}
+  Omitted. See GR1 Ch5 4.1.
+\end{proof}
+
+\begin{rmk}
+  
+  Assuming the above result,
+  we can give each $\INDCOH\,X$ a symmetric monoidal structure
+  by the following trick from GR.
+  A symmetric monoidal dg-$\infty$-category is by GR's definition
+  a commutative algebra object in $\DGCAT_\CTS$.
+  The idea is that the source of commutative algebra structure on 
+  $\INDCOH\,X$ actually comes a commutative algebra structure on
+  \emph{$X$ itself}.
+  This means the following.
+  
+\end{rmk}
+
+\begin{lem}[Symmetric Monoidal Structure on $\PSTK$]
+  
+  There is a symmetric monoidal structure $\otimes$ on $\PSTK^\OP$
+  that gives for each $X , Y \in \PSTK^\OP$, \[
+    X \otimes Y \simeq X \times Y \in \PSTK^\OP
+  \]
+
+  Furthermore, we have a functor
+  $\PSTK^\OP \to \CALG(\PSTK^\OP)$
+  which for every $X \in \PSTK^\OP$,
+  gives it a commutative algebra structure such that
+  the multiplication
+  \[
+    X \times X \to X  
+  \]
+  is given by (the opposite of) the diagonal $\De^\OP$.
+  \begin{proof1}
+    The proof is not so important for our purposes.
+    We refer the reader to Lurie HA 2.4.1.5
+    where the result is proved for any $\infty$-category
+    admitting all finite products.
+  \end{proof1}
+\end{lem}
+
+\begin{dfn}[GR1 Ch5 4.1.3]
+  
+  The symmetric monoidal functor $\INDCOH^! : \DSCH_\AFT^\OP \to \DGCAT_\CTS$
+  sends commutative algebra objects to commutative algebra objects.
+  So we have the following :
+  \begin{cd}
+    {\DSCH_\AFT^\OP} & {\DGCAT_\CTS} \\
+    {\CALG(\DSCH_\AFT^\OP)} & {\CALG(\DGCAT_\CTS)}
+    \arrow["{\INDCOH^!}", from=1-1, to=1-2]
+    \arrow["{\text{use diagonal}}"', shift right=2, from=1-1, to=2-1]
+    \arrow["{\INDCOH^!}"', from=2-1, to=2-2]
+    \arrow["{\text{``forget''}}"', from=2-2, to=1-2]
+    \arrow["{\text{``forget''}}"', shift right=2, from=2-1, to=1-1]
+  \end{cd}
+  Hence we obtain a factoring of $\INDCOH^!$ through the forgetful functor 
+  $\CALG(\DGCAT_\CTS) \to \DGCAT_\CTS$.
+
+  For $X \in \DSCH_\AFT$,
+  we use $\OTIMES$ to denote the symmetric monoidal operation
+  on $\INDCOH\,X$.
+  
+\end{dfn}
+
+\begin{rmk}
+  
+  Tracing through the above functor
+  $\INDCOH^! : \DSCH_\AFT^\OP \to \CALG(\DSCH_\AFT^\OP) \to \CALG(\DGCAT_\CTS)$,
+  we see that for $X \in \DSCH_\AFT$,
+  the symmetric monoidal operation for $\INDCOH\,X$ is the following : 
+  \begin{cd}
+    {X \times X} & \rightsquigarrow & {\INDCOH\,X \otimes \INDCOH\,X} & {\INDCOH(X \times X)} \\
+    X &&& {\INDCOH\,X}
+    \arrow["\boxtimes", from=1-3, to=1-4]
+    \arrow["{\De_X^!}", from=1-4, to=2-4]
+    \arrow["\OTIMES"', from=1-3, to=2-4]
+    \arrow[from=1-1, to=2-1]
+  \end{cd}
+\end{rmk}
+
+\begin{prop}[``Serre Duality'']
+  \link{duality.serre}
+  
+  Let $X \in \DSCH_\AFT$.
+  Define \[
+    \<\_,\_\> : 
+    \INDCOH\,X \otimes \INDCOH\,X \map{\OTIMES}{} 
+    \INDCOH\,X \map{(p_X)_*}{} \VEC
+  \]
+  Then $\<\_,\_\>$ exhibits $\INDCOH\,X$ as its own dual.
+  Let $\D_\SERRE : \INDCOH\,X \simeq (\INDCOH\,X)^\vee$
+  correspond to $\<\_,\_\>$. 
+  We refer to $\D_\SERRE$ as the \emph{Serre duality functor}.
+\end{prop}
+\begin{proof}
+  
+  Let $e := \<\_ , \_\>$.
+  Following GR1 Ch5 4.2.8, 
+  we will explicitly give a morphism 
+  $c : \VEC \to \INDCOH\,X \otimes \INDCOH\,X$ in $\DGCAT_\CTS$
+  making $(c , e)$ into duality datum.
+  We want to map into $\INDCOH\,X\otimes\INDCOH\,X$.
+  The only way we can do that by definition is 
+  via $\otimes : \INDCOH\,X \times \INDCOH\,X \to \INDCOH\,X\otimes\INDCOH\,X$.
+  However, ...
+  should i just defer to reference? GR1 Ch4 6.3.4.
+  This is why GR decided to do it first.
+
+\end{proof}
+
+  
+\end{document}

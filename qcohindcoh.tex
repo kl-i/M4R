@@ -1,28 +1,15 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
 
-\begin{dfn}[Ind-coherent sheaves on laft prestacks (GR1 Ch5 3.4.1)]
-  
-  We define $\INDCOH^! : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP$
-  as the left Kan extension of 
-  $\INDCOH^! : \DAFF^{<\infty}_\FT \to (\DGCAT_\CTS)^\OP$
-  via the \linkto{dgcat.psh.up}{
-    universal property of presheaf $\infty$-categories
-  }.
-\end{dfn}
-  
-(Something about $\INDCOH^! \to \QCOH^*$)
-
 There is also a functor turning quasi-coherent sheaves into
-ind-coherent sheaves.
+ind-coherent sheaves for all laft prestacks.
+This is crucial for the proving the \linkto{crys.leftRight}{equivalence of 
+left and right crystals}.
 
 \begin{dfn}[Action of $\QCOH\,X$ on $\INDCOH\,X$]
   
   Let $X \in \DSCH_\AFT$.
-  It is shown in BZFN-3.19 that $\QCOH\,X = \IND((\QCOH\,X)^c)$,
-  where $(\QCOH\,X)^c$ is the full subcategory of compact objects,
-  which in this case coincides with $\PERF\,X$,
-  the full subcategory of perfect complexes.
+  \linkto{duality.dsch}{We have seen that} $\QCOH\,X = \IND((\QCOH\,X)^c)$.
 
   Then the tensor product $\QCOH\,X \otimes \QCOH\,X \to \QCOH\,X$ 
   which is a morphism in $\DGCAT_\CTS$
@@ -41,24 +28,23 @@ ind-coherent sheaves.
   \]
   which on objects gives $\FF \mapsto \FF \otimes \om_X$.
 
-  It is shown in GR1, Ch 6, 3.3 that $\Upsilon$ can be made into 
+  It is shown in \cite[Ch 6 , 3.3]{GR1} that $\Upsilon$ can be made into 
   a natural transformation $\QCOH^* \to \INDCOH^!$ as functors
   $\DSCH_\AFT \to (\DGCAT_\CTS)\op$.
   To extend to all laft prestacks, 
   we first restrict to $\DAFF^{<\infty}_\FT \subs \DSCH_\AFT$.
   \begin{cd}
-    {} && {\mathrm{QCoh}^*} & 
+    {\mathrm{QCoh}^*} & 
       {\mathrm{IndCoh}^!} & {\text{in}} & 
         {\mathrm{Fun}(\DAFF^{<\infty}_\FT,
         \mathrm{DGCat}_\mathrm{cts}^\OP)} \\
-    && 
     {\widetilde{\mathrm{QCoh}^*}} & 
       {\mathrm{IndCoh}^!} & {\text{in}} & 
         {\mathrm{Fun}(\mathrm{PStk}_\mathrm{laft},
         \mathrm{DGCat}_\mathrm{cts}^\OP)}
-    \arrow["{\mathrm{Lan}}"', squiggly, from=1-6, to=2-6]
-    \arrow["{\Upsilon }", from=1-3, to=1-4]
-    \arrow["\Upsilon", from=2-3, to=2-4]
+    \arrow["{\mathrm{Lan}}"', squiggly, from=1-4, to=2-4]
+    \arrow["{\Upsilon }", from=1-1, to=1-2]
+    \arrow["\Upsilon", from=2-1, to=2-2]
   \end{cd}
   For each individual $X \in \PSTK_\LAFT$,
   this means \begin{align*}
@@ -80,6 +66,52 @@ ind-coherent sheaves.
   where the top morphism has components
   $\QCOH^*(X) \to \widetilde{\QCOH^*}(X)$ induced by the inclusion
   $\DAFF^{<\infty}_\FT / X \to \DAFF / X$.
+  \cite[Ch 6 , 3.3.4]{GR1}
 \end{dfn}
+
+Consider the following situation in linear algebra :
+Suppose you have two finite dimensional vector spaces
+$V, W$ equipped $\<\_,\_\> : V \otimes V \to k$ and 
+$\<\_,\_\> : W \otimes W \to k$ inducing $V \simeq V^\vee, W \simeq W^\vee$.
+Then given any linear map $A : V \to W$,
+there is a unique $A^\vee : W \to V$ such that \[
+  \< A \_ , \star \> = \< \_ , A^\vee \star \>  
+\]
+The above phenomenon is true for any pair of self-dual objects $V, W$
+in an $\infty$-category of modules over a commutative algebra object
+$k$ in a symmetric monoidal $\infty$-category $\VEC$.
+In particular,
+we have an analogous result for $\mathbb{D}_\mathrm{naive}$ and
+$\mathbb{D}_\mathrm{Serre}$.
+
+\begin{prop}
+  \link{duality.Upsilon}
+  
+  Let $X \in \DSCH_\AFT$ and the base field $k$ be perfect.
+  Then under the self-dualities 
+  $\D_\mathrm{naive} : \QCOH\,X \simeq (\QCOH\,X)^\vee$ and
+  $\D_\SERRE : \INDCOH\,X \simeq (\INDCOH\,X)^\vee$,
+  we have \[
+    \Upsilon_X \simeq \Psi_X^\vee
+  \]
+  More concretely, we have the following equivalence of
+  functors $\INDCOH\,X \otimes \QCOH\,X \to \VEC$,
+  \[
+    \<\Psi_X \_ , \star\> \simeq \<\_ , \Upsilon_X \star \>
+  \]
+
+  \cite[Ch 9, 9.3]{INDCOH}
+\end{prop}
+\begin{proof}
+  This follows from the computation : 
+  \begin{align*}
+    \<\Psi_X \_ , \star\>
+    &\simeq \Ga(X , \Psi_X \_ \otimes \star) 
+      \simeq \Ga(X , \Psi_X(\star \otimes \_)) \\
+    &\simeq \Ga(X , \Psi_X(\star \otimes (\_ \OTIMES \om_X)))
+      \simeq \Ga(X , \Psi_X(\_ \OTIMES (\star \otimes \om_X)))
+      \simeq \< \_ , \Upsilon_X \star\>
+  \end{align*}
+\end{proof}
 
 \end{document}

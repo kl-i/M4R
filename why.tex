@@ -1,13 +1,425 @@
 \documentclass[./main.tex]{subfiles}
 
 \begin{document}
+
+\subsection{Why crystals?}
+
+The goal is to provide a setting where 
+representation theory can be interpreted in algebraic geometry.
+Here, 
+\begin{itemize}
+  \item ``representation theory'' refers to the study of Lie algebras
+  and their representations
+  \item ``algebraic geometry'' means being able to pushforward and pullback 
+  sheaves on spaces where 
+  computations ultimately come down to commutative algebra.
+\end{itemize}
+
+One key example of something from representation theory we would like to 
+interpret algebro-geometrically is Beilinson-Bernstein localisation.
+This result played a central role in solving the Kazhdan-Lusztig conjectures
+and is one of the founding results of modern representation theory.
+Roughly speaking, 
+this says that given a semi-simple Lie algebra $\f{g}$,
+there is an equivalence \[
+  L : \f{g}\MOD_0 \map{\sim}{} \DIFF_X\MOD
+\]
+where \begin{itemize}
+  \item $\f{g}\MOD_0$ is the category of left modules over 
+  the universal enveloping algebra $U(\f{g})$ of $\f{g}$ where
+  the center of $U(\f{g})$ acts trivially.
+  \item $\DIFF_X\MOD$ is the category of left $D$-modules on $X$ with
+  $X$ being the flag variety of $\f{g}$.
+\end{itemize}
+We refer the reader to \cite*{Keller} for an introduction to 
+Beilinson-Bernstein localisation.
+A more detailed treatment with relations to Kazhdan-Lusztig conjectures
+can be found in \cite[Ch 11, Ch 12]{H.T.T.}.
+
+Let us describe what the Beilinson-Bernstein localisation functor looks like
+in this new algebro-geometric framework.
+Let $k$ be a field of characteristic zero
+and $\bullet := \SPEC\,k$.
+Firstly, we would have a correspondence between
+Lie algebras over $k$ and ``formal groups'' over $k$.
+\cite[Ch 7, 3.1.4]{GR2}
+\[
+  \LIE : \GRP(\FMOD / \bullet) \simeq \LIE\ALG(\QCOH\,k) : \exp
+\]
+\begin{itemize}
+  \item $\FMOD / \bullet$ refers to \emph{formal moduli problems over $k$}
+  \cite[Ch 2]{Lurie-DAGX}\cite[Ch 5, 1.1.]{GR2} and 
+  group objects in there are what GR calls
+  \emph{formal groups over $k$}.
+  $\GRP(\FMOD / \bullet)$ denotes the category of these.
+  \item For the full correspondence, we need to pass from Lie algebras to
+  \emph{differential graded Lie algebras}.
+  So $\QCOH\,k$ refers to the derived category of chain complexes of
+  $k$-vector spaces and $\LIE(\QCOH\,k)$ refers to
+  Lie algebra objects in there.
+  \cite[2.1.5]{Lurie-DAGX}
+\end{itemize}
+Furthermore, the action of a $\f{g} \in \LIE\ALG(\QCOH\,k)$
+on a scheme $X$ via vector fields should be equivalent to
+an action of the formal group $\exp\,\f{g}$ on $X$.
+
+Secondly, given a scheme $X$ equipped with an action from a formal group $G$,
+we should be able to \emph{form the quotient $X$ by $G$},
+which should be a morphism $X \to B_XG$.
+In general, we should be able to \emph{quotient by formal groupoids $\GG$},
+giving under object $X \to B_X \GG$ under $X$ such that
+$\GG$ is recovered as $X \times_{B_X \GG} X$.
+\cite[Ch 5 , 2.3.2]{GR2}
+\[
+  B_X : \FGRPD(X) \simeq \FMOD_{X /} : \text{ fiber product }
+\]
+\begin{itemize}
+  \item $\FGRPD(X)$ refers to the category of formal groupoids over $X$.
+  This includes $G \times X$ coming from the action of
+  a formal group $G$ on $X$. \cite[Ch 5, 2.2.1]{GR2}
+  \item $\FMOD_{X /}$ denotes the category of 
+  \emph{formal moduli problems under $X$}. \cite[Ch 5, 1.3]{GR2}
+\end{itemize}
+As a corollary in the situation of $X = \bullet$,
+we obtain an equivalence : 
+\[
+  B : \GRP(\FMOD / \bullet) \simeq \PT(\FMOD / \bullet) : \Om
+\]
+where $B$ takes a formal group $G$ to its \emph{classifying space $BG$}
+and $\Om$ takes $s : \bullet \to Y$ to $\bullet \times_Y \bullet$.
+Furthermore,
+in the special case of $G = \exp\,\f{g} \in \GRP(\FMOD / \bullet)$
+the formal group corresponding to a $\f{g} \in \LIE\ALG(\QCOH\,k)$,
+we should have an equivalence : 
+\begin{cd}
+  {\QCOH(BG)} && {\mathfrak{g}\MOD(\QCOH\,k)} \\
+	& {\QCOH\,k}
+	\arrow["\sim", from=1-1, to=1-3]
+	\arrow["{s^!}", shift left=3, from=1-1, to=2-2, shorten <=9pt]
+	\arrow["{s_*}", shift left=2, from=2-2, to=1-1]
+	\arrow["\top"{marking}, draw=none, from=2-2, to=1-1]
+	\arrow["{\text{ind}}"{pos=0.3}, shift left=2, shorten >=10pt, from=2-2, to=1-3]
+	\arrow["{\text{forget}}", shift left=2, shorten >=3pt, from=1-3, to=2-2]
+	\arrow["\bot"{marking}, draw=none, from=2-2, to=1-3]
+\end{cd}
+which realises pullback $s^!$ along $s$ as the forgetful functor
+$\f{g}\MOD \to \QCOH\,k$ and pushforward $s_*$ inducing representations
+(from the trivial Lie algebra).
+
+Thirdly, within the category of formal moduli problem under a scheme $X$,
+there is a space called the \emph{de Rham space} $p_\DR : X \to X_\DR$.
+The formal groupoid $X \times_{X_\DR} X$ over $X$ corresponding to
+the de Rham space is called the \emph{infinitesimal groupoid}.
+Intuitively, $p_\DR$ is the quotient of $X$ by all points that are 
+``infinitesimally close'',
+and thus sheaves on $X_\DR$ are supposed to be sheaves on $X$ equipped with
+``infinitesimal equivariance''.
+This idea leads to an equivalence under the case of smooth $X$ : 
+\begin{cd}
+  {\QCOH(X_\DR)} && {\DIFF_X\MOD} \\
+	& {\QCOH\,X}
+	\arrow["\sim", from=1-1, to=1-3]
+	\arrow["{p_\DR^!}", shift left=3, from=1-1, to=2-2, shorten <=9pt]
+	\arrow["{(p_\DR)_*}", shift left=2, from=2-2, to=1-1]
+	\arrow["\top"{marking}, draw=none, from=2-2, to=1-1]
+	\arrow["{\mathrm{ind}}"{pos=0.3}, shift left=2, shorten >=9pt, from=2-2, to=1-3]
+	\arrow["{\text{oblv}}", shift left=2, shorten >=3pt, from=1-3, to=2-2]
+	\arrow["\bot"{marking}, draw=none, from=2-2, to=1-3]
+\end{cd}
+which realises sheaves on $X_\DR$ as D-modules on $X$,
+induction $\mathrm{ind}$ of D-modules as pushforward $(p_\DR)_*$ and
+the forgetful functor $\mathrm{oblv}$ of D-modules as pullback $p_\DR^!$.
+The category of sheaves on $X_\DR$ is called the category of 
+\emph{(left) crystals on $X$}.
+
+To put everything together, let $\f{g} \in \LIE\ALG(\QCOH\,k)$
+and $X$ a scheme be equipped with an action from the formal group
+$\exp\f{g}$ corresponding to $\f{g}$.
+Then we obtain a \emph{correspondence of spaces} :
+\begin{cd}
+  {\exp\mathfrak{g}} & {(\exp\mathfrak{g}) \times X} & \rightsquigarrow & {B(\exp\mathfrak{g})} & {B_X(\exp\mathfrak{g})} \\
+	\bullet & X & {X \times_{X_\DR} X} & {} & {X_\DR} \\
+	&&&& {}
+	\arrow[from=2-2, to=2-1]
+	\arrow[from=1-1, to=2-1]
+	\arrow[from=1-2, to=1-1]
+	\arrow["{\text{action}}"', from=1-2, to=2-2]
+	\arrow["p", from=1-5, to=2-5]
+	\arrow["q"', from=1-5, to=1-4]
+	\arrow[from=2-3, to=2-2]
+	\arrow[from=1-2, to=2-3]
+\end{cd}
+Intuitively, $q$ comes from factoring 
+$X \to \bullet \to B(\exp\f{g})$ through $X \to B_X(\exp\f{g})$
+and $p$ comes from the morphism of formal groupoids
+$(\exp\f{g}) \times X \to X \times_{X_\DR} X$ over $X$.
+Finally, in the case of $\f{g}$ being a Lie algebra concentrated in degree zero
+that is semi-simple,
+and $X$ its flag variety,
+we recover the Beilinson-Bernstein localisation functor as
+pullback then pushforward across the above correspondence.
+\[
+  L \simeq p_* q^! : \f{g}\MOD \simeq \QCOH(B\exp\f{g}) \to 
+  \QCOH(X_\DR) \simeq \DIFF_X\MOD
+\]
+
+The end goal of this paper is to understand just one part of this story : 
+the equivalence between (left) crystals and (left) D-modules on
+a smooth scheme $X$.
+
+\subsection{Why stable infinity categories?}
+
+Let us be clear that all of the categories of sheaves and categories
+of modules mentioned in the previous section are 
+\emph{stable infinity categories}.
+
+We know from classical algebraic geometry that
+when considering derived categories of sheaves,
+we want to consider them as at least triangulated categories.
+However, triangulated categories suffer some drawbacks : 
+\begin{enumerate}
+  \item cones are not functorial
+  \item limits of triangulated categories are hard to deal with
+\end{enumerate}
+By passing to stable infinity categories, the situation is improved : 
+\begin{itemize}
+  \item Cones are colimits and thus can be made functorial,
+  and easier to work with abstractly.
+  \item Stable infinity categories are closed under limits.
+  This is what will allow us to define sheaves on arbitrary prestacks
+  rather simply and be able to argue with them abstractly.
+  \item Analogous to the 
+  theory of compactly generated triangulated categories and 
+  colimit-preserving functors,
+  there is a theory of compactly generated stable infinity categories
+  and colimit-preserving functors which makes computations possible.
+  This is used, for example, 
+  in giving a working theory of \linkto{fm.qcoh.daff}{integral transforms}
+  \item due to the existence of a \linkto{dgcat.dgcat.tensor}{tensor product},
+  duality statements can be phrased nicely in terms of
+  derived categories of sheaves being \emph{self-dual}.
+  Examples include 
+  \linkto{duality.naive}{self duality of $\QCOH\,X$} for quasi-compact schemes
+  $X$ with affine diagonal and \linkto{duality.serre}{Serre duality}.
+\end{itemize}
+
+\subsection{Why derived algebraic geometry?}
+
+There is another direction in which infinity categories are getting involved :
+we require the use of \emph{derived algebraic geometry},
+meaning that the basic building blocks of schemes are not
+commutative rings but \emph{commutative differential graded algebras}.
+
+A simple reason is that base change theorems break 
+without flatness assumptions.
+Consider the following example.
+Let $A := k[t]/(t)^2$ where $k$ is a field and let
+$\SPEC\,k \to \SPEC\,A$ be the closed embedding of $t = 0$.
+Then the \emph{classical} fiber product gives the following.
+\begin{cd}
+  {\SPEC\,k} & {\SPEC\,k} & \rightsquigarrow & {\QCOH\,k} & {\QCOH\,k} \\
+  {\SPEC\,k} & {\SPEC\,A} && {\QCOH\,k} & {\QCOH\,A}
+  \arrow["i"', from=2-1, to=2-2]
+  \arrow["{\id{}}"', from=1-1, to=2-1]
+  \arrow["{\id{}}", from=1-1, to=1-2]
+  \arrow["i", from=1-2, to=2-2]
+  \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \arrow["{\id{}}"', from=1-4, to=2-4]
+  \arrow["{\id{}}"', from=1-5, to=1-4]
+  \arrow["{Li^*}", from=2-5, to=2-4]
+  \arrow["{R i_*}", from=1-5, to=2-5]
+  \arrow["\not\simeq"{description}, Rightarrow, from=1-4, to=2-5]
+\end{cd}
+Indeed the diagram on the right hand side does not commute up to isomorphism
+since we have : 
+\begin{cd}
+  &&& \vdots & \vdots \\
+  &&& {A \otimes_A k} & k \\
+  {Li^*(Ri_* \,k)} & {Li^*(k)} & {k \otimes^L_A k} & {A \otimes_A k} & k & k
+  \arrow["\simeq"{description}, draw=none, from=3-1, to=3-2]
+  \arrow["\simeq"{description}, draw=none, from=3-2, to=3-3]
+  \arrow["{t \otimes 1}"', from=2-4, to=3-4]
+  \arrow["{t \otimes 1}"', from=1-4, to=2-4]
+  \arrow["\simeq"{description}, draw=none, from=3-3, to=3-4]
+  \arrow["0"', from=1-5, to=2-5]
+  \arrow["0"', from=2-5, to=3-5]
+  \arrow["\simeq"{description}, draw=none, from=3-4, to=3-5]
+  \arrow["\not\simeq"{description}, draw=none, from=3-5, to=3-6]
+\end{cd}
+Going derived fixes this because we have the isomorphism 
+\[
+  \_ \otimes^L_A k \simeq \_ \otimes^L_k (k \otimes^L_A k)		
+\]
+
+Another reason is that the theory of formal moduli problems
+mentioned in the first section also involves derived affine schemes,
+rather than just affine schemes.
+However, we will not get this in this paper.
+
+\subsection{Why ind-coherent sheaves?}\label{why.indcoh}
+
+Let us also be clear that it will not be enough to consider
+quasi-coherent sheaves alone.
+There are a few reasons for this : 
+\begin{itemize}
+  \item In the first section,
+  we saw that many of adjunctions of representation theory
+  under the interpreted using sheaves requires the pullback of sheaves to be
+  the \emph{right adjoint} to pushforward,
+  rather than the left adjoint as it usual is for quasi-coherent sheaves
+  on schemes.
+
+  \item As mentioned, 
+  for computations with derived categories of sheaves
+  as stable infinity categories, 
+  it is desirable to stay in the world of
+  compactly generated stable infinity categories and colimit-preserving functors.
+
+\end{itemize}
+The example of the closed embedding 
+$i : \SPEC\,k \to \SPEC\,A = \SPEC\,k[t]/(t)^2$
+again demonstrates both of the above points.
+Let us explain.
+
+We will show later that
+\linkto{duality.daff}{$\QCOH\,k$ and $\QCOH\,A$ are both compactly generated},
+meaning \linkto{dgcat.cg.out}
+{they are the ind-completions of their full subcategory of 
+compact objects}.
+Now let us impose the above two points on
+the derived pushforward $i_* : \QCOH\,k \to \QCOH\,A$,
+i.e. let's assume that $i_*$ has a right adjoint $i^!$ that 
+preserves small colimits.
+Then \[
+  \brkt{\QCOH\,A}(i_* V , M) \simeq \brkt{\QCOH\,k}(V , i^! M)
+\]
+for any $V \in \QCOH\,k , M \in \QCOH\,A$.
+It follows that $i_*$ preserves compact objects
+if and only if $i^!$ preserves small coproducts.
+By the assumption,
+we thus obtain that $i_* k$ must be compact as an object in $\QCOH\,A$.
+However, it is a classical result that
+for $A$ Noetherian, a module $M$ over $A$ is compact in $\QCOH\,A$
+if and only if it is finitely generated and admits a
+finite projective resolution.
+This in particular implies that $\TOR_A^n(i_*k , i_*k) = 0$ for large enough
+$n$.
+But this is a contradiction since for all $n \geq 0$, \[
+  \TOR_A^n(i_*k , i_*k) \simeq H^n(k \lotimes_A k) \simeq k \not\simeq 0
+\]
+
+The issue above can be seen as the failure of
+$i_*$ to preserve compact objects.
+The idea behind \emph{ind-coherent sheaves} is this : 
+since $i$ is proper, $i_*$ sends $\COH\,k$ to $\COH\,A$ where
+$\COH\,\_$ denotes the full subcategory $\QCOH\,\_$ of $\FF$
+with finitely many non-zero cohomologies, all of which are coherent sheaves.
+So we replace \begin{cd}
+	{\QCOH\,k \simeq \IND\,\PERF\,k} & \rightsquigarrow & {\INDCOH\,k } & {\IND(\COH\,k)} \\
+	{\QCOH\,A \simeq \IND\,\PERF\,A} && {\INDCOH\,A } & {\IND(\COH\,A)}
+	\arrow["{i_*}"', from=1-1, to=2-1]
+	\arrow["{:=}"{description}, draw=none, from=1-3, to=1-4]
+	\arrow["{:=}"{description}, draw=none, from=2-3, to=2-4]
+	\arrow["{i_*}"', from=1-3, to=2-3]
+\end{cd}
+where $\IND$ denotes \emph{ind-completion} and $i_*$ comes from the 
+\linkto{dgcat.ind.up}{universal property of ind-completions}
+and by definition preserves small colimits,
+and hence has a right adjoint $i^!$
+by \linkto{dgcat.adjoint}{adjoint functor theorem}.
+(We will cover this later.)
+Furthermore, this right adjoint also preserves small coproducts
+because it can be shown that the full subcategory of 
+compact objects of $\INDCOH\,k, \INDCOH\,A$ are $\COH\,k, \COH\,A$,
+which are preserved by $i_*$ by construction.
+
+Thus, a large part of the theory of crystals is
+in developing the theory of ind-coherent sheaves together with 
+pushforward, pullback, tensor, proper base change, etc for a 
+large enough class of spaces including de Rham spaces, 
+formal groups, quotients by formal groupoids.
+Crystals on a scheme $X$ are then defined as 
+\[
+  \CRYS\,X := \INDCOH\,X_\DR
+\]
+
+\subsection{How crystals compare with usual D-modules?}
+
+The classical theory of D-modules has its advantage in how explicit it is
+and hence how indispensible it is for calculations in examples.
+However, it is known that for singular varieties $Z$, 
+even in the affine case the ring of differential operators can be
+rather complicated.
+\cite{BGG} gives an example where Noetherianness of 
+the ring of differential operators fails.
+One approach is via Kashiwara's theorem : 
+find a closed embedding $Z \to X$ where $X$ is smooth
+then define $D$-modules on $Z$ to be $D$-modules on $X$ which are
+supported on $Z$.
+One then has to do work to show that this is independent of
+the closed embedding $Z \to X$.
+One advantage of crystals is that 
+they are intrinsic to the space, and 
+Kashiwara's theorem can be deduced \cite[Ch 2, 2.5.6]{Crys}
+rather than taken as a definition.
+
+The main advantage of crystals over D-modules is 
+in the perspective it brings : 
+one can now think of D-modules as quasi-coherent / ind-coherent sheaves,
+and hence operations to do with D-modules as usual operations
+to do with quasi-coherent / ind-coherent sheaves.
+This includes interpretation as Verdier duality for D-modules as 
+self-duality of $\CRYS\,X := \INDCOH\,X_\DR$,
+which places it on the same footing as \linkto{duality.serre}{Serre duality}.
+Of course, it is also made with higher stacks in mind,
+which makes it indispensible for the Geometric Langlands programme.
+
+\subsection{Guide to Reading}
+
+The structure of the paper is as follows : 
+\begin{itemize}
+  \item In section \ref{setting}
+  we first explain how to work with ``dg categories'' in the sense of
+  Gaitsgory--Rozenblyum, gathering all results needed to
+  do reduces computations to the level of triangulated categories.
+  Then we describe the types of spaces $\INDCOH$ will be made from,
+  namely, \linkto{dsch.laft.char}{prestacks of locally almost finite type}.
+  \item In section \ref{indcoh},
+  we describe how ind-coherent sheaves work for derived schemes.
+  We first take a look at the definition, 
+  pushforward, pullback for open immersions,
+  pullback for proper morphisms, and proper base change.
+  Then we describe the theory of integral transforms
+  for both quasi-coherent and ind-coherent sheaves,
+  which is central to Gaitsgory--Rozenblyum's proof of
+  the equivalence of (left) crystals and left D-modules
+  for smooth classical schemes.
+  On the way, we describe self-dualities of $\QCOH\,X$ and $\INDCOH\,X$
+  on derived schemes of almost finite type
+  and how they relate to the classical procedure of 
+  taking duals of perfect complexes and Serre-duals of coherent sheaves.
+  Finally, we describe a comparison $\Upsilon$ from
+  $\QCOH$ to $\INDCOH$ which exist not only for derived schemes of
+  almost finite type but all prestacks of locally almost finite type.
+  \item In section \ref{crys},
+  we first introduce de Rham spaces, left and right crystals.
+  Then induction of crystals is obtained from
+  Lurie's very general theory of descent and 
+  the fact that $\INDCOH$ satisfies base change for
+  \emph{ind-proper morphisms}.
+  Finally, we prove the equivalence of left crystals and left D-modules.
+\end{itemize}
+
+\begin{rmk}
   
-To give a setting where representation theory can be
-interpreted algebro-geometrically.
-More concretely : 
-everything should be seen as pushing or pulling
-quasi-coherent sheaves across spaces.
-A key example of something we would like
-to reinterpret is the Beilinson-Bernstein localisation functor.
+  The proofs of all of the results in this paper
+  are well-known to the experts.
+  However, I have tried to make proofs more explicit
+  wherever possible by adding more details, 
+  or slightly altering the argument so that things are 
+  hopefully more digestable.
+  I always indicate when I do this.
+
+\end{rmk}
 
 \end{document}

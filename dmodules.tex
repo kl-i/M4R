@@ -1,9 +1,9 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
   
-\begin{prop}
+\begin{prop}[Main Result]
   
-  Let $X$ be a smooth classical scheme of
+  Let $X$ be a smooth proper classical scheme of
   locally almost finite type.
   Then there is an equivalence $\CRYS^L(X) \simeq \DIFF_X\MOD$
   such that the following commutes up to natural isomorphism : 
@@ -16,16 +16,49 @@
     \arrow["\sim", from=1-1, to=1-2]
   \end{cd}
   The right vertical morphism is the forgetful functor.
+  \cite[Section 5.5.5]{Crys}
 \end{prop}
 \begin{proof}
-  
-  Outline : 
   \begin{enumerate}
-    \item $\CRYS^L \rightleftarrows \QCOH\,X$ and 
+    \item $\CRYS^L\,X \rightleftarrows \QCOH\,X$ and 
     $\DIFF_X\MOD \rightleftarrows \QCOH\,X$ are both monadic.
-    So they are determined by their monads.
+    
+    $\DIFF_X\MOD$ is by definition the $\infty$-category of
+    modules in $\QCOH\,X$ over the monad corresponding to 
+    $\DIFF_X \in \QCOH(X\times X)$,
+    so $\DIFF_X\MOD \rightleftarrows \QCOH\,X$ is monadic.
+    
+    For $\CRYS^L\,X$, by \cite[Prop 4.7.0.3]{Lurie-HA}, 
+    it suffices to show that 
+    \begin{itemize}
+      \item $\OBLV^L$ is conservative
+      \item $\CRYS^L\,X$ has geometric realisations and $\OBLV^L$ preserves them.
+    \end{itemize}
+    The second point is taken care of by 
+    the fact that $\QCOH^* : \PSTK \to (\DGCAT_\CTS)^\OP$.
+    For the first point,
+    since $X$ is a laft smooth classical scheme,
+    \linkto{crys.sm_implies_cfsm}{it is classically formally smooth}.
+    This \linkto{crys.cfsm}{implies} the equivalence 
+    between left crystals and infinitesimally equivariant quasi-coherent sheaves,
+    as well as the equivalence between right crsytals and 
+    infinitesimally equivariant ind-coherent sheaves :
+    \begin{cd}
+      {\mathrm{Crys}^L\,X} & {\varprojlim \mathrm{QCoh}(\check{C}(X/X_\mathrm{dR}))} \\
+      {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))}
+      \arrow["\sim", from=1-1, to=1-2]
+      \arrow["\sim", from=2-1, to=2-2]
+    \end{cd}
+    Under the \linkto{crys.leftRight}{equivalence of left and right crystals}
+    and the equivalence $\Upsilon_X : \QCOH\,X \simeq \INDCOH\,X$ due to
+    smoothness of $X$,
+    we obtain $\OBLV^L \simeq \Upsilon_X^{-1} \OBLV^R \Upsilon_{X_\DR}$.
+    Since $\OBLV^R$ is conservative, we obtain the same for $\OBLV^L$.
 
-    \item Under the integral transform equivalence
+    So the two $\infty$-categories $\CRYS^L\,X$ and 
+    $\DIFF_X\MOD$ are determined by their monads.
+
+    \item Under the \linkto{fm.qcoh}{integral transform equivalence}
     $\QCOH (X\times X) \simeq \DGCAT_\CTS(\QCOH\,X , \QCOH\,X)$,
     algebra objects on the left correspond to 
     algebra objects on the right, i.e. monads.
@@ -37,89 +70,82 @@
 
     \item
     Let $\s{D}^L_X \in \QCOH(X\times X)$ correspond to $\OBLV^L\,\INDUCE^L$.
-    GR Crystals 5.3.6 shows $\s{D}^L_X$ lies $\QCOH(X\times X)^\heartsuit$.
+    \cite[Prop 5.3.6]{Crys} shows 
+    \[ 
+      \s{D}^L_X \simeq (\om_X \boxtimes \O_X) \otimes 
+      \mathrm{Fiber}(\O_{X\times X} \to j_* j^* \O_{X\times X})
+    \]
+    lies $\QCOH(X\times X)^\heartsuit$,
+    with $j : X \times X \minus \De_X \to X \times X$.
 
     \item
-    GR Crystals 5.4.1 claims
+    In \cite[Section 5.4.1]{Crys}, we have
     for any $\FF, \GG \in (\QCOH\,X)^\heartsuit$ and 
     $\QQ \in \QCOH(X \times X)^\heartsuit$ 
     with set-theoretically supported on the diagonal,
+    % \begin{align*}
+    %   (p_2)_* (p_1^! \FF \otimes \QQ) \to \GG \,\,\,\,\,\,
+    %   \leftrightsquigarrow\,\,\,\,\,\,\,\, & p_1^! \FF \otimes \QQ \to p_2^! \GG \\
+    %   \leftrightsquigarrow\,\,\,\,\,\,\,\, & \QQ \to \underline{\HOM}(p_1^! \FF , p_2^!\GG) \\
+    %   \leftrightsquigarrow\,\,\,\,\,\,\,\, & \QQ \to \DIFF_X(\FF , \GG)
+    % \end{align*}
     \begin{align*}
-      (p_2)_* (p_1^! \FF \otimes \QQ) \to \GG \,\,\,\,\,\,
-      \leftrightsquigarrow\,\,\,\,\,\,\,\, & p_1^! \FF \otimes \QQ \to p_2^! \GG \\
-      \leftrightsquigarrow\,\,\,\,\,\,\,\, & \QQ \to \underline{\HOM}(p_1^! \FF , p_2^!\GG) \\
-      \leftrightsquigarrow\,\,\,\,\,\,\,\, & \QQ \to \DIFF_X(\FF , \GG)
+      (p_2)_* (p_1^* \FF \otimes \QQ) \to \GG \,\,\,\,\,\,
+      \leftrightsquigarrow \,\,\,\,\,\, \QQ \to \DIFF_X(\FF , \GG)
     \end{align*}
     Applying to $\FF = \GG = \OO_X, \QQ = \s{D}^L_X$,
     we obtain a morphism $\s{D}^L_X \to \DIFF_X$.
     This is a morphism of algebra objects on $\QCOH(X\times X)$.
 
-    \item GR Crystals 5.4.3 claims $\s{D}^L_X \map{\sim}{} \DIFF_X$ 
-    is a classical computation.
+    \item 
+    As in \cite[Section 5.4.3]{Crys}, 
+    $\s{D}^L_X \map{\sim}{} \DIFF_X$ 
+    is a classical computation by using the fact that
+    when $X$ is smooth proper Noetherian classical over $k$,
+    $\om_X$ has an explicit description as shifted top forms.
+    \cite[Lem 48.15.7]{stacks}
 
   \end{enumerate}
 
-  (1) $\DIFF_X\MOD$ is by definition the $\infty$-category of
-  modules in $\QCOH\,X$ over the monad corresponding to 
-  $\DIFF_X \in \QCOH(X\times X)$,
-  so $\DIFF_X\MOD \rightleftarrows \QCOH\,X$ is monadic.
-  
-  For $\CRYS^L\,X$,
-  by Lurie HA 4.7.0.3, 
-  it suffices to show that 
-  \begin{itemize}
-    \item $\OBLV^L$ is conservative
-    \item $\CRYS^L\,X$ has geometric realisations and $\OBLV^L$ preserves them.
-  \end{itemize}
-  % Recall we have the following commuting diagram : 
-  % \begin{cd}
-  %   {\mathrm{Crys}^L\,X} & {\mathrm{Crys}^R \, X} \\
-  %   {\mathrm{QCoh}\,X} & {\mathrm{IndCoh}\,X}
-  %   \arrow["{\Upsilon_X}", from=2-2, to=2-1]
-  %   \arrow["{\mathrm{oblv}^L}"', from=1-1, to=2-1]
-  %   \arrow["{\mathrm{oblv}^R}", from=1-2, to=2-2]
-  %   \arrow["{\Upsilon_{X_\mathrm{dR}}}"', from=1-2, to=1-1]
-  % \end{cd}
-  % where the bottom morphism is an equivalence since
-  % $X$ is smooth and classical,
-  % the top morphism is the equivalence between left and right crystals.
-  % So it suffices to show that $\CRYS^R\,X$ and $\OBLV^R$ has 
-  % the deserved properties.
+  % (1) 
+  % % Recall we have the following commuting diagram : 
+  % % \begin{cd}
+  % %   {\mathrm{Crys}^L\,X} & {\mathrm{Crys}^R \, X} \\
+  % %   {\mathrm{QCoh}\,X} & {\mathrm{IndCoh}\,X}
+  % %   \arrow["{\Upsilon_X}", from=2-2, to=2-1]
+  % %   \arrow["{\mathrm{oblv}^L}"', from=1-1, to=2-1]
+  % %   \arrow["{\mathrm{oblv}^R}", from=1-2, to=2-2]
+  % %   \arrow["{\Upsilon_{X_\mathrm{dR}}}"', from=1-2, to=1-1]
+  % % \end{cd}
+  % % where the bottom morphism is an equivalence since
+  % % $X$ is smooth and classical,
+  % % the top morphism is the equivalence between left and right crystals.
+  % % So it suffices to show that $\CRYS^R\,X$ and $\OBLV^R$ has 
+  % % the deserved properties.
 
-  % By definition, $\INDCOH^! : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP$ so 
-  % $\CRYS^R\,X$ has all small colimits and $\OBLV^R$ preserves them.
-  % This applies in particular to geometric realisations.
-  % Now for conservativity of $\OBLV^R$.
-  % Since $X$ is a smooth classical scheme of locally almost finite type,
-  % it is classically formally smooth and hence
-  % we have the equivalence 
-  % \begin{cd}
-  %   {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))}
-  %   \arrow["\sim", from=1-1, to=1-2]
-  % \end{cd}
+  % % By definition, $\INDCOH^! : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP$ so 
+  % % $\CRYS^R\,X$ has all small colimits and $\OBLV^R$ preserves them.
+  % % This applies in particular to geometric realisations.
+  % % Now for conservativity of $\OBLV^R$.
+  % % Since $X$ is a smooth classical scheme of locally almost finite type,
+  % % it is classically formally smooth and hence
+  % % we have the equivalence 
+  % % \begin{cd}
+  % %   {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))}
+  % %   \arrow["\sim", from=1-1, to=1-2]
+  % % \end{cd}
 
-  Since $X$ is a laft smooth classical scheme,
-  \linkto{crys.sm_implies_cfsm}{it is classically formally smooth}.
-  This \linkto{crys.cfsm}{implies} the equivalence 
-  between left crystals and infinitesimally equivariant quasi-coherent sheaves :
-  $\CRYS^L\,X \map{\sim}{} \LIM \QCOH(\check{C}(X / X_\DR))$.
-  Now take $\FF \in \CRYS^L\,X$ and assume $\OBLV^L\,\FF \simeq 0$.
-  The ``forgetful functor'' $\OBLV^L$ is the morphism from
-  $\CRYS^L\,X$ to the zero-th part of the Cech nerve.
-  So $\OBLV^L\,\FF \simeq 0$ implies $\FF$ is zero in 
-  $\LIM \QCOH(\check{C}(X / X_\DR))$ and hence in $\CRYS^L\,X$ as desired. 
+  % (2) 
 
-  (2) 
+  % GR2 Ch2 1.6.11 - definition of ind-proper morphism.
 
-  GR2 Ch2 1.6.11 - definition of ind-proper morphism.
+  % (3)
 
-  (3)
+  % (4)
 
-  (4)
+  % (5)
 
-  (5)
-
-  (6)
+  % (6)
 
 \end{proof}
 

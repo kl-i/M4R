@@ -19,9 +19,17 @@
 
 % Bibliography
 \usepackage{url}
-\usepackage{biblatex}
+\usepackage[backend=biber,
+            isbn=false,
+            doi=false,
+            giveninits=true,
+            style=alphabetic,
+            useprefix=true,
+            maxcitenames=4,
+            maxbibnames=4,
+            sorting=nyt,
+            citestyle=alphabetic]{biblatex}
 
-\addbibresource{mybib.bib}
 
 % Shortcuts
 
@@ -42,6 +50,7 @@
 \newcommand{\PSH}{\mathrm{PSh}}
 \newcommand{\FT}{\mathrm{ft}}
 \newcommand{\AFT}{\mathrm{aft}}
+\newcommand{\LFT}{\mathrm{lft}}
 \newcommand{\LAFT}{\mathrm{laft}}
 \newcommand{\RED}{\mathrm{red}}
 \newcommand{\AFF}{\mathrm{Aff}}
@@ -67,6 +76,19 @@
 \newcommand{\OBLV}{\mathrm{oblv}}
 \newcommand{\HOM}{\mathrm{Hom}}
 \newcommand{\RES}{\mathrm{res}}
+\newcommand{\SERRE}{\mathrm{Serre}}
+\newcommand{\OTIMES}{\overset{!}{\otimes}}
+\newcommand{\CALG}{\mathrm{cAlg}}
+\newcommand{\ALG}{\mathrm{Alg}}
+\newcommand{\PROPER}{\mathrm{proper}}
+\newcommand{\GRP}{\mathrm{Grp}}
+\newcommand{\FMOD}{\mathrm{FormMod}}
+\newcommand{\LIE}{\mathrm{Lie}}
+\newcommand{\PT}{\mathrm{Pt}}
+\newcommand{\FGRPD}{\mathrm{FormGrpd}}
+\newcommand{\TOR}{\mathrm{Tor}}
+\newcommand{\lotimes}{\overset{L}{\otimes}}
+\newcommand{\FACTOR}{\mathrm{Factor}}
 
 % % Misc
 \newcommand{\brkt}[1]{\left(#1\right)}
@@ -120,6 +142,7 @@
 % % Mathbb
 \newcommand{\A}{\mathbb{A}}
 \newcommand{\C}{\mathbb{C}}
+\newcommand{\D}{\mathbb{D}}
 \newcommand{\F}{\mathbb{F}}
 \newcommand{\G}{\mathbb{G}}
 \newcommand{\M}{\mathbb{M}}
@@ -169,6 +192,7 @@
 \DeclareMathOperator{\AUT}{Aut}
 \newcommand{\id}[1]{\mathbbm{1}_{#1}}
 \newcommand{\map}[2]{\yrightarrow[#2][2.5pt]{#1}[-1pt]}
+\newcommand{\mapfrom}[2]{\yleftarrow[#2][2.5pt]{#1}[-1pt]}
 \newcommand{\iso}[1][]{\cong_{#1}}
 \newcommand{\op}{^{op}}
 \newcommand{\darrow}{\downarrow}
@@ -237,6 +261,17 @@
   % there's text below
   {
     \xrightarrow[ \protect{ \yaHelper[ #2 ]{ #1 } } ]
+    { \protect{ \yaHelper[ #4 ]{ #3 } } } 
+  } 
+}
+
+\newcommandx{\yleftarrow}[4][1=\empty, 2=\empty, 4=\empty, usedefault=@]{
+  \ifthenelse{\equal{#2}{\empty}}
+  % there's no text below
+  { \xleftarrow{ \protect{ \yaHelper[ #4 ]{ #3 } } } } 
+  % there's text below
+  {
+    \xleftarrow[ \protect{ \yaHelper[ #2 ]{ #1 } } ]
     { \protect{ \yaHelper[ #4 ]{ #3 } } } 
   } 
 }
@@ -396,7 +431,7 @@
 \newenvironment{cd}{
     \begin{figure}[H]
     \centering
-    \begin{tikzcd}
+    \begin{tikzcd}[sep = large]
 }{
     \end{tikzcd}
     \end{figure}

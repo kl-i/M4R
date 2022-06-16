@@ -1,0 +1,441 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+We are now ready for compactly generated $\infty$-categories.
+We will only make use of the case of 
+\emph{stable} compactly generated $\infty$-categories
+since many definitions then admit alternative characterisations
+which can be checked at the level of triangulated categories.
+
+We first note that the theory of colimits
+simplifies in the stable case.
+\begin{prop}
+  \link{dgcat.stable.colimits}
+  
+  \begin{itemize}
+    \item For a stable $\infty$-category $C$, TFAE: 
+    \begin{itemize}
+      \item admitting small colimits
+      \item admitting small filtered colimits
+      \item admitting small coproducts
+    \end{itemize}
+    \item For a functor $F : C \to D$ between stable $\infty$-categories
+    which admit small colimits, TFAE: 
+    \begin{itemize}
+      \item preserving small colimits
+      \item preserving small filtered colimits
+      \item preserving small coproducts
+    \end{itemize}
+    Any functor satisfying the above, GR calls \emph{continuous}.
+  \end{itemize}
+  \cite[Prop 1.4.4.1]{Lurie-HA}
+\end{prop}
+
+We now explain compact generation.
+The starting point is the theory of \emph{inductive completions}\footnote{
+  This is a bit of a misnomer because 
+  intuitively we are adding filtered \emph{colimits}, not limits.
+}.
+Here are the main results concerning ind-completions in the stable case.
+\begin{prop}[Ind-completions of Stable $\infty$-Categories]
+  \link{dgcat.ind.up}
+
+  Let $C$ be a small $\infty$-category and $\ka$ a regular cardinal.\footnote{
+    A regular cardinal $\ka$ is a cardinality that is 
+    ``sufficiently large'' in the sense that
+    the 1-category $\SET_{<\ka}$ of sets with cardinality strictly less than
+    $\ka$ has all colimits of size strictly less than $\ka$.
+    The cardinality of $\N$ is an example, 
+    since a finite colimit of finite sets is still finite.
+  }
+  Then the Yoneda embedding $C \to \PSH\,C$ factors through a full subcategory
+  $\IND_\ka(C)$ with the following properties : 
+  \begin{itemize}
+    \item \cite[Prop 5.3.5.3]{Lurie-HTT} 
+    $\IND_\ka(C)$ has all small $\ka$-filtered colimits
+    and the inclusion $\IND_\ka(C) \subs \PSH\, C$ preserves them
+    \item \cite[Prop 5.3.5.4]{Lurie-HTT}
+    An object $X$ in $\PSH\,C$ is in $\IND_\ka(C)$ iff
+    it is a $\ka$-filtered colimit of representables iff
+    $X : C\op \to \SPC$ preserves $\ka$-small limits.
+    \item \cite[Prop 1.1.3.6]{Lurie-HA} 
+    If $C$ is stable then so is $\IND_\ka(C)$.
+    \item \cite[Prop 5.3.5.10]{Lurie-HTT} For any $\infty$-category $D$ 
+    admitting small $\ka$-filtered colimits,
+    we have the following equivalence of functor $\infty$-categories : 
+    \[
+      \FUN_\ka(\IND_\ka(C) , D) \map{\sim}{} \FUN(C , D)
+    \]
+    where \begin{itemize}
+      \item the left category denotes the full subcategory of 
+      $\FUN(\IND_\ka(C),D)$ consisting of functors preserving 
+      $\ka$-filtered colimits.\footnote{
+        At \cite[Prop 5.3.4.5]{Lurie-HTT}, 
+        these are called $\ka$-continuous functors.
+        Taking the minimal case of $\ka = \abs{\N}$,
+        it seems only reasonable to refer to 
+        functors preserving filtered colimits as
+        \emph{continuous} functors.
+        This is a potential explanation of GR's choice of terminology
+        for continuous functors.
+      }
+      \item the forward functor is given by restricting along the Yoneda embedding 
+      $C \to \IND_\ka(C)$
+      \item the inverse functor is given by left Kan extension.
+    \end{itemize} 
+    Assuming $C, D$ are stable and $\ka$ is the cardinality of $\N$, 
+    the above equivalence restricts to
+    an equivalence between the following two full subcategories :
+    \[
+      \FUN_\CTS^\EX(\IND_\ka(C) , D) \map{\sim}{} \FUN^\EX(C , D)
+    \]
+    where the left is the $\infty$-category of
+    exact continuous functors from $\IND_\ka(C)$ to $D$.
+
+  \end{itemize}
+
+  When $\ka$ is the cardinality of $\N$,
+  we write $\IND$ instead of $\IND_\ka$.
+\end{prop}
+
+For a regular cardinal $\ka$ and an $\infty$-category $C$,
+we say $C$ is $\ka$-compactly generated when
+it has all small colimits and there exists a small $\infty$-category
+$C^0$ with an equivalence $\IND_\ka(C^0) \map{\sim}{} C$.\footnote{
+  This is unraveled from 
+  \cite[Def 5.5.7.1]{Lurie-HTT}
+  \cite[Def 5.5.0.18]{Lurie-HTT}
+  \cite[Def 5.4.2.1]{Lurie-HTT}.
+  In particular, the second condition is usually called 
+  $\ka$-accessibility, but we have no need for such terminology.
+}
+For the case of $\ka =$ cardinality of $\N$,
+we simply say \emph{compactly generated}.
+A \emph{presentable} $\infty$-category is one that is
+$\ka$-compactly generated for some $\ka$.
+We use $(\infty,1)\dash\CAT^\EX_\CTS$ to denote
+the subcategory of $(\infty,1)\dash\CAT^\EX$ whose objects are
+presented stable $\infty$-categories and morphisms are
+exact functors preserving small coproducts.
+
+One appeal of presentable stable $\infty$-categories is that
+we have the adjoint functor theorem at our disposal.
+\begin{prop}[Adjoint Functor Theorem for Presentable Stable $\infty$-Categories]
+  \link{dgcat.adjoint}
+  
+  Let $F : C \to D$ be a functor between presentable $\infty$-categories.
+  \begin{itemize}
+    \item $F$ is a left adjoint iff it preserves small colimits.
+    \item $F$ is a right adjoint iff it preserves small limits and
+    there exists a regular cardinal $\ka$ such that
+    $C$ has small $\ka$-filtered colimits and $F$ preserves them.
+  \end{itemize}
+  \cite[Prop 5.5.2.9]{Lurie-HTT}
+\end{prop}
+We also have a way of detecting when a right adjoint is continuous.
+\begin{prop}[Continuity of Right Adjoint]
+  \link{dgcat.radj.cts}
+  
+  Let $F \dashv G : C \rightleftarrows D$ be an adjunction between 
+  compactly generated stable $\infty$-categories.
+  Then $G$ is continuous if and only if $F$ preserve compact objects.
+\end{prop}
+\begin{proof}
+  Direct application of \cite[Prop 5.5.7.2]{Lurie-HTT}.
+  We saw the idea of the proof in \ref{why.indcoh}.
+\end{proof}
+
+For functors out of $\IND_\ka(C)$,
+fully faithfulness and equivalence can be detected at the level of $C$.
+\begin{prop}[Functors out of $\ka$-Compactly Generated Categories]
+  \link{dgcat.cg.out}
+  
+  Let $C^0$ be a small $\infty$-category, $\ka$ a regular cardinal,
+  $C = \IND_\ka(C^0)$ and
+  $D$ an $\infty$-category admitting $\ka$-filtered colimits.
+  Let $D^\ka$ be the full subcategory of $D$ consisting of 
+  $\ka$-compact objects.
+  Let $F : C \to D$ be a functor preserving $\ka$-filtered colimits
+  and $F_0 : C^0 \to D$ its restriction along 
+  the Yoneda embedding $C^0 \to C$.
+  \begin{itemize}
+    \item If $F_0$ is fully faithful and its essential image lands in $D^\ka$,
+    then $F$ is fully faithful.
+    \item $F$ is an equivalence iff the following are true :
+    \begin{itemize}
+      \item $F_0$ fully faithful
+      \item $F_0$ factors through $D^\ka$
+      \item all objects of $D$ are $\ka$-filtered colimits of diagrams
+      in $D$ with objects in the image of $F_0$.
+    \end{itemize}
+    In particular,
+    for any full subcategory $\tilde{C} \subs C^\ka$ which
+    generates $C$ under $\ka$-filtered colimits,
+    we have $\IND_\ka(\tilde{C}) \map{\sim}{} C$.
+  \end{itemize}
+  \cite[Prop 5.3.5.11]{Lurie-HTT}
+\end{prop}
+
+Furthermore, 
+the Yoneda embedding $C^0 \to C$ factors through $C^\ka$.
+The fully faithful functor $C^0 \to C^\ka$ is not in general an equivalence,
+however it does exhibit $C^\ka$ as the \emph{idempotent completion}
+of $C^0$. (See in next proposition.)
+So if $C^0$ is idempotent complete, 
+then we recover the $\ka$-compact objects of $C$ as precisely 
+(the essential image of) $C^0$.
+
+There is a complication with defining idempotents in an $\infty$-category $C$.
+All we need to know is that 
+they are diagrams $\mathrm{Idem} \to C$ from a certain ``shape''\footnote{
+  meaning simplicial set, if we choose to use the quasi-categories
+  model for $\infty$-categories. 
+}
+and $C$ is called idempotent complete when
+all such diagrams admit a colimit.
+
+The following propositions contain all we need about idempotent completions.
+One should not worry about having to check idempotent completeness
+$\infty$-categorically because we will only be in the stable setting,
+in which we have a characterisation at the level of triangulated categories.
+\begin{prop}[Idempotent Completions]
+  \link{dgcat.idem}
+
+  Let $C$ be an $\infty$-category.
+  \begin{itemize}
+    \item If $C$ has small colimits, then $C$ is idempotent complete.
+    \item (\cite[Def 5.1.4.1, Prop 5.1.4.9, Lem 5.1.4.7]{Lurie-HTT})
+    A functor $F : C \to D$ in $(\infty,1)\dash\CAT$ is said to
+    \emph{exhibit $D$ as the idempotent completion of $C$} when 
+    $F$ is fully faithful, $D$ is idempotent complete and every
+    object of $D$ is a retract of some $F(x)$ with $x \in C$.
+
+    Suppose $F : C \to D$ is such a functor.
+    Then for any idempotent complete $\infty$-category $E$,
+    we have an equivalence : 
+    \[
+      \FUN(D , E) \map{\sim}{} \FUN(C , E)
+    \]
+    given by restriction along $F$.
+    An inverse functor is given by left Kan extension along $F$.
+    \item \cite[Prop 5.4.2.4]{Lurie-HTT} 
+    Let $C$ be small and $\ka$ a regular cardinal.
+    Then $C \to (\IND\,C)^\ka$ exhibits the latter $\infty$-category as
+    the idempotent completion of $C$.
+    In particular, the latter is equivalent to a small $\infty$-category.
+    \item \cite[Prop 1.2.4.6]{Lurie-HA} Let $C$ be a stable $\infty$-category.
+    Then $C$ is idempotent complete iff $hC$ is as a 1-category,
+    i.e. for every morphism $e : B \to B$ such that $e^2 = e$,
+    there exists a retract of $s : A \rightleftarrows B : r$
+    that exhibits $e = r s$.
+
+    If the above is the case and $C$ is small,
+    then for any regular cardinal $\ka$ we have
+    $C \map{\sim}{} (\IND_\ka(C))^\ka$.
+  \end{itemize}
+\end{prop}
+
+\textbf{\emph{But how do I actually get my hands on a presentable
+stable $\infty$-category?}}
+Worry not! All the computable examples
+are in the compactly generated case.
+As it turns out, this can also be checked at the level of 
+the triangulated categories.
+\begin{prop}[Compact Generation of Stable Infinity Categories]
+  \link{dgcat.stable.cg}
+  
+  Let $C$ be a stable $\infty$-category.
+  We say an object $X$ \emph{generates $C$} when
+  for all objects $Y$ in $C$, 
+  $hC (X,Y) = 0$ implies $Y \simeq 0$.
+  Additionally, we say a set $I$ of objects in $C$ 
+  \emph{compactly generates $C$} when $I$ consists of compact objects and
+  $X := \bigoplus_{X_i \in I} X_i$ generates $C$.
+
+  Then the following are true : 
+  \begin{enumerate}
+    \item Suppose we have that :
+    \begin{itemize}
+      \item $C$ has small coproducts
+      \item $hC$ is locally small
+      \item There exists a compact object $X$ which generates $C$.
+    \end{itemize}
+    Define the following sequence of full subcategories of $C$ : 
+    \begin{align*}
+      C(0) &:= 
+        \text{full subcategory of $C$ spanned by $\set{X[n]}_{n \in\Z}$} \\
+      C(k + 1) &:= 
+        \text{full subcategory of $C$ spanned by 
+        cofibers of morphisms in $C(k)$} \\
+      C(\om) &:= \bigcup_{n \in \N} C(n) 
+    \end{align*}
+    Then \begin{enumerate}
+      \item $C(\om)$ is the smallest stable full subcategory of $C$
+      containing $X$ and is equivalent to a small $\infty$-category.
+      \item $\IND\,C(\om) \map{\sim}{} C$.
+      In particular, $C$ is compactly generated.
+    \end{enumerate}
+    \item \cite[Prop 1.4.4.1]{Lurie-HA} For an object $X$ in $C$,
+    $X$ is compact if and only if for every morphism 
+    $f : X \to \coprod_{i \in I} Y_i$ in $C$,
+    there exists a finite subset $I_0 \subs I$ such that
+    in $hC$, $f$ factors through 
+    $\coprod_{i \in I_0} Y_i \to \coprod_{i \in I} Y_i$.
+
+    \item Suppose $F \in \FUN^\EX_\CTS(C , D)$ where
+    both $C, D$ satisfies the conditions in (1) with
+    compact generators $X \in C , F(X) \in D$ respectively.
+    Suppose the induced morphism $C(X,X) \to D(F(X) , F(X))$ is 
+    an equivalence.
+    Then $F$ is an equivalence.\footnote{
+      The idea that ``for an equivalence it suffices that
+      compact generators and their $\mathrm{Ext}$'s match''
+      is old,
+      but I could not find a formalisation of this idea
+      in the stable $\infty$-categorical set up.
+      The proof I wrote here is likely to be faulty so
+      I would be grateful if someone can check the proof.
+    }
+  \end{enumerate}
+\end{prop}
+\begin{proof}
+  The following proof of (1) is adapted from the proof of 
+  \cite[Prop 1.4.4.2]{Lurie-HA}
+  which is about general presentable $\infty$-categories,
+  rather than the compactly generated special case.
+
+  We first show $C(\om)$ is equivalent to a small $\infty$-category.
+  This part is the same as in \cite[Prop 1.4.4.2]{Lurie-HA}.
+  It is a set-theoretic issue that's not very interesting,
+  so we will use the following result without proof.
+  \begin{lem}
+
+    Let $C$ be an $\infty$-category and $\ka$ a regular cardinal 
+    which is uncountable.
+    Then there exists a $\ka$-small $\infty$-category $D \map{\sim}{} C$
+    if and only if $hC$ is $\ka$-small and $C$ is locally $\ka$-small,
+    i.e. for every morphism $f : X \to Y$ in $C$,
+    $\pi_0 C(X,Y)$ and $\pi_{i > 0}(C(X,Y) , f)$ are $\ka$-small.
+    \begin{proof1}
+      See \cite[Prop 5.4.1.2]{Lurie-HTT}
+    \end{proof1}
+  \end{lem}
+  Since $h C(\omega)$ is small, in order to show $C(\om)$ is equivalent to
+  a small $\infty$-category,
+  it remains to show that $C$ is locally small. 
+  We have $\pi_0 (X , Y) = hC(X , Y)$ is small by assumption.
+  For the higher homotopy groups, note that 
+  $C(X,Y) \simeq \Om C(\Om X , Y)$ therefore
+  the we can WLOG assume $f = 0$ for computation of the higher homotopy groups.
+  Then $\pi_{i > 0}(C(X,Y), 0) \simeq h C(X[i] , Y)$ which is small again.
+
+  Now we may WLOG assume $C(\om)$ is small.
+  By construction, $C(\om)$ is closed under translations and cofibers.
+  It follows from the stability of $C$ that $C(\om)$ is also closed under
+  fibers and hence a stable full subcategory.
+  We thus have (a) by construction.
+
+  To prove (b),
+  by the \linkto{dgcat.ind.up}{universal property of ind-completions},
+  the inclusion $C(\om) \to C$ factors into 
+  \[
+    C(\om) \map{\text{Yoneda}}{} \IND\,C(\om) \map{j}{} C
+  \]
+  where $j$ is the left Kan extension of $C(\om) \to C$.
+  The inclusion $C(\om) \subs C$ is fully faithful and 
+  every object in $C(\om)$ is compact,
+  \linkto{dgcat.cg.out}{therefore $j$ is fully faithful}.
+  
+  It remains to show the essential image of $j$ is all of $C$.
+  We will achieve this by explicitly computing an inverse.
+  We saw above that $C$ is locally small.
+  So by \linkto{dgcat.psh.up}
+  {the universal property of presheaf $\infty$-categories}
+  applied to the inclusion $i : C(\om) \to C$, we have an adjunction
+  \begin{cd}
+    {\IND\,C(\omega)} \\
+    {\PSH\, C(\omega)} & C
+    \arrow[shift left=3, shorten <=5pt, from=1-1, to=2-2, "{j}"]
+    \arrow["\subseteq"', from=1-1, to=2-1]
+    \arrow["{i_!}", shift left=2, from=2-1, to=2-2]
+    \arrow["{i^*}", shift left=2, from=2-2, to=2-1]
+    \arrow["\bot"{description}, draw=none, from=2-1, to=2-2]
+  \end{cd}
+  where $i_!$ is the left Kan extension of $i$ along 
+  $C(\om) \to \PSH\,C(\om)$.
+  The above diagram commutes up to isomorphism 
+  \linkto{dgcat.ind.up}{because} both $j$ and $i_!$ restrict to give
+  $i : C(\om) \to C$.
+  Now, the fact that $i$ preserves finite colimits 
+  \linkto{dgcat.ind.up}{implies} that $i^* C \subs \IND\,C(\om)$.
+  Thus, we have an adjunction 
+  $j \dashv i^* : \IND\,C(\om) \rightleftarrows C$. 
+  It suffices to show that for all $Y$ in $C$,
+  $j(i^* Y) \map{\sim}{} Y$.
+  Let $K \to j(i^* Y) \to Y$ be a fiber sequence.
+  It suffices to show $K \simeq 0$.
+  Since $X$ is a generator of $C$, 
+  this is equivalent to showing \[
+    0 \simeq hC(X , K) \simeq \pi_0 (\IND\,C(\om))(X , i^* K)
+  \]
+  where the latter isomorphism comes from the adjunction $j \dashv i^*$.
+  This follows by applying the right adjoint $i^*$ to the fiber sequence :
+
+  \begin{cd}
+    K & {j(i^*Y)} & \rightsquigarrow & {i^*K} & {i^*(j(i^*Y))} \\
+    0 & Y && 0 & {i^*Y}
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow["\sim", from=1-5, to=2-5]
+    \arrow[from=1-4, to=1-5]
+    \arrow[from=1-4, to=2-4]
+    \arrow[from=2-4, to=2-5]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-4, to=2-5]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd}
+  The equivalence $i^* j i^* Y \to i^* Y$ comes from 
+  the adjunction $j \dashv i^*$.
+  Therefore $i^* K \simeq 0$ and hence we have
+  $\pi_0 (\IND\,C(\om))(X , i^* K) \simeq 0$ as desired. 
+
+  (2) We refer the reader to the reference.
+
+  (3)
+  By compact generation of $C$ and $D$,
+  $F$ is an equivalence \linkto{dgcat.cg.out}{iff}
+  $F$ is fully faithful on the full subcategory $C^c$ of compact objects
+  of $C$ and $F C^c \subs D^c$.
+  By the \linkto{dgcat.idem}{theory of idempotent completions},
+  $C(\om) \to C^c$ exhibits the latter as the idempotent completion of
+  the former, the smallest stable full subcategory of $C$ containing $X$.
+  We have the same situation with $D(\om) \to D^c$.
+  It thus suffices to show that $F : C(\om) \to D$ factors through
+  $D(\om)$ and gives an equivalence $F : C(\om) \map{\sim}{} D(\om)$.
+  We check this inductively.
+  For the base case, we have $F : C(0) \map{\sim}{} D(0)$
+  because the homs in $C(0), D(0)$ are given by suspensions and loopings
+  of respectively $C(X,X) , D(F(X) , F(X))$, which we assumed are equivalent
+  under $F$.
+  For $k + 1$, \linkto{dgcat.stable}{exactness of $F$} and
+  the inductive hypothesis that $F : C(k) \simeq D(k)$,
+  we obtain that the essential image of $C(k+1)$ under $F$ is $D(k+1)$.
+  Since homs between cofibers of morphisms in $C(k)$ are determined by
+  fibers and cofibers of homs in $C(k)$,
+  and $F$ is exact,
+  we obtain that $F : C(k+1) \to D(k + 1)$ is fully faithful.
+  Therefore, $F$ induces an equivalence $C(k+1) \simeq D(k+1)$.
+
+\end{proof}
+
+Finally, there is one hard fact we shall use without motivation.
+\begin{prop}
+  \link{dgcat.presentable.has_lim}
+  
+  Let $C \in (\infty,1)\dash\CAT^\EX_\CTS$.
+  Then $C$ has all small limits.
+  \cite[Prop 5.5.2.4]{Lurie-HTT}
+\end{prop} 
+
+\end{document}

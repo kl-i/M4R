@@ -23,6 +23,7 @@ natural transformation $\id{\PSTK} \to \DR$.
 For $X \in \PSTK$, we write $p_\DR : X \to X_\DR$
 for the component of the natural transformation.
 
+\cite[Section 1.1]{Crys}
 \end{dfn}
 
 \begin{rmk}
@@ -80,6 +81,7 @@ for the component of the natural transformation.
   the full subcategory of $\AFF / X_\DR$
   with objects $x : \SPEC\, A \to X_\DR$ such that $\SPEC\, A^\RED \to X$
   is an open immersion.
+  \cite[Def 60.9.1]{stacks}
 
 \end{rmk}
 
@@ -114,7 +116,9 @@ for the component of the natural transformation.
 \end{prop}
 \begin{proof}
 
-  We proceed by a slightly different proof to GR Crys 1.1.4.
+  We proceed by a slightly different proof to \cite[Lem 1.1.4]{Crys}.
+  Basically, this is an exercise in 
+  \linkto{dgcat.psh.triple}{the theory of presheaf $\infty$-categories}.
   To show $\DR = \RAN\,\RES$ preserves small colimits and small limits, 
   it suffices that $\RAN$ is a left adjoint.
   By applying \linkto{dgcat.psh.triple}{the theory of left and right 
@@ -123,8 +127,7 @@ for the component of the natural transformation.
   \begin{cd}
     &&& {\PSTK_\RED} && \PSTK \\
     {\AFF^\RED} & \DAFF & \rightsquigarrow \\
-    {} & {} & {} & {\PSTK_\RED} & {} & \PSTK \\
-    {} & {} & {}
+    {} & {} & {} & {\PSTK_\RED} & {} & \PSTK
     \arrow["\LAN"', shift right=5, from=3-6, to=3-4]
     \arrow["{\mathrm{res}}"{description}, from=3-4, to=3-6]
     \arrow["\RAN", shift left=5, from=3-6, to=3-4]
@@ -173,25 +176,44 @@ for the component of the natural transformation.
   \[
     \CRYS^L(X) := \QCOH\,X_\DR  
   \]
+  \cite[Def 2.1.1]{Crys}
   The \emph{$\infty$-category of right crystals on $X$} is defined to be
   \[
     \CRYS^R(X) := \INDCOH\,X_\DR  
   \]
-
+  \cite[Def 2.3.2]{Crys}
 \end{dfn}
 
 Technically speaking, for the definition of right crystals to make sense,
 we need to show that $X_\DR$ is also locally almost finite type.
 Indeed, we have the following.
 
-\begin{prop}[$\PSTK_\LAFT$ is closed under $\DR$ (GR Crys 1.3.3)]
+\begin{prop}[$\PSTK_\LAFT$ is closed under $\DR$]
   \link{crys.dR.laft}
 
   Let $X \in \PSTK_\LAFT$.
-  Then $X_\DR \in \PSTK_\LAFT \cap \PSTK_\CL$.
+  Then $X_\DR \in \PSTK_\LAFT$.
+  \cite[prop 1.3.3]{Crys}
 \end{prop}
 \begin{proof}
-  IP.
+  
+  We first show the convergence of $X_\DR$.
+  This follows from the following diagram which commutes up to isomorphism : 
+  \begin{cd}
+    {X(A_\RED)} & {\varprojlim_n X(A_\RED)} \\
+    {X_\DR(A)} & {\varprojlim_n X_\DR(\tau^{\leq n} A)} 
+    \arrow["{=}"', from=1-1, to=2-1]
+    \arrow[from=2-1, to=2-2]
+    \arrow["\sim", from=1-2, to=2-2]
+    \arrow["\sim", from=1-1, to=1-2]
+  \end{cd}
+  It remains to show $X_\DR$ takes filtered limits in $\DAFF^{\leq n}$ to
+  filtered colimits in $\SPC$.
+  By assumption, $X$ does this so it suffices to show that
+  $\RED : \DAFF^{\leq n} \to \AFF^\RED$ preserves filtered limits.
+  This is a composition $\DAFF^{\leq n} \to \AFF \to \AFF^\RED$
+  where the first part takes $H^0$ and the second part takes reduction.
+  Both functors preserve filtered limits.
 \end{proof}
 
 \begin{rmk}
@@ -201,7 +223,7 @@ Indeed, we have the following.
   geometric realisation of its Cech nerve $\check{C}(X/X_\DR)$,
   i.e. when $X \to X_\DR$ is an effective epimorphism.\footnote{
     For a definition of Cech nerves,
-    see Lurie HTT 6.1.2.11. 
+    see \cite[Prop 6.1.2.11]{Lurie-HTT}.
   }
 \end{rmk}
 
@@ -209,7 +231,7 @@ Indeed, we have the following.
   \link{crys.cfsm}
 
   Let $X \in \PSTK_\LAFT$.
-  Then the following are equivalent : 
+  Then the following are equivalent :
   \begin{enumerate}
     \item For all $S \in \DAFF$, 
     the map of sets $\pi_0 X(S) \to \pi_0 X(S_\RED)$ is surjective.
@@ -219,18 +241,26 @@ Indeed, we have the following.
   when any (and thus all) of the above are satisfied.
   In this case, we have 
   \begin{cd}
-    {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))} \\
-    {\mathrm{Crys}^L\,X} & {\varprojlim \mathrm{QCoh}(\check{C}(X/X_\mathrm{dR}))}
+    {\mathrm{Crys}^L\,X} & {\varprojlim \mathrm{QCoh}(\check{C}(X/X_\mathrm{dR}))} \\
+    {\mathrm{Crys}^R\,X} & {\varprojlim \mathrm{IndCoh}(\check{C}(X/X_\mathrm{dR}))}
     \arrow["\sim", from=1-1, to=1-2]
     \arrow["\sim", from=2-1, to=2-2]
   \end{cd}
   i.e. ``crystals are the same as sheaves equipped with equivariance
-  with respect to the infinitesimal groupoid''.
+  with respect to the infinitesimal groupoid''.\footnote{
+    Crys 3.1.3 actually proves this for general 
+    dg ind-scheme $X$ of locally almost finite type without
+    assumptions of classically formally smooth.
+    However, we focused on this because it is all that's needed for
+    the equivalence crystals and D-modules.
+  }
 \end{prop}
 \begin{proof}
   
-  For the equivalence of $(1)$ and $(2)$.
-  Colimits in $\PSTK = \PSH\,\DAFF$ are computed pointwise,
+  Let us remark that \cite[Lem 1.2.4]{Crys} only proves (1) implies (2),
+  but we think the two are actually equivalent.
+  For the equivalence of $(1)$ and $(2)$,
+  we use that colimits in $\PSTK = \PSH\,\DAFF$ are computed pointwise,
   the lemma is equivalent to claiming that
   $X(S) \to X(S_\RED)$ is effectively epic if and only if
   it is surjective on $\pi_0$.
@@ -241,7 +271,8 @@ Indeed, we have the following.
     Then $q$ is an effective epimorphism if and only if 
     it is surjective on $\pi_0$.
     \begin{proof1}
-      We defer the interested reader to Lurie HTT 6.1.2.14.
+      We defer the interested reader to
+      \cite[Prop 7.2.1.15]{Lurie-HTT}.
 
       % Let us assume $X, Y$ are sets.
       % Then the colimit of the Cech nerve $\check{C}(q)$ is
@@ -272,7 +303,7 @@ Indeed, we have the following.
   We want to use the same argument for right crystals,
   however the subtlety is that $\INDCOH^!$ is 
   \emph{not} defined on all of $\PSTK$ but rather just $\PSTK_\LAFT$.\footnote{
-    This is GR Crys 2.3.11. However, 
+    This is \cite[Lem 2.3.11]{Crys}. However, 
     the proof in the reference simply claims that the argument is
     the same as for left crystals.
     We provide some unclear details.
@@ -305,10 +336,10 @@ whose proof we won't go into.
 \end{prop}
 \begin{proof}
   Omitted.
-  It is shown in GR DGINDSCH 8.4.2 that 
+  It is shown in \cite[Prop 8.4.2]{DGINDSCH} that 
   smooth classical schemes of finite type over $k$
   are \emph{formally smooth} when considered as prestacks.\footnote{
-  GR's usage of the term ``formally smooth'' does \emph{not}
+  Gaitsgory--Rozenblyum's usage of the term ``formally smooth'' does \emph{not}
   immediately match the usual usage.
   The interested reader may find the definition in the reference provided.
 }

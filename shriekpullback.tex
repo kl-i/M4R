@@ -1,0 +1,209 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+
+We describe what $\INDCOH$ does to morphisms in $\DSCH_\AFT$.
+Pushforward for $\INDCOH$ is easy to describe.
+It follows from the definition of the t-structure of $\INDCOH$.
+
+\begin{prop}[Pushforward for $\INDCOH$ on $\DSCH_\AFT$]
+
+  Let $f : X \to Y$ be in $\DSCH_\AFT$.
+  Then there exists a unique 
+  $f_*^\INDCOH \in \DGCAT_\CTS(\INDCOH\,X , \INDCOH\,Y)$
+  that is compatible with $\Psi$ meaning the following commutes :
+  \begin{cd}
+    {\INDCOH\,X} & {\QCOH\,X} \\
+    {\INDCOH\,Y} & {\QCOH\,Y}
+    \arrow["{\Psi_X}", from=1-1, to=1-2]
+    \arrow["{\Psi_Y}", from=2-1, to=2-2]
+    \arrow["{f_*^\INDCOH}"', from=1-1, to=2-1]
+    \arrow["{f_*^\QCOH}", from=1-2, to=2-2]
+  \end{cd}
+\end{prop}
+\begin{proof} This is a sketch of \cite[Ch 4 , 2.1.2]{GR1}.
+  
+  This crucially uses the fact that $\Psi$ gives an equivalence
+  $(\INDCOH\,X)^+ \map{\sim}{} (\QCOH\,X)^+$.
+  Using the t-structure of $\INDCOH\,X$ and the
+  \linkto{dgcat.ind.up}{universal property of ind-completions}
+  in order to give $f_*^{\INDCOH}$
+  it suffices to show that $f_*^{\QCOH} \Psi_X$ maps
+  $(\INDCOH\,X)^+$ into $(\QCOH\,Y)^+$.
+  This comes down to the fact that $f_*^{\QCOH}$ is a right derived functor
+  and hence sends $(\QCOH\,X)^+$ to $(\QCOH\,Y)^+$.
+\end{proof}
+
+In \cite[Ch 4, 2.2]{GR1}, functoriality of pushforward is shown.
+\begin{prop}
+  
+  There exists a functor \[
+    \INDCOH_* : \DSCH_\AFT \to \DGCAT_\CTS  
+  \]
+  equipped with a natural transformation \[
+    \Psi : \INDCOH_* \to \QCOH_*  
+  \]
+  such that on objects and morphisms it yields \[
+    \INDCOH^*(X) = \INDCOH(X) \,\,\,\,\, 
+    f : X \to Y \rightsquigarrow  f_* : \INDCOH\,X \to \INDCOH\,Y
+  \]
+  \cite[Ch 4, 2.2.3]{GR1}
+\end{prop} 
+
+We now describe pullback for $\INDCOH$.
+This is more delicate because it needs to achieve two things : 
+\begin{itemize}
+  \item for proper $f : X \to Y$ in $\DSCH_\AFT$,
+  we want to have an adjunction \[
+    f_* \dashv f^! : \INDCOH\,X \rightleftarrows \INDCOH\,Y
+  \]
+  inside $\DGCAT_\CTS$.
+  \item for an open embedding $j : U \to X$ in $\DSCH_\AFT$,
+  we want to have an adjunction \[
+    j^! \dashv j_* : \INDCOH\,U \rightleftarrows \INDCOH\,X  
+  \]
+\end{itemize}
+Let us first show how this pullback functors
+exist in the individual cases.
+
+\begin{prop}[Pullback for $\INDCOH$ along Proper Morphisms]
+  \link{indcoh.proper}
+  
+  Let $f : X \to Y$ be a proper morphism in $\DSCH_\AFT$.
+  Then $f_* : \INDCOH\,X \to \INDCOH\,Y$ maps
+  $\COH\,X$ into $\COH\,Y$.
+  Hence we have an adjunction \[
+    f_* \dashv f^! : \INDCOH\,X \rightleftarrows \INDCOH\,Y  
+  \]
+  where $f^! \in \DGCAT_\CTS(\INDCOH\,Y , \INDCOH\,X)$.
+
+\end{prop}
+\begin{proof}
+  This is a sketch of \cite[Ch 4, 5.1.4]{GR1}.
+  By construction of $f_*$ for $\INDCOH$,
+  it suffice to show the result for $f_* : \QCOH\,X \to \QCOH\,Y$.
+  By a standard argument with t-structures,
+  it suffices to show $f_* (\COH\,X)^\heartsuit \subs \COH\,Y$.
+  We try to the case of $X, Y$ both classical.
+  First, notice that the inclusion $i : X^\CL \to X$ induces an equivalence
+  $(\COH\,X)^\heartsuit \simeq (\COH\,X)^\heartsuit$.
+  Combining this with the fact that the inclusion
+  $Y^\CL \to Y$ maps $\COH\,Y^\CL \to \COH\,Y$,
+  it suffices to prove the result for $X^\CL \to Y^\CL$.
+  We are now in the classical case \cite[Prop 30.19.1]{stacks}.
+  This proves $f^* \COH\,X \subs \COH\,Y$.
+
+  The fact that we have an adjunction $f_* \dashv f^!$
+  is simply an application of the \linkto{dgcat.adjoint}{adjoint functor theorem}
+  since $f_*$ is by definition in $\DGCAT_\CTS$.
+  The content of this proposition is that
+  since \linkto{indcoh.compact}{$\COH\,X \sim (\INDCOH\,X)^c$}
+  and $f_*$ preserves compact objects,
+  \linkto{dgcat.radj.cts}{it follows} that $f^!$ is continuous.
+\end{proof}
+
+\begin{prop}[Proper Base Change for $\INDCOH$]
+  \link{indcoh.proper_bc}
+
+  Suppose we have the following cartesian square in $\DSCH_\AFT$ : 
+  \begin{cd}
+    W & Y \\
+    X & Z
+    \arrow["v"{description}, from=1-1, to=2-1]
+    \arrow["g"{description}, from=1-2, to=2-2]
+    \arrow["f"{description}, from=2-1, to=2-2]
+    \arrow["u"{description}, from=1-1, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd}
+  where $g$ and $v$ are proper.
+  Then the dashed morphism below obtained from $g_* u_* \simeq f_* v_*$
+  is an equivalence : 
+  \begin{cd}
+    {u_* v^!} & {g^! f_*} \\
+    {g^!g_*u_*v^!} & {g^!f_*v_*u^!}
+    \arrow[from=1-1, to=2-1]
+    \arrow["\sim"', from=2-1, to=2-2]
+    \arrow[from=2-2, to=1-2]
+    \arrow[dashed, from=1-1, to=1-2]
+  \end{cd}
+\end{prop}
+\begin{proof}
+  This is \cite[Ch 4, 5.2.2]{GR1}.
+  The proof follows basically from
+  the compatibility of the continuous right adjoint $f^!$ for $\INDCOH$
+  and the \emph{not necessarily continuous} right adjoint $f^!$ for $\QCOH$
+  under \link{indcoh.t}{the equivalence} 
+  $\Psi : (\INDCOH\,\_)^+ \simeq (\INDCOH\,,\_)^+$,
+  the adjunction $f_* \dashv f^! : \QCOH\,X \rightleftarrows \QCOH\,Y$
+  from classical algebraic geometry,
+  and finally base change for $\QCOH$ along quasi-compact schematic morphisms.
+  \cite[Ch 3, 2.2.2]{GR1}
+\end{proof}
+
+\begin{prop}[Pullback for $\INDCOH$ across Open Embeddings]
+  \link{indcoh.open_emb}
+  
+  Let $j : U \to X$ be an open embedding.
+  Then we have an adjunction \[
+    j^! \dashv j_* : \INDCOH\,U \rightleftarrows \INDCOH\,X  
+  \]
+  where $j_*$ is fully faithful.
+\end{prop}
+\begin{proof}
+  
+  This is a shortened version of \cite[Ch 4, 3]{GR1} applied to
+  the special case of open embeddings.
+  First note that $j^* : \QCOH\,X \to \QCOH\,U$
+  maps $\COH\,X$ into $(\QCOH\,U)^+ \simeq (\INDCOH\,U)^+ \subs \INDCOH\,U$.
+  So by the \linkto{dgcat.ind.up}{universal property of ind-completions},
+  we obtain $j^* \in \DGCAT_\CTS(\INDCOH\,X , \INDCOH\,U)$.
+  We claim that $j^! := j^*$ works.
+
+  To show $j^! \dashv j_*$ on $\INDCOH$,
+  since both are continuous,
+  it suffices to check on the full subcategory of compact objects.
+  \linkto{indcoh.compact}{This is $\COH\,X$, respectively $\COH\,U$}.
+  The adjunction now follows from 
+  $j^* \dashv j_* : \QCOH\,X \rightleftarrows \QCOH\,U$.
+
+  The fully faithfulness of $j_*$,
+  equivalently the fact that $j^*j_* \to \id{}$ is an equivalence
+  is checked in the same way : on compact objects.
+\end{proof}
+
+Now, the idea for $f^!$ for a general $f : X \to Y$ in $\DSCH_\AFT$
+is to use Nagata's compactification theorem
+\cite[Thm 38.33.8]{stacks} to factor $f = p j$ where
+$p$ is proper and $j$ is an open embedding and define \[
+  f^! := p^! j^!  
+\]
+In \cite[Ch 5 , 2.1]{GR1},
+it is then shown that the $\infty$-category $\FACTOR(f)$ of
+factorings of $f$ into an open embedding followed by a proper morphism
+is contractible and that
+this gives functoriality for !-pullback.
+Unfortunately, the proof is much too complicated so
+we will omit the proof.
+
+\begin{prop}[Functoriality of !-Pullback]
+  
+  There exists a functor $\INDCOH^! : \DSCH_\AFT \to (\DGCAT_\CTS)^\OP$
+  such that for proper $f$ in $\DSCH_\AFT$,
+  the image of $f$ recovers $f^!$ and for open embeddings $j$ in $\DSCH_\AFT$,
+  the image of $j$ recovers $j^!$.
+  \cite[Ch 5 , 3.1.4]{GR1}
+\end{prop}
+
+Finally, we obtain ind-coherent sheaves on all laft prestacks.
+
+\begin{dfn}[Ind-coherent sheaves on laft prestacks]
+  
+  We define $\INDCOH^! : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP$
+  as the left Kan extension of 
+  $\INDCOH^! : \DAFF^{<\infty}_\FT \to (\DGCAT_\CTS)^\OP$
+  via the \linkto{dgcat.psh.up}{
+    universal property of presheaf $\infty$-categories
+  }.
+  \cite[Ch 5 , 3.4.1]{GR1}
+\end{dfn}
+
+\end{document}

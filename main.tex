@@ -1,9 +1,12 @@
 \documentclass{article}
 \input{preamble.tex}
 
+\addbibresource{refs.bib}
+
 \begin{document}
 
-\title{M4R : Crystals }
+\title{A Study in `A Study in Derived Algebraic Geometry' : 
+Ind-Coherent Sheaves , Duality and Crystals }
 
 \author{Ken Lee}
 \date{2022}
@@ -11,17 +14,42 @@
 
 \tableofcontents
 
-``IP'' stands for ``indefinitely postponed'', 
-which means the details are at the bottom of the priority list,
-and I will only fill them in if I have time at the end.
+Acknowledgements : 
+\begin{itemize}
+  \item Thanks Mum for these 22 years.
+  \item Thanks Dad for getting into maths.
+  \item Thanks to Ayano, my girlfriend for staying with me through hell
+  and back.
+  \item Thanks to my sister for pointing out when I'm being an idiot.
+  \item Thanks to my supervisor Dr. Travis Schedler for 
+  giving me the opportunity for this project.
+  \item Thanks Haiping for 10 months-worth of diet coke.
+\end{itemize}
+
+Declaration : The following is my own work except otherwise stated.
 
 \section{Introduction}
 
-  \subsection{Why?}\subfile{why.tex}
+  \subfile{why.tex}
 
-\section{Setting}
+\section{Setting}\label{setting}
 
-  \subsection{How to work with ``DG Categories''}\subfile{dgcat.tex}
+  \subsection{How to work with ``DG Categories''}\subfile{dgcat-intro.tex}
+
+  \subsection{All you need to know about infinity categories}
+    \subfile{inftycat.tex}
+
+  \subsection{All you need know about stable infinity categories}
+    \subfile{stable.tex}
+
+  \subsection{
+    All you need to know about
+    compactly generated stable infinity categories
+  }
+    \subfile{cg.tex}
+
+  \subsection{``DG Categories'' Finally}
+    \subfile{dgcat.tex}
 
   \subsection{Derived Schemes}\subfile{dsch.tex}
 % 1. DMod(X) = IndCoh(X_dR)
@@ -31,46 +59,54 @@ and I will only fill them in if I have time at the end.
 %    [Q : this is where DAG is hiding?]
 % 3. BB localization as B(exp g) <- B_X(exp g) -> X_dR
 
-\section{IndCoherent Sheaves on Derived Schemes}
+\section{IndCoherent Sheaves on Derived Schemes}\label{indcoh}
 
   \subsection{Quasi-Coherent Sheaves}\subfile{qcoh.tex}
 
-  \subsection{Why Ind-Coherent Sheaves?}\subfile{indcoh.tex}
+  % \subsection{Why Ind-Coherent Sheaves?}\subfile{indcoh.tex}
 
-  \subsection{Correspondences and Six Functor Formalisms}\subfile{corr.tex}
+  % \subsection{Correspondences and Six Functor Formalisms}\subfile{corr.tex}
 
   \subsection{Ind-Coherent Sheaves on a single Derived Scheme}
     \subfile{indCohdSch.tex}
 
+  \subsection{Pushforward and Pullback across Various Morphisms}
+    \subfile{shriekpullback.tex}
+
+  % \subsection{Duality}
+  %   \subfile{duality.tex}
+
+  \subsection{Integral Transforms and Duality for Quasi-Coherent Sheaves}
+    \subfile{fm-qcoh.tex}
+
+  \subsection{Integral Transforms and Duality for Ind-Coherent Sheaves}
+    \subfile{fm-indcoh.tex}
+
   \subsection{Relation between Quasi-Coherent Sheaves and Ind-Coherent Sheaves}
     \subfile{qcohindcoh.tex}
-
-  \subsection{Pushward and Pullback across Various Morphisms}
-
-  \subsection{Integral Transforms}
-
-  \subsection{Serre Duality}
 % Desired computations : 
-% - !-pullback for a non-proper non-open morphism
-% - example of proper basechange
-% - integral transform formula, at least in dAff case
-% - the unit of !-tensor is really dualizing sheaf
-% - the abstract duality functors match the classical computation
+% - !-pullback for a non-proper non-open morphism <- this is for abstract
+% - example of proper basechange 
+% - integral transform formula, at least in dAff case <- yey
+% - the unit of !-tensor is really dualizing sheaf <- quote
+% - the abstract duality functors match the classical computation <- naive ok.
 
-\section{Crystals and D-modules}
+\section{Crystals and D-modules}\label{crys}
 
-  \subsection{A note on inf-schemes}
-  Say something about making $\INDCOH$ base change
-  for larger class of spaces and morphisms
-  that includes $X \to X_\DR$.
+  % \subsection{A note on inf-schemes}
+  % Say something about making $\INDCOH$ base change
+  % for larger class of spaces and morphisms
+  % that includes $X \to X_\DR$.
 
   \subsection{Left and Right Crystals}\subfile{crys.tex}
+
+  \subsection{Equivalence of Left and Right Crystals}\subfile{leftRightCrys.tex}
 
   \subsection{Induction of Left and Right Crystals}\subfile{induction.tex}
 
   \subsection{Equivalence of Left Crystals and D-modules}\subfile{dmodules.tex}
 
-  \subsection{Kashiwara's Lemma}\subfile{kashiwara.tex}
+  % \subsection{Kashiwara's Lemma}\subfile{kashiwara.tex}
 % Desired computations : 
 % - the crystals monad actually corresponds sheaf of diff operators
 %   (fill in details omitted in GR)
@@ -80,6 +116,7 @@ and I will only fill them in if I have time at the end.
 % \section{The Localization Functor}
 % example of sl2-mod iso QCoh(P^1) as a correspondence
 
-%\printbibliography
+\section{Bibliography}
+\printbibliography
 
 \end{document}

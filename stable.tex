@@ -1,0 +1,163 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+$(\infty,1)\dash\CAT^\mathrm{ex}$ denotes subcategory of $1\dash\CAT$
+consisting of \emph{stable infinity categories} and \emph{exact functors}.  
+It contains all small limits and
+the ``inclusion'' $1\dash\CAT^{ex} \to 1\dash\CAT$ preserves 
+small limits \cite[Prop 1.1.4.4]{Lurie-HA}.
+
+Stable infinity categories are basically
+triangulated categories where exact triangles are determined by
+an infinity-categorical universal property.
+Here is the definition.
+\begin{dfn}
+  \link{dgcat.stable}
+  
+  Let $C$ be an infinity category. 
+  We say $C$ has a \emph{zero object} when
+  it has an object that is both initial and final. 
+  \cite[Def 1.1.1.1]{Lurie-HA}
+
+  Now assume $C$ have a zero object.
+  Then a \emph{triangle} in $C$ is defined as a diagram in $C$ of the form : 
+  \begin{cd}
+    X & Y \\
+    0 & Z
+    \arrow[from=1-1,to=1-2]
+    \arrow[from=1-1,to=2-1]
+    \arrow[from=1-2,to=2-2]
+    \arrow[from=2-1,to=2-2]
+  \end{cd}
+  A triangle is called a \emph{fiber sequence} when it is a cartesian
+  and a \emph{cofiber sequence} when it is cocartesian.
+  \cite[Def 1.1.1.4]{Lurie-HA}
+  In the first case,
+  we say \emph{$Y \to Z$ admits a fiber} and refer to $X$ as the fiber,
+  and in the other case
+  we say \emph{$X \to Y$ admits a cofiber} and refer to $Z$ as the cofiber.
+
+  $C$ is called \emph{stable} when the following are true : 
+  \begin{itemize}
+    \item every morphism has both a kernel and a cokernel.
+    \item A triangle is fiber sequence iff it is a cofiber sequence.
+    Such triangles are called \emph{exact triangles}.
+  \end{itemize}
+  \cite[Prop 1.1.1.9]{Lurie-HA}
+
+  An exact functor $F : C \to D$ between stable infinity categories
+  is one which satisfy any of the following equivalent conditions : 
+  \cite[Prop 1.1.4.1]{Lurie-HA}
+  \begin{itemize}
+    \item $F$ preserves exact triangles
+    \item $F$ preserves finite limits
+    \item $F$ preserves finite colimits.
+  \end{itemize}
+  
+  For stable $\infty$-categories $C, D$
+  the full subcategory $\FUN^\EX(C,D)$ of $\FUN(C,D)$ consisting of
+  exact functors is also stable.\footnote{
+    \cite[Ch 1, 5.1.4]{GR1}claims this.
+    \cite[Prop 1.1.3.1]{Lurie-HA} shows that $\FUN(K,C)$ is stable for
+    any $K$ and stable $C$.
+    The result follows given that
+    finite (co)limit-preserving functors
+    are closed under finite (co)limits.
+  }
+\end{dfn}
+To help build intuition of ``stable infinity categories as 
+fixed triangulated categories'',
+we record here the important parts of the procedure
+of extracting a triangulated category from a stable infinity category.
+\begin{prop}
+  
+  Let $C$ be a stable infinity category.
+  Then the following defines a triangulated structure on 
+  the 1-category $hC$ : 
+  \begin{itemize}
+    \item Define the \emph{suspension functor} $\Sigma : C \to C$ by
+    pushout against zeros : 
+    \begin{cd}
+      X & 0 \\
+      0 & \Sigma X
+      \arrow[from=1-1,to=1-2]
+      \arrow[from=1-1,to=2-1]
+      \arrow[from=1-2,to=2-2]
+      \arrow[from=2-1,to=2-2] 
+    \end{cd}
+    Since the above square is a cofiber sequence,
+    it is also a fiber sequence. 
+    This shows that \emph{looping} $\Omega : C \to C$,
+    given by pullback against zeros, gives an inverse for $\Sigma$
+    and hence shows that $\Sigma$ is an equivalence.
+    Taking homotopy categories, we obtain an equivalence 
+    $[1] : hC \map{\sim}{} hC$, which we use as the shift functor
+    for the triangulated structure.
+
+    \item We call a diagram \[
+      X \map{f}{} Y \map{g}{} Z \map{h}{} X[1] 
+    \]
+    in $hC$ an exact triangle (in the triangulated categorical sense) 
+    when it comes from a diagram of the following form in $C$ : 
+    \begin{cd}
+      X & Y & 0 \\
+      0 & Z & {X[1]}
+      \arrow[from=1-1, to=1-2]
+      \arrow[from=1-2, to=2-2]
+      \arrow[from=2-2, to=2-3]
+      \arrow[from=1-1, to=2-1]
+      \arrow[from=2-1, to=2-2]
+      \arrow[from=1-2, to=1-3]
+      \arrow[from=1-3, to=2-3]
+      \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, 
+        draw=none, from=2-2, to=1-1]
+      \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=180}, 
+        draw=none, from=2-3, to=1-2]
+    \end{cd}
+    i.e. two exact triangles (in the stable infinity categorical sense).
+    \item For $X, Y$ objects of $C$,
+    we have 
+    \begin{align*}
+      C(X,Y) &\simeq C(\Sigma \Omega X , Y) \simeq \Omega C(\Omega X , Y) \\
+      &\simeq C(\Sigma^2 \Omega^2 X , Y) \simeq \Omega^2 C(\Omega^2 X , Y)
+    \end{align*}
+    Upon taking $\pi_0$ , we obtain 
+    \[
+      hC(X,Y) := \pi_0 C(X,Y) \simeq \pi_1 C(\Om X , Y) 
+      \simeq \pi_2 (\Om^2 X , Y)
+    \]
+    where the last isomorphism is a group morphism.
+    For $\pi_2$ of any ``space'' \footnote{
+      In the quasi-category model of infinity categories,
+      $C(X,Y)$ is a Kan complex,
+      which one can take homotopy groups of.
+    } the obvious group structure given by is abelian,
+    this gives $hC(X,Y)$ an abelian group structure,
+    making $hC$ into an additive category.
+  \end{itemize}
+  \cite[Thm 1.1.2.14]{Lurie-HA}
+
+  For $X, Y$ objects in $C$,
+  we define the abelian group $\EXT^n_C(X,Y) := hC(X , Y[n])$.
+  \cite[Notation 1.1.2.17]{Lurie-HA}
+\end{prop}
+
+A t-structure on a stable $\infty$-category is simply a
+t-structure on its homotopy category.
+\cite[Def 1.2.1.4]{Lurie-HA}
+% (IP : t-structures, truncation as reflective localisation,
+% $(D^-(A))^\heartsuit \simeq A$ Lurie 1.3.2.19)
+
+\begin{dfn}
+  
+  Let $F : C \to D$ be a functor in $1\dash\CAT^\EX$
+  where $C$ and $D$ are equipped with t-structures.
+  Then $F$ is called \emph{right t-exact} when
+  $F C_{0 \leq} \subs D_{0 \leq}$.
+  It is called \emph{left t-exact} when $F C_{\leq 0} \subs D_{\leq 0}$.
+  We say $F$ is \emph{t-exact} when it is both left and right t-exact. 
+
+  \cite[Def 1.3.3.1]{Lurie-HA}
+\end{dfn}
+
+\end{document}

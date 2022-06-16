@@ -1,0 +1,127 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+We will use ``infinity category'' to refer only to 
+$(\infty,1)$-categories.
+The word ``category'' will exclusively refer to $1$-categories.
+
+$(\infty,1)\dash\CAT$ denotes the infinity category of 
+small infinity categories. 
+$(\infty,1)\dash\CAT$ has all small limits \cite[Cor 7.4.1.11]{Kerodon}
+and small colimits \cite[Cor 7.4.3.13]{Kerodon} and
+is cartesian closed.
+We use $\FUN(C,D)$ to denote the infinity category of functors from
+$C$ to $D$.
+
+There is an adjunction 
+$h \dashv N : (\infty,1)\dash\CAT \rightleftarrows 1\dash\CAT$.
+$N$ is called the \emph{nerve functor} and it is fully faithful,
+allowing us to see 1-categories as $\infty$-categories.
+In particular, we use $\De^n$ to denote the \emph{$n$-simplex},
+the $\infty$-category obtained from the linear order
+$[n] = \set{0 \leq \cdots \leq n}$.
+Given an infinity category $C$,
+objects of $C$ are the same as functors $\De^0 \to C$
+and morphisms in $C$ are the same as functors $\De^1 \to C$.
+
+There is a full subcategory $\SPC$ of $(\infty,1)\dash\CAT$ consisting
+of $\infty$-categories $X$ where all morphisms are isomorphisms.
+These are called \emph{$\infty$-groupoids} but also \emph{spaces}
+by homotopy theorists.
+The infinity category $\SPC$ plays the role of $\SET$ in 1-category theory
+in the sense that given an infinity category $C$,
+the fiber of $\FUN(\De^1 , C) \to \FUN(\partial\De^1 , C)$
+over $(X,Y)$, denoted $C(X,Y)$, is in fact a space.
+The nerve functor $N$ lands $\SET$ inside $\SPC$,
+where given a set $S$ and two points $x, y \in S$,
+we have $NS(x,y) \simeq \nothing$ the empty space.
+In other words, sets are ``discrete spaces''.
+
+For any infinity category $C$, 
+we define $\PSH\,C := \FUN(C\op,\SPC)$ and refer to its objects as
+\emph{presheaves in $C$}.
+Infinity categories of presheaves are significant since
+we will be working with derived algebraic geometry functorially.
+We will use the following universal property of $\PSH\,C$ many times.
+
+\link{dgcat.psh.up}
+\begin{prop}[Universal Property of Presheaf $\infty$-Categories]
+
+  Let $S$ be a small $\infty$-category.
+  \begin{itemize}
+    \item There is a fully faithful functor $S \to \PSH\,S$
+    which takes each object $x$ in $S$ to the functor 
+    $S(\_ , x) : C\op \to \SPC$ taking points $y$ to $S(y,x)$.
+    This is called the \emph{Yoneda embedding}.
+    \item \cite[Prop 5.1.2.3]{Lurie-HTT}
+    $\PSH\,S$ has small colimits and small limits.
+    In fact, they are computed pointwise.
+    \item \cite[Prop 5.1.5.6, 5.2.6.5]{Lurie-HTT}
+    For $C$ be an $\infty$-category with small colimits, 
+    let $\mathrm{Fun}^L(\PSH\, S , C)$ denote the
+    full subcategory of $\mathrm{Fun}(\PSH\, S, C)$ consisting of
+    functors preserving small colimits.
+    Then restricting along the Yoneda embedding $S \to \PSH\, S$
+    gives an equivalence of $\infty$-categories : 
+    \[
+      \mathrm{Fun}^L(\PSH\, S , C) \map{\sim}{} \mathrm{Fun}(S , C)  
+    \]
+    An inverse functor is given by left Kan extension.
+    In particular,
+    for $u_! \in \mathrm{Fun}^L(\PSH\, S , C)$ corresponding to 
+    $u \in \mathrm{Fun}(S , C)$,
+    we have for every $X \in \PSH\, S$ that
+    $u_!$ exhibits $u_!(X)$ as the colimit of the diagram 
+    $S_{/ X} \to S \to C$.
+    Furthermore, if we assume $C$ is locally small,
+    then we have an adjunction 
+    \[
+      u_! \dashv u^* : \PSH\,S \rightleftarrows C
+    \]
+    where $u^*$ is given by the composition 
+    \[
+      C \map{\text{Yoneda}}{} \PSH\,C = \FUN(C,\SPC^\OP) 
+      \map{\text{restrict along $u$}}{} \FUN(S,\SPC^\OP) = \PSH\,S
+    \]
+  \end{itemize}
+\end{prop}
+
+An immediate consequence of the above is the following,
+which is key for defining de Rham spaces.
+
+\link{dgcat.psh.triple}
+\begin{lem}[Left and Right Kan Extensions of Presheaves]
+  
+  Let $u : S \to T$ be a functor between small $\infty$-categories.
+  Then we have a triple of adjoints : 
+  \begin{cd}
+    {\mathrm{PSh}\,S} & {} & {\mathrm{PSh}\,T}
+    \arrow["{u^*}"{description}, from=1-3, to=1-1]
+    \arrow["{\mathrm{u_!}}", shift left=5, from=1-1, to=1-3]
+    \arrow["{u_*}"', shift right=5, from=1-1, to=1-3]
+    \arrow["\bot"{description}, shift left=3, draw=none, from=1-1, to=1-3]
+    \arrow["\bot"{description}, shift right=3, draw=none, from=1-1, to=1-3]
+  \end{cd}
+  where 
+  \begin{itemize}
+    \item $u_!$ is the left Kan extension of $S \to T \to \PSH\,T$
+    \item $u^*$ is the composition $\PSH\,T \to \PSH\,\PSH\,T \to \PSH\,S$
+    \item $u_*$ is the composition $\PSH\,S \to \PSH\,\PSH\,S \to \PSH\,T$
+  \end{itemize}
+  In particular, for $X \in \PSH\,S$,
+  $u_!(X)$ is the left Kan extension of $X$ along $S \to T$
+  and $u_*(X)$ is the right Kan extension of $X$ along $S \to T$.
+  \begin{proof1}
+    For $u_! \dashv u^*$, we apply the universal property of
+    presheaf $\infty$-categories to $S \to T \to \PSH\,T$.
+    Now for $u^* \dashv u_*$, note that
+    since colimits in $\PSH\,T$ are computed pointwise,
+    we have that $u^*$ preserves small colimits.
+    This means we can apply the universal property of 
+    presheaf $\infty$-categories again,
+    but this time to the composition $T \to \PSH\,T \to \PSH\,S$.
+    This gives $u^* \dashv u_*$. 
+  \end{proof1}
+\end{lem}
+
+\end{document}

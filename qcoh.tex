@@ -1,11 +1,31 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
-  
-\begin{dfn}[Covariant $\QCOH$]
 
-  There is a functor $\QCOH^* : \DAFF \to \DGCAT_{cts}^\OP$
+The theory of ind-coherent sheaves does not stand alone from
+the theory of quasi-coherent sheaves.
+So before starting with ind-coherent sheaves,
+we briefly gather some basic facts about quasi-coherent sheaves.
+Specifically, how they are set up in derived algebraic geometry.
+  
+\begin{prop}[Contravariant $\QCOH$]
+
+  There is a functor $\QCOH^* : \DAFF \to (\infty,1)\dash\CAT^\OP$
   that assigns to each $A \in \DAFF$ the 
   \emph{derived category of $A$-modules}, denoted $A\dash\MOD$.
+
+  For $\SPEC\,A \in \DAFF$, $A\dash\MOD$ is
+  $\infty$-category of left modules over $A$ in $\VEC$.
+  It can be realised as localisation of left modules over
+  $A$ as a commutative dg-algebra w.r.t. some model structure.
+  $A\dash\MOD = \QCOH\,A$ is a cocomplete and complete stable
+  infinity category.
+
+  For $f : \SPEC\,B \to \SPEC\,A$,
+  $f^* : \QCOH\,A \to \QCOH\,B$ can be realised as
+  derived tensoring $A \lotimes_k \_$.
+\end{prop}
+
+\begin{rmk}[Concrete description of $A\dash\MOD$]
 
   For $A$ discrete (i.e. a commutative ring),
   there is the following description of $A\dash\MOD$
@@ -24,31 +44,28 @@
     \arrow["{=:}"{description}, draw=none, from=2-2, to=2-3]
     \arrow["h", from=2-2, to=3-2]
   \end{cd}
-  Details : 
+  Explanation : 
   \begin{itemize}
     \item $\CH\,A$ is the honest-to-god dg-category of chain complexes of
     honest-to-god $A$-modules
     and $D(A)$ is the category of complexes of injectives 
     \item $\CH\,A$ has a model structure such that 
     cofibrations are degree-wise injections and 
-    weak equivalences are quasi-isomorphisms (Lurie HA 1.3.5.3).
+    weak equivalences are quasi-isomorphisms.
+    \cite[Prop 1.3.5.3]{Lurie-HA}
     Although the class of fibrations are defined abstractly as
     those satisfying right lifting with respect to acyclic cofibrations,
     it turns out that any fibrant complex must be degree-wise injective,
     and partially conversely,
-    any bounded above complex of injectives is fibrant 
-    (Lurie HA 1.3.5.6).
+    any bounded above complex of injectives is fibrant.
+    \cite[Prop 1.3.5.6]{Lurie-HA}
     $(\CH\,A)_f$ denotes the full subcategory of fibrant complexes.
     \item $N$ denotes the nerve functor which converts
     1-categories to simplicial sets, which have the property of being
     $\infty$-categories.
     $N_{dg}$ denotes the dg-nerve functor which achieves the same thing for
     honest-to-god dg-catgeory categories. 
-    (See Kerodon 2.5.3 for a construction.)
-    \item $h$ is the truncation of an infinity category to a 1-category
-    by taking its homotopy catgeory.
-    It is the left adjoint to $N$.
-    (See Kerodon 1.2.5 for a construction.)
+    (See \cite[Subsection 2.5.3]{Kerodon} for a construction.)
 
     We have that the homotopy category of $A\dash\MOD$ gives the
     usual derived category of $A$-modules, as in classical algebraic geometry.
@@ -58,42 +75,54 @@
     there exists a acyclic cofibration $M_\bullet \to I_\bullet$ 
     to fibrant $I_\bullet$
     and this is initial in the category of arrows from 
-    $M_\bullet$ into $N_{dg}((\CH\,A)_f)$
-    (Lurie HA 1.3.5.12).
+    $M_\bullet$ into $N_{dg}((\CH\,A)_f)$.
+    \cite[Prop 1.3.5.12]{Lurie-HA}
     This means for each $M_\bullet$, 
     such a morphism $M_\bullet \to I_\bullet$ is unique up to equivalence
     and assembles to the desired functor $L$.
     Practically speaking, $L(M_\bullet) \simeq I_\bullet$.
     \item The composition $N(\CH\, A) \to N_{dg}((\CH\, A)_f)$
     exhibits the latter as the $\infty$-categorical localisation 
-    of the former at quasi-isomorphisms (Lurie HA 1.3.5.15).
+    of the former at quasi-isomorphisms.
+    \cite[Prop 1.3.5.15]{Lurie-HA}
     This matches the standard treatment in classical algebraic geometry : 
     the localisation functor from $\CH\, A$ to $D(A)$
     takes a complex and resolves it by injecting it
     quasi-isomorphically into a complex of injectives.
   \end{itemize}
+\end{rmk}
 
-\end{dfn}
+\begin{rmk}
+  For $\SPEC\,A \in \DAFF$, $\QCOH\,A$ has obvious t-structure.
+\end{rmk}
 
-\begin{itemize}
-  \item $\DAFF^\OP$ is localisation of commutative dg-algebras w.r.t.
-  suitable model structure. 
-  (Alternatively, localisation of simplicial commutative rings w.r.t. 
-  suitable model structure. However, then need to show
-  is equivalent to commutative algebra objects in $\VEC$.)
-  \item for $\SPEC\,A \in \DAFF$, $A\dash\MOD$ is
-  $\infty$-category of left modules over $A$ in $\VEC$.
-  Can be realised as localisation of left modules over
-  $A$ as a commutative dg-algebra w.r.t. some model structure.
-
-  \item $\QCOH^* : \DAFF \to \DGCAT_\CTS^\OP$ works
-  and for each $f : \SPEC\,B \to \SPEC\,A$,
-  $f^* : \QCOH\,A \to \QCOH\,B$ can be realised as
-  $A \otimes^L_k \_$.
-
-  \item for $\SPEC\,A \in \DAFF$, $\QCOH\,A$ has obvious t-structure.
+\begin{prop}[Pullback is Symmetric Monoidal]
+  \link{qcoh.symm_mon}
   
-\end{itemize}
+  The functor $\QCOH^* : \DAFF \to (\infty,1)\dash\CAT^\OP$
+  admits a lifts to a functor $\QCOH^* : \DAFF \to 
+  \brkt{\mathrm{cMon}\brkt{(\infty,1)\dash\CAT}}^\OP$,
+  where the latter is the opposite of 
+  the $\infty$-category of commutative monoid objects
+  in $(\infty,1)\dash\CAT$, A.K.A. symmetric monoidal $\infty$-categories
+  with symmetric monoidal functors.
+
+  \cite[Prop 4.5.3.1]{Lurie-HA}
+\end{prop}
+
+\begin{rmk}
+  
+  We take for granted that $\QCOH^* : \DAFF \to (\infty,1)\dash\CAT^\OP$ 
+  as mentioned so far
+  can be lifted to $\QCOH^* : \DAFF \to \DGCAT_\CTS^\OP$.
+  For individual $\QCOH\,A$,
+  this is not hard to believe since the hom complexes of $\QCOH\,A$
+  are left $A$-modules, and hence in particular,
+  complexes of $k$-vector spaces.
+
+  With that, 
+  we are ready for quasi-coherent sheaves on all prestacks.
+\end{rmk}
 
 \begin{dfn}[Quasi-coherent Sheaves on Prestacks]
   
@@ -102,7 +131,30 @@
 \end{dfn}
 
 \begin{rmk}
-  
+  For $X \in \PSTK$, $\QCOH\,X$ has obvious t-structure
+  that is checked pointwise. 
+  We refer the reader to \cite[Ch 3, 1.5]{GR1}.
+
+  For $X \in \DSCH$, 
+  the heart of $\QCOH\,X$ gives the abelian 1-category
+  of quasi-coherent sheaves.
+\end{rmk}
+
+There is also a covariant $\QCOH$.
+
+\begin{prop}
+
+  There exists a functor $\QCOH_* : \PSTK \to \DGCAT$
+  which at the level of objects does the same as $\QCOH^*$
+  but at the level of morphisms $f : X \to Y$,
+  its image $f_*$ is obtained as the right adjoint to
+  $f^*$ via the \linkto{dgcat.adjoint}{adjoint functor theorem}.
+  \cite[Ch 3, 2.1.1]{GR1}
+\end{prop}
+
+\begin{rmk}
+  It is important to note that $f_*$ is \emph{not} in general
+  continuous.
 \end{rmk}
 
 

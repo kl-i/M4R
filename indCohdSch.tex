@@ -1,6 +1,66 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
   
+\begin{dfn}[$\INDCOH$]
+  
+  Let $X \in \DSCH_\AFT$.
+  For $\FF \in \QCOH\,X$, 
+  we say $\FF$ is \emph{coherent} when
+  it has finitely many non-zero cohomologies and for all $i \in \Z$, 
+  $H^i \FF \in (\QCOH\,X)^\heartsuit$ is coherent in the classical sense.
+  We use $\COH\,X$ to denote the full subcategory of $\QCOH\,X$
+  consisting of coherent sheaves.
+  \cite[Intro, 1.1.]{GR1}
 
+  The $\infty$-category $\INDCOH\,X$ is defined as 
+  the ind-completion $\IND\,(\COH\,X)$.
+  \cite[Ch 4, 1.1.1]{GR1}
+\end{dfn}
+
+\begin{lem}[t-structure on $\INDCOH$]
+  \link{indcoh.t}
+  
+  By the \linkto{dgcat.ind.up}{universal property of ind-completions},
+  we have \begin{cd}
+    {\COH\,X} & {\QCOH\,X} \\
+    {\INDCOH\,X}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow["{\Psi_X}"', dashed, from=2-1, to=1-2]
+  \end{cd}
+  where $\Psi_X$ left Kan extends the fully faithful inclusion
+  $\COH\,X \to \QCOH\,X$.
+  
+  Then there is an unique t-structure on $\INDCOH\, X$ such that 
+  \begin{itemize}
+    \item $(\INDCOH\,X)^{\leq 0} = 
+    \Psi_X^{-1}(\QCOH\,X)^{\leq 0} \text{ full subcat } \INDCOH\,X$
+    \item $\Psi_X$ is t-exact.
+    \item $\INDCOH(X)^{0 \leq}$ is closed under filtered colimits
+    \item for any $n \in \Z$, $\Psi_X$ gives an equivalence 
+    $\INDCOH(X)^{n \leq} \map{\sim}{} \QCOH(X)^{n \leq}$.
+  \end{itemize}
+
+  In particular, $\COH\,X \subs (\INDCOH\,X)^+$.
+  \begin{proof1}
+    See \cite[Ch 4, 1.2.2]{GR1}
+  \end{proof1}
+\end{lem}
+
+\begin{prop}
+  \link{indcoh.compact}
+  
+  Let $X \in \DSCH_\AFT$.
+  Then $\COH\,X$ is idempotent complete.
+  Hence the Yoneda embedding $\COH\,X \map{\sim}{} (\INDCOH\,X)^c$
+  is an equivalence.
+
+  \cite[Ch 4 , 1.2.8]{GR1}
+\end{prop}
+\begin{proof}
+  This can be checked at the level of
+  the triangulated category $h\COH\,X$
+  \linkto{dgcat.idem}{since} $\COH\,X$ is a stable $\infty$-category.
+\end{proof}
 
 \end{document}

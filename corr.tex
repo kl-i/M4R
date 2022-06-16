@@ -6,16 +6,146 @@ the assignment $X \rightsquigarrow \INDCOH\,X$ should be viewed
 not as two functors $\INDCOH_* : \DSCH_\AFT \to \DGCAT_\CTS$ and
 $\INDCOH^! : \DSCH_\AFT \to \DGCAT_\CTS$ but rather as a single
 functor between \emph{$(\infty,2)$-categories} : 
-\[
-  \INDCOH : \CORR(\DSCH_\AFT)_{all, all}^{proper} \to \DGCAT_\CTS^{(\infty,2)}
-\]
-The precise construction of $\INDCOH$ in this form is
-beyond the scope of this paper.
-However, let us describe what this gives us
-and leave the interested reader to find details in GR1, Ch 5.
+\begin{cd}
+  {\DSCH_\AFT} & {\CORR(\DSCH_\AFT)^\mathrm{proper}_\mathrm{all , all}} & {\DSCH_\AFT^\OP} \\
+	& {\DGCAT_\CTS^{(\infty,2)}}
+	\arrow["\INDCOH"{description}, from=1-2, to=2-2]
+	\arrow["{\mathrm{vert}}", from=1-1, to=1-2]
+	\arrow["{\INDCOH_*}"', from=1-1, to=2-2]
+	\arrow["{\mathrm{hori}}"', from=1-3, to=1-2]
+	\arrow["{\INDCOH^!}", from=1-3, to=2-2]
+\end{cd}
+In this section, 
+we will explain informally how viewing $\INDCOH$ in this way
+efficiently encodes many of the properties we wish an 
+``$\infty$-category of sheaves'' to have.
+We will then in the subsequent sections show how
+each of the things we want actually computes and be content that
+it can all be fit together into $\INDCOH$ 
+with all higher-categorical coherencies accounted for.
+The interested reader can find the formal construction of $\INDCOH$ in this way
+in GR1 Ch5.
 
-IP : describe how correspondences encode
-integral transforms, proper base change.
+\begin{itemize}
+  \item (Correspondences)
+  $\CORR(\DSCH_\AFT)^\mathrm{proper}$ is an
+  \emph{$(\infty,2)$-category}.
+  The objects are the same as $\DSCH_\AFT$.
+  Given $X , Y$ derived schemes of almost finite type, 
+  there is an $(\infty,1)$-category of morphisms 
+  \[
+    \CORR^\mathrm{proper}(X,Y) \simeq 
+    \brkt{\DSCH_\AFT / X \times Y}^\mathrm{proper}
+  \]
+  where the latter is the subcategory of $\DSCH_\AFT / X \times Y$
+  consisting of all objects but the only morphisms are the ones
+  that are proper, i.e.
+  \begin{cd}
+    Z & Y \\
+    X & {Z_1}
+    \arrow[from=1-1, to=2-1]
+    \arrow[from=1-1, to=1-2]
+    \arrow[from=2-2, to=1-2]
+    \arrow[from=2-2, to=2-1]
+    \arrow["{\mathrm{proper}}"{description}, from=1-1, to=2-2]
+  \end{cd} 
+  for $Z , Z_1 \in \DSCH_\AFT / X \times Y$.
+  Given $Z \to X \times Y$, 
+  we will refer to the projection into $X$ as the \emph{horizontal component}
+  and the projection into $Y$ as the \emph{vertical component}.
+
+  \item (Composition of Correspondences)
+  Given two correspondences $X \mapfrom{}{} U \map{}{} Y$ and
+  $Y \mapfrom{}{} V \map{}{} Z$,
+  the composition is computed by using fiber products : 
+  \begin{cd}
+    X & U & W \\
+    & Y & V \\
+    && Z
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-3, to=2-2]
+    \arrow[from=2-3, to=3-3]
+    \arrow[from=1-3, to=1-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, 
+      draw=none, from=1-3, to=2-2]
+  \end{cd}
+  \item (Horizontal and Vertical Embeddings)
+  The functor $\mathrm{vert} : \DSCH_\AFT \to \CORR(\DSCH_\AFT)^\PROPER$
+  is identity on objects, and for $X , Y \in \DSCH_\AFT$,
+  the induced functor \[
+    \DSCH_\AFT(X , Y) \to 
+    \CORR^\PROPER(X , Y) \simeq (\DSCH_\AFT / X \times Y)^\PROPER 
+  \]
+  puts $\id{X}$ in the horizontal component.
+
+  The functor $\mathrm{hori}$ is similar, 
+  except it puts $\id{Y}$ in the vertical component,
+  hence the contravariance.
+
+  \item $\DGCAT_\CTS^{(\infty,2)}$ is obtained from the $(\infty,1)$-category 
+  $\DGCAT_\CTS$ by seeing it as an $(\infty,2)$-category whose only
+  2-morphisms are equivalences.
+  So $\INDCOH$ is a functor between $(\infty,2)$-categories.
+
+  \item ($*$-Pushforward and $!$-Pullback)
+  By restricting along $\mathrm{vert}$ respectively $\mathrm{hori}$,
+  we obtain $\INDCOH_*$ respectively $\INDCOH^!$,
+  which can be seen as functors between $(\infty,1)$-categories.
+  For a 1-morphism $f$ in $\DSCH_\AFT$,
+  we use $f_*$ and $f^!$ to denote the image of $f$ under
+  $\INDCOH_*$ and $\INDCOH^!$ respectively.
+
+  Let $(f , g) : Z \to X \times Y$ be a correspondence.
+  We can compute its image under $\INDCOH$ as follows : 
+  \begin{cd}
+    X & Z & Z && {\INDCOH\,X} & {\INDCOH\,Z} \\
+    & Z & Z & \rightsquigarrow && {\INDCOH\,Y} \\
+    && Y
+    \arrow["f", from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-3, to=2-2]
+    \arrow["g"', from=2-3, to=3-3]
+    \arrow[from=1-3, to=1-2]
+    \arrow[from=1-3, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-3, to=2-2]
+    \arrow["{\text{image of }(f,g)}"', from=1-5, to=2-6]
+    \arrow["{f^!}", from=1-5, to=1-6]
+    \arrow["{g_*}", from=1-6, to=2-6]
+  \end{cd}
+  Thus the image of $(f,g)$ is pull-push across the correspondence.
+
+  \item (Proper Adjunction) 
+  
+  \item open adjunction
+  \item proper base change
+  \item symmetric monoidal structure on $\INDCOH^!$,
+  hence internal hom
+  \item $\INDCOH\,X$ self-dual
+\end{itemize}
+
+
+For intuition, it helps to think of the following linear algebra analogy : 
+\begin{align*}
+  &k \text{ base field} 
+    & \VEC \\
+  &V \text{ abelian group}
+    & C \in (\infty,1)\dash\CAT^\EX_\CTS \\
+  & \text{1-category of $k$-modules } k\MOD
+    & \DGCAT_\CTS = \VEC\MOD \\
+  & \HOM_k(V , W)
+    & \DGCAT_\CTS(C , D) \\
+  & V \otimes W 
+    & C \otimes D \\
+  & \bullet \text{ 1-category with single point, only identity}
+    & \DAFF \\
+  & \SET
+    & \PSTK \\
+  & k^\_ = \SET(\_,k) : \SET \to (k\MOD)^\OP
+    & \QCOH^* : \PSTK_\LAFT \to (\DGCAT_\CTS)^\OP \\
+\end{align*}
+
 
 
 \end{document}

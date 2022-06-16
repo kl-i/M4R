@@ -1,6 +1,135 @@
 \documentclass[./main.tex]{subfiles}
 \begin{document}
   
+The main tool is the theory of descent as formulated in
+\cite[Prop 4.7.5.2]{Lurie-HA}.
 
+\begin{prop}[Descent]
+  \link{induction.desc}
+  
+  Let $C^\bullet : \Delta \to (\infty,1)\dash\CAT$. 
+  Suppose $C^\bullet$ has the following property : 
+  \begin{itemize}
+    \item for all $\al : [m] \to [n]$ in $\De$, 
+    then the following commutative square is \emph{left-adjointable} :
+     \begin{cd}
+      {C^m} & {C^{m+1}} & \rightsquigarrow & {C^m} & {C^{m+1}} \\
+      {C^n} & {C^{n+1}} && {C^n} & {C^{n+1}}
+      \arrow[from=1-1, to=2-1]
+      \arrow[from=1-2, to=2-2]
+      \arrow["{d_0}", from=1-1, to=1-2]
+      \arrow["{d_0}"', from=2-1, to=2-2]
+      \arrow[from=1-4, to=2-4]
+      \arrow[from=1-5, to=2-5]
+      \arrow["{\de_0}", from=2-5, to=2-4]
+      \arrow["{\de_0}"', from=1-5, to=1-4]
+     \end{cd}
+     meaning the coface morphisms $d^0 : C^k \to C^{k+1}$ admit 
+     left adjoints $F(k) : C^{k+1} \to C^k$ and
+     the commutative square on the left hand side
+     induces the commutative square on the right by passing to left adjoints.
+  \end{itemize}
+
+  Let $C$ be the underlying $\infty$-category of the limit $\LIM C^\bullet$.
+  Then \begin{itemize}
+    \item the functor $G : C \to C^0$ admits a left adjoint $F$.
+    \item the following commutative square is left-adjointable : 
+    \begin{cd}
+      C & {C^0} & \rightsquigarrow & C & {C^0} \\
+      {C^0} & {C^1} && {C^0} & {C^1}
+      \arrow["G"', from=1-1, to=2-1]
+      \arrow["G", from=1-1, to=1-2]
+      \arrow["{d^0}"', from=2-1, to=2-2]
+      \arrow["{d^1}", from=1-2, to=2-2]
+      \arrow["G"', from=1-4, to=2-4]
+      \arrow["{d^1}", from=1-5, to=2-5]
+      \arrow["F"', from=1-5, to=1-4]
+      \arrow["{F(0)}", from=2-5, to=2-4]
+    \end{cd}
+    \item the adjunction $F \dashv G : C^0 \rightleftarrows C$ is monadic.
+  \end{itemize}
+  \cite[Prop 4.7.5.2]{Lurie-HA}
+\end{prop}
+
+Under the simplifying assumption of 
+$X \in \PSTK_\LAFT$ being classically formally smooth so that
+\[
+  \CRYS^R\,X \map{\sim}{} \LIM \INDCOH\brkt{\check{C}(X / X_\DR)}
+\]
+we see that to obtain the induction functor for right crystals, 
+we want the projections 
+$p_1, p_2 : X \times_{X_\DR} X \rightrightarrows X$ to give
+$p_1^! , p_2^!$ which admit left adjoints and satisfies base change.
+This is indeed possible and is what \cite[Ch 3, 2.1]{GR2} achieves.
+
+\begin{prop}[Base Change for $\INDCOH$ on Ind-Schematic, Ind-Proper Morphisms]
+  
+  Suppose we have the following cartesian square in $\PSTK_\LAFT$ : 
+  \begin{cd}
+    W & Y \\
+    X & Z
+    \arrow["v"{description}, from=1-1, to=2-1]
+    \arrow["g"{description}, from=1-2, to=2-2]
+    \arrow["f"{description}, from=2-1, to=2-2]
+    \arrow["u"{description}, from=1-1, to=1-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125}, draw=none, from=1-1, to=2-2]
+  \end{cd}
+  where $g$ is \emph{ind-schematic} and \emph{ind-proper}.
+  Then $g^!, v^!$ respectively admit left adjoints $g_* , v_*$ such that
+  we have an equivalence \[
+    v_* u^! \map{\sim}{} f^! g_*
+  \]
+  arising by adjunction from the equivalence $f_* v_* \simeq g_* u_*$.
+\end{prop}
+\begin{proof}
+  Omitted since this would require developing
+  the theory of ind-schemes for derived algebraic geometry.
+  See \cite[Ch 3, 2.1]{GR2} for the proof.
+\end{proof}
+
+Due to the constraint in space,
+we also choose to omit the verification that
+the projections $p_1, p_2 : X \times_{X_\DR} X \rightrightarrows X$ are 
+ind-schematic and ind-proper.
+We defer the reader to the definitions at 
+\cite[Ch 2, 1.6.5]{GR2} and \cite[Ch 2, 1.6.11]{GR2}.
+We thus obtain induction for right crystals.
+
+\begin{prop}[Induction for Right Crystals (Crys 3.3.2)]
+  \link{induction.right}
+  
+  Let $X \in \PSTK_\LAFT$ such that
+  \[
+    \CRYS^R\,X \map{\sim}{} \LIM \INDCOH\brkt{\check{C}(X / X_\DR)}
+  \]
+  (such as $X$ classically formally smooth).
+  Consider $p : X \to X_\DR$ and 
+  $p_s, p_t : X \times_{X_\DR} X \rightrightarrows X$.
+  Then \begin{enumerate}
+    \item the functor $\OBLV^R = p^! : \CRYS^R\,X \to \INDCOH\,X$
+    has a left adjoint $\INDUCE^R$.
+    \item we have an equivalence of functors \[
+      \OBLV^R\,\INDUCE^R \simeq (p_t)_*\,p_s^!
+    \]
+    \item the adjunction $\INDUCE^R \dashv \OBLV^R$ is monadic.
+    In particular, if $\INDCOH\,X$ is compactly generated,
+    so is $\CRYS^R\,X$.\cite[Cor 3.3.3]{Crys}
+  \end{enumerate}
+  \cite[Prop 3.3.2]{Crys}
+\end{prop}
+\begin{proof}
+  We've already discussed how (1) and (2) follow from
+  \linkto{induction.desc}{Lurie's theory of descent}.
+
+  For (3), note that since $\INDUCE^R \dashv \OBLV^R$ is monadic,
+  $\OBLV^R$ must be conservative.
+  This implies that the image of the set of objects of $(\INDCOH\,X)^c$
+  compactly generates $\CRYS^R\,X$.
+\end{proof}
+
+The induction functor for left crystals 
+$\INDUCE^L : \QCOH\,X \to \CRYS^L\,X$ is obtained by 
+transferring across the equivalence 
+$\Upsilon_{X_\DR} : \CRYS^L\,X \simeq \CRYS^R\,X$.
 
 \end{document}

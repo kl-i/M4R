@@ -1,0 +1,284 @@
+\documentclass[./main.tex]{subfiles}
+\begin{document}
+  
+The integral transform theorem for $\INDCOH$ follows the same strategy
+as that of $\QCOH$.
+\begin{cd}
+  {\INDCOH(Y\times X)} & {\INDCOH\,X \otimes \INDCOH\,Y} 
+  & {\DGCAT_\CTS(\INDCOH\,X , \INDCOH\,Y)}
+	\arrow["\sim"',"{(1)}", from=1-2, to=1-1]
+	\arrow["\sim","{(2)}"', from=1-2, to=1-3]
+\end{cd}
+As in the argument for $\QCOH$, 
+(2) comes from a self-duality of $\INDCOH\,X$.
+But let us address (1) first.
+
+\begin{prop}[Integral Transform for Ind-Coherent Sheaves]
+  \link{fm.indcoh}
+
+  Let $X, Y \in \PSTK_\LAFT$.
+  Assume $\INDCOH\,X$ is dualisable.
+  Let us also assume that the base field $k$ is perfect.
+  Then \[
+    \boxtimes : \INDCOH\,X \otimes \INDCOH\,Y \map{\sim}{}
+    \INDCOH(X \times Y)
+  \]
+\end{prop}
+\begin{proof}
+
+  As in the first part of the proof of
+  \linkto{fm.qcoh}{integral transforms for quasi-coherent sheaves},
+  we reduce to the case of $X, Y \in \DAFF^{<\infty}_\FT$.
+  The result is in fact true for all $X, Y \in \DSCH_\AFT$.
+
+  \begin{lem}[]
+    \link{fm.indcoh.aft}
+
+    Let $X , Y \in \DSCH_\AFT$.
+    Then \[
+      \boxtimes : \INDCOH\,X \otimes \INDCOH\,Y \map{\sim}{}
+      \INDCOH(X \times Y)
+    \] 
+    is fully faithful.
+    If the base field $k$ is perfect,
+    then $\boxtimes$ is an equivalence. 
+
+    \begin{proof1}
+      We refer the reader to \cite[Ch 4 , 6.3.4]{GR1}.
+    \end{proof1}
+  \end{lem}
+\end{proof}
+
+It remains to describe self-duality for $\INDCOH\,X$ when $X \in \DSCH_\AFT$.
+Note that by definition, 
+$\INDCOH\,X$ is compactly generated and hence dualisable.
+What's interesting is that the self-duality recovers 
+the classical Serre duality for coherent sheaves.
+First, we need to give $\INDCOH\,X$ a symmetric monoidal structure.
+
+\begin{prop}
+
+  Let $X , Y \in \DSCH_\AFT$. 
+  Then there exists a unique functor
+  \[
+    \boxtimes \in \DGCAT_\CTS\brkt{
+      \INDCOH\,X \otimes \INDCOH\,Y , \INDCOH(Y \times X)
+    }
+  \]
+  that preserves compact objects and makes the following diagram commute : 
+  \begin{cd}
+    {\INDCOH\,X \otimes \INDCOH\,Y} & {\INDCOH(Y \times X)} \\
+    {\QCOH\,X \otimes \QCOH\,Y} & {\QCOH(Y\times X)}
+    \arrow["{\Psi_X \otimes \Psi_Y}"', from=1-1, to=2-1]
+    \arrow["\boxtimes"', from=2-1, to=2-2]
+    \arrow["{\Psi_{Y \times X}}", from=1-2, to=2-2]
+    \arrow["\boxtimes", from=1-1, to=1-2]
+  \end{cd}
+\end{prop}
+\begin{proof}
+  Technical. See \cite[Ch 4 , 6.3.2]{GR1} for details.
+\end{proof}
+
+In \cite[Ch 5 , 4.1]{GR1}, functoriality of $\boxtimes$ is shown.
+\begin{prop}
+ 
+  There is a symmetric monoidal structure on 
+  $\INDCOH^! : \DSCH_\AFT^\OP \to \DGCAT_\CTS$ 
+  such that for $X , Y \in \DSCH_\AFT$,
+  the morphism \[
+    \INDCOH\,X \otimes \INDCOH\,Y \map{}{} \INDCOH(Y \times X)
+  \]
+  from the symmetric monoidal structure of $\INDCOH^!$
+  recovers $\boxtimes$. 
+\end{prop}
+\begin{proof}
+  Omitted. See \cite[Ch 5 , 4.1]{GR1}.
+\end{proof}
+
+\begin{rmk}
+  
+  Assuming the above result,
+  we can give each $\INDCOH\,X$ a symmetric monoidal structure
+  by the following trick from Gaitsgory--Rozenblyum.
+  A symmetric monoidal dg-$\infty$-category is by their definition
+  a commutative algebra object in $\DGCAT_\CTS$.
+  The idea is that the source of commutative algebra structure on 
+  $\INDCOH\,X$ actually comes a commutative algebra structure on
+  \emph{$X$ itself}.
+  This means the following.
+  
+\end{rmk}
+
+\begin{lem}[Symmetric Monoidal Structure on $\PSTK$]
+  
+  There is a symmetric monoidal structure $\otimes$ on $\PSTK^\OP$
+  that gives for each $X , Y \in \PSTK^\OP$, \[
+    X \otimes Y \simeq X \times Y \in \PSTK^\OP
+  \]
+
+  Furthermore, we have a functor
+  $\PSTK^\OP \to \CALG(\PSTK^\OP)$
+  which for every $X \in \PSTK^\OP$,
+  gives it a commutative algebra structure such that
+  the multiplication
+  \[
+    X \times X \to X  
+  \]
+  is given by (the opposite of) the diagonal $\De^\OP$.
+  \begin{proof1}
+    The proof is not so important for our purposes.
+    We refer the reader to \cite[Prop 2.4.1.5]{Lurie-HA}
+    where the result is proved for any $\infty$-category
+    admitting all finite products.
+  \end{proof1}
+\end{lem}
+
+\begin{dfn}
+  
+  The symmetric monoidal functor $\INDCOH^! : \DSCH_\AFT^\OP \to \DGCAT_\CTS$
+  sends commutative algebra objects to commutative algebra objects.
+  So we have the following :
+  \begin{cd}
+    {\DSCH_\AFT^\OP} & {\DGCAT_\CTS} \\
+    {\CALG(\DSCH_\AFT^\OP)} & {\CALG(\DGCAT_\CTS)}
+    \arrow["{\INDCOH^!}", from=1-1, to=1-2]
+    \arrow["{\text{use diagonal}}"', shift right=2, from=1-1, to=2-1]
+    \arrow["{\INDCOH^!}"', from=2-1, to=2-2]
+    \arrow["{\text{``forget''}}"', from=2-2, to=1-2]
+    \arrow["{\text{``forget''}}"', shift right=2, from=2-1, to=1-1]
+  \end{cd}
+  Hence we obtain a factoring of $\INDCOH^!$ through the forgetful functor 
+  $\CALG(\DGCAT_\CTS) \to \DGCAT_\CTS$.
+
+  For $X \in \DSCH_\AFT$,
+  we use $\OTIMES$ to denote the symmetric monoidal operation
+  on $\INDCOH\,X$.
+  
+  \cite[Ch 5 , 4.1.3]{GR1}
+\end{dfn}
+
+\begin{rmk}
+  
+  Tracing through the above functor
+  $\INDCOH^! : \DSCH_\AFT^\OP \to \CALG(\DSCH_\AFT^\OP) \to \CALG(\DGCAT_\CTS)$,
+  we see that for $X \in \DSCH_\AFT$,
+  the symmetric monoidal operation for $\INDCOH\,X$ is the following : 
+  \begin{cd}
+    {X \times X} & \rightsquigarrow & {\INDCOH\,X \otimes \INDCOH\,X} & {\INDCOH(X \times X)} \\
+    X &&& {\INDCOH\,X}
+    \arrow["\boxtimes", from=1-3, to=1-4]
+    \arrow["{\De_X^!}", from=1-4, to=2-4]
+    \arrow["\OTIMES"', from=1-3, to=2-4]
+    \arrow[from=1-1, to=2-1]
+  \end{cd}
+\end{rmk}
+
+\begin{prop}[``Serre Duality'']
+  \link{duality.serre}
+  
+  Let $X \in \DSCH_\AFT$ and the base field $k$ be perfect.
+  Define \[
+    \<\_,\_\> : 
+    \INDCOH\,X \otimes \INDCOH\,X \map{\OTIMES}{} 
+    \INDCOH\,X \map{(p_X)_*}{} \VEC
+  \]
+  Then $\<\_,\_\>$ exhibits $\INDCOH\,X$ as its own dual.
+  Let $\D_\SERRE : \INDCOH\,X \simeq (\INDCOH\,X)^\vee$
+  correspond to $\<\_,\_\>$. 
+  We refer to $\D_\SERRE$ as the \emph{Serre duality functor}.
+\end{prop}
+\begin{proof}
+  Let us first say that the way in which \cite{GR1} obtains
+  $\D_\SERRE$ is highly abstract.
+  This is to ensure the duality has higher categorical functoriality.
+  However, at \cite[Ch 5 , Rmk 4.2.8]{GR1},
+  it is mentioned that one does not need all the machinery of 
+  \emph{correspondences} to deduce Serre duality for each
+  individual $X \in \DSCH_\AFT$ and a method is briefly explained.
+  What follows is an expansion of the remark.
+  
+  Let $e := \<\_ , \_\>$.
+  Following , 
+  we will explicitly give a morphism 
+  $c : \VEC \to \INDCOH\,X \otimes \INDCOH\,X$ in $\DGCAT_\CTS$
+  making $(c , e)$ into duality datum.
+  The idea of \cite{GR1} is that
+  the duality datum $(e , c)$ should come from
+  a duality datum on the underlying space $X$ with itself.
+  This is the philosophy of \emph{correspondences}.
+  The key behind $X$ being self-dual is essentially the following :
+  \begin{cd}
+    {Y \times X} & R & \leftrightsquigarrow & Y \\
+    & Z && R & {X \times Z}
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-4, to=1-4]
+    \arrow[from=2-4, to=2-5]
+  \end{cd}
+  Applying the above to the identity correspondence 
+  $X \mapfrom{}{} X \map{}{} X$ yields two correspondences :
+  \begin{cd}
+    {X\times X} & X & {\SPEC\,k} \\
+    {} & {\SPEC\,k} & X & {X \times X}
+    \arrow[from=1-2, to=1-1]
+    \arrow[from=1-2, to=2-2]
+    \arrow[from=2-3, to=1-3]
+    \arrow[from=2-3, to=2-4]
+  \end{cd}
+  Using the fact \linkto{fm.indcoh.fm}
+  {$\boxtimes$ is an equivalence for $\INDCOH$},
+  the left correspondence gives $e$ and the right correspondence leads us to
+  define $c := (\De_X)_* p_X^!$.
+  We need to show the following triangles commute in $\DGCAT_\CTS$ :
+  \begin{cd}
+    {\INDCOH\,X} & {(\INDCOH\,X)^{\otimes 3}} & {\INDCOH\,X} \\
+    {} & {\INDCOH\,X} & {(\INDCOH\,X)^{\otimes 3}} & {\INDCOH\,X}
+    \arrow["{\id{} \otimes e}", from=1-2, to=2-2]
+    \arrow["{\id{} \otimes c}"', from=1-3, to=2-3]
+    \arrow["{e \otimes \id{}}"', from=2-3, to=2-4]
+    \arrow["{c \otimes \id{}}", from=1-1, to=1-2]
+    \arrow["{\id{}}"', from=1-1, to=2-2]
+    \arrow["{\id{}}", from=1-3, to=2-4]
+  \end{cd}
+  Again, the source of the above commuting triangles
+  should be at the level of spaces.
+  Indeed, the functors in the above diagram come from
+  the following correspondences : 
+  \begin{cd}
+    X & {X \times X} & X & X \\
+    & {X \times X \times X} & {X \times X} & {X\times X} & {X \times X \times X} \\
+    && X & X & {X \times X} & X
+    \arrow["{(p_X,\id{})}"', from=1-2, to=1-1]
+    \arrow["{(\De_X , \id{})}"', from=1-2, to=2-2]
+    \arrow["{(\id{} , \De_X)}", from=2-3, to=2-2]
+    \arrow["{(\id{} , p_X)}", from=2-3, to=3-3]
+    \arrow["{\De_X}", from=1-3, to=1-2]
+    \arrow["{\De_X}"', from=1-3, to=2-3]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-3, to=2-2]
+    \arrow["{(\id{} , p_X)}", from=2-4, to=1-4]
+    \arrow["{(\id{} , \De_X)}", from=2-4, to=2-5]
+    \arrow["{(\De_X , \id{})}"', from=3-5, to=2-5]
+    \arrow["{(p_X , \id{})}"', from=3-5, to=3-6]
+    \arrow["{\De_X}"', from=3-4, to=2-4]
+    \arrow["{\De_X}", from=3-4, to=3-5]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=90}, draw=none, from=3-4, to=2-5]
+  \end{cd}
+  Thus, we are reduced to showing $\INDCOH$ base change for 
+  the cartesian square :
+  \begin{cd}
+    {X \times X} & X \\
+    {X \times X \times X} & {X \times X}
+    \arrow["{(\De_X , \id{})}"', from=1-1, to=2-1]
+    \arrow["{(\id{} , \De_X)}", from=2-2, to=2-1]
+    \arrow["{\De_X}"', from=1-2, to=1-1]
+    \arrow["{\De_X}", from=1-2, to=2-2]
+    \arrow["\lrcorner"{anchor=center, pos=0.125, rotate=-90}, draw=none, from=1-2, to=2-1]
+  \end{cd}
+  where all morphisms are closed embeddings
+  (since in \cite{GR1}'s definition of $\DSCH$ the diagonal morphism is
+  assumed to be a closed embedding).
+  This follows from \linkto{indcoh.proper_bc}{proper base change for $\INDCOH$}.
+
+\end{proof}
+
+\end{document}
